@@ -11,5 +11,19 @@ Your proposal should include:
 -   A brief description of your dataset including its provenance, dimensions, etc. (Make sure to load the data and use inline code for some of this information.)
 -   The reason why you chose this dataset.
 -   The two questions you want to answer.
-    -   A plan for answering each of the questions including the variables involved, variables to be created (if any), external data to be merged in (if any).
-ddd
+    -   A plan for answering each of the questions including the variables involved, variables to be created (if any), external data to be merged in (if any). ddd
+
+1. We are using air quality data from the EPA (Environmental Protection Agency). Their data records atmospheric concentrations of major pollutants (CO, NO2, O3, PM 2.5, and SO2) every day of the year in geographic areas across the United States. The data can be as granular as county level; for our research purposes, we are focusing on the Portland metropolitan area (Portland-Hillsboro-Vancouver) and using data from 2017-2023. For our two research questions, we have subsetted the data into two forms:
+
+
+
+
+2. We wanted to explore environmental data because it can be considered a “subversive” topic by some audiences. We believe it is important to study environmental trends in order to confirm or deny common arguments and observe relationships between anthropogenic activity and environmental impacts. We chose this dataset because it is accessible through the EPA’s website and can be easily filtered from the AQI monitoring webpage by type of pollutant, geographic area, and year. 
+
+3. Our two questions are:
+- How did the COVID pandemic lockdown impact air quality in the Portland Metropolitan area? 
+- Is there a correlation between wildfire season and air quality fluctuations in the Portland Metropolitan area?
+
+4. For our first question, we will be visualizing changes over time for the 5 major pollutants above in the Portland-Vancouver-Hillsboro area. We will be using data from 2017 to 2023 in order to get a sense of what the air quality looked like before the pandemic, during the pandemic (highlighting 2020-2021 as prime lockdown years), and seeing if pollutant concentrations increased after lockdown restrictions were lifted (from 2022-2023). We will plot monthly averages for each pollutant and graph the changes across the 7 year time span on a line graph, with multiple lines for each pollutant. If there are too many observations we may split the data into three graphs (before, during, and after lockdown).
+
+For our second question, we will plot observations for the first, 15th, and last day of each month across one year. We will observe whether there is a stark increase in pollutant concentrations during the wildfire season (July-September) and have multiple lines to see which pollutants in particular increase. We will make a graph for each year to check for precision.
