@@ -1,0 +1,14 @@
+{
+  "hash": "4c707502205b1c658789dd3962395405",
+  "result": {
+    "markdown": "---\ntitle: \"data_cleanup\"\noutput: pdf_document\ndate: \"2024-02-21\"\n---\n\n\n\n\n\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

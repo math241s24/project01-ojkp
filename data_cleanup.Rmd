@@ -20,89 +20,410 @@ library(dplyr)
 # pm2.5 data 2017-2023 portland-vancouver-hillsboro (or-wa)
 
 pm25_portland_2023 <- read_csv("~/Github/project01-ojkp/air data/pm25/pm25 portland 2023.csv", 
-                               col_types = cols(Date = col_date(format = "%m/%d/%Y")))
-pm25_portland_2022 <- read_csv("~/Github/project01-ojkp/air data/pm25/pm25 portland 2022.csv", 
-                               col_types = cols(Date = col_date(format = "%m/%d/%Y")))
-pm25_portland_2021 <- read_csv("~/Github/project01-ojkp/air data/pm25/pm25 portland 2021.csv", 
-                               col_types = cols(Date = col_date(format = "%m/%d/%Y")))
-pm25_portland_2020 <- read_csv("~/Github/project01-ojkp/air data/pm25/pm25 portland 2020.csv", 
-                               col_types = cols(Date = col_date(format = "%m/%d/%Y")))
-pm25_portland_2019 <- read_csv("~/Github/project01-ojkp/air data/pm25/pm25 portland 2019.csv", 
-                               col_types = cols(Date = col_date(format = "%m/%d/%Y")))
-pm25_portland_2018 <- read_csv("~/Github/project01-ojkp/air data/pm25/pm25 portland 2018.csv", 
-                               col_types = cols(Date = col_date(format = "%m/%d/%Y")))
-pm25_portland_2017 <- read_csv("~/Github/project01-ojkp/air data/pm25/pm25 portland 2017.csv", 
-                               col_types = cols(Date = col_date(format = "%m/%d/%Y")))
+                               col_types = cols(Date = col_date(format = "%m/%d/%Y"), Source = col_skip(), 
+        `Site ID` = col_skip(), POC = col_skip(), 
+        UNITS = col_skip(), `Site Name` = col_skip(), 
+        DAILY_OBS_COUNT = col_skip(), PERCENT_COMPLETE = col_skip(), 
+        AQS_PARAMETER_CODE = col_skip(), 
+        AQS_PARAMETER_DESC = col_skip(), 
+        CBSA_CODE = col_skip(), STATE_CODE = col_skip(), 
+        STATE = col_skip(), COUNTY_CODE = col_skip(), 
+        COUNTY = col_skip(), SITE_LATITUDE = col_skip(), 
+        SITE_LONGITUDE = col_skip()))
 
-# pm10 data 2017-2023 portland-vancouver-hillsboro (or-wa)
-pm10_portland_2023 <- read_csv("~/Github/project01-ojkp/air data/pm10/pm10 portland 2023.csv", 
-                               col_types = cols(Date = col_date(format = "%m/%d/%Y")))
-pm10_portland_2022 <- read_csv("~/Github/project01-ojkp/air data/pm10/pm10 portland 2022.csv", 
-                               col_types = cols(Date = col_date(format = "%m/%d/%Y")))
-pm10_portland_2021 <- read_csv("~/Github/project01-ojkp/air data/pm10/pm10 portland 2021.csv", 
-                               col_types = cols(Date = col_date(format = "%m/%d/%Y")))
-pm10_portland_2020 <- read_csv("~/Github/project01-ojkp/air data/pm10/pm10 portland 2020.csv", 
-                               col_types = cols(Date = col_date(format = "%m/%d/%Y")))
-pm10_portland_2019 <- read_csv("~/Github/project01-ojkp/air data/pm10/pm10 portland 2019.csv", 
-                               col_types = cols(Date = col_date(format = "%m/%d/%Y")))
-pm10_portland_2018 <- read_csv("~/Github/project01-ojkp/air data/pm10/pm10 portland 2018.csv", 
-                               col_types = cols(Date = col_date(format = "%m/%d/%Y")))
-pm10_portland_2017 <- read_csv("~/Github/project01-ojkp/air data/pm10/pm10 portland 2017.csv", 
-                               col_types = cols(Date = col_date(format = "%m/%d/%Y")))
+pm25_portland_2022 <- read_csv("~/Github/project01-ojkp/air data/pm25/pm25 portland 2022.csv", 
+                               col_types = cols(Date = col_date(format = "%m/%d/%Y"), Source = col_skip(), 
+        `Site ID` = col_skip(), POC = col_skip(), 
+        UNITS = col_skip(), `Site Name` = col_skip(), 
+        DAILY_OBS_COUNT = col_skip(), PERCENT_COMPLETE = col_skip(), 
+        AQS_PARAMETER_CODE = col_skip(), 
+        AQS_PARAMETER_DESC = col_skip(), 
+        CBSA_CODE = col_skip(), STATE_CODE = col_skip(), 
+        STATE = col_skip(), COUNTY_CODE = col_skip(), 
+        COUNTY = col_skip(), SITE_LATITUDE = col_skip(), 
+        SITE_LONGITUDE = col_skip()))
+pm25_portland_2021 <- read_csv("~/Github/project01-ojkp/air data/pm25/pm25 portland 2021.csv", 
+                               col_types = cols(Date = col_date(format = "%m/%d/%Y"), Source = col_skip(), 
+        `Site ID` = col_skip(), POC = col_skip(), 
+        UNITS = col_skip(), `Site Name` = col_skip(), 
+        DAILY_OBS_COUNT = col_skip(), PERCENT_COMPLETE = col_skip(), 
+        AQS_PARAMETER_CODE = col_skip(), 
+        AQS_PARAMETER_DESC = col_skip(), 
+        CBSA_CODE = col_skip(), STATE_CODE = col_skip(), 
+        STATE = col_skip(), COUNTY_CODE = col_skip(), 
+        COUNTY = col_skip(), SITE_LATITUDE = col_skip(), 
+        SITE_LONGITUDE = col_skip()))
+pm25_portland_2020 <- read_csv("~/Github/project01-ojkp/air data/pm25/pm25 portland 2020.csv", 
+                               col_types = cols(Date = col_date(format = "%m/%d/%Y"), Source = col_skip(), 
+        `Site ID` = col_skip(), POC = col_skip(), 
+        UNITS = col_skip(), `Site Name` = col_skip(), 
+        DAILY_OBS_COUNT = col_skip(), PERCENT_COMPLETE = col_skip(), 
+        AQS_PARAMETER_CODE = col_skip(), 
+        AQS_PARAMETER_DESC = col_skip(), 
+        CBSA_CODE = col_skip(), STATE_CODE = col_skip(), 
+        STATE = col_skip(), COUNTY_CODE = col_skip(), 
+        COUNTY = col_skip(), SITE_LATITUDE = col_skip(), 
+        SITE_LONGITUDE = col_skip()))
+pm25_portland_2019 <- read_csv("~/Github/project01-ojkp/air data/pm25/pm25 portland 2019.csv", 
+                               col_types = cols(Date = col_date(format = "%m/%d/%Y"), Source = col_skip(), 
+        `Site ID` = col_skip(), POC = col_skip(), 
+        UNITS = col_skip(), `Site Name` = col_skip(), 
+        DAILY_OBS_COUNT = col_skip(), PERCENT_COMPLETE = col_skip(), 
+        AQS_PARAMETER_CODE = col_skip(), 
+        AQS_PARAMETER_DESC = col_skip(), 
+        CBSA_CODE = col_skip(), STATE_CODE = col_skip(), 
+        STATE = col_skip(), COUNTY_CODE = col_skip(), 
+        COUNTY = col_skip(), SITE_LATITUDE = col_skip(), 
+        SITE_LONGITUDE = col_skip()))
+pm25_portland_2018 <- read_csv("~/Github/project01-ojkp/air data/pm25/pm25 portland 2018.csv", 
+                               col_types = cols(Date = col_date(format = "%m/%d/%Y"), Source = col_skip(), 
+        `Site ID` = col_skip(), POC = col_skip(), 
+        UNITS = col_skip(), `Site Name` = col_skip(), 
+        DAILY_OBS_COUNT = col_skip(), PERCENT_COMPLETE = col_skip(), 
+        AQS_PARAMETER_CODE = col_skip(), 
+        AQS_PARAMETER_DESC = col_skip(), 
+        CBSA_CODE = col_skip(), STATE_CODE = col_skip(), 
+        STATE = col_skip(), COUNTY_CODE = col_skip(), 
+        COUNTY = col_skip(), SITE_LATITUDE = col_skip(), 
+        SITE_LONGITUDE = col_skip()))
+pm25_portland_2017 <- read_csv("~/Github/project01-ojkp/air data/pm25/pm25 portland 2017.csv", 
+                               col_types = cols(Date = col_date(format = "%m/%d/%Y"), Source = col_skip(), 
+        `Site ID` = col_skip(), POC = col_skip(), 
+        UNITS = col_skip(), `Site Name` = col_skip(), 
+        DAILY_OBS_COUNT = col_skip(), PERCENT_COMPLETE = col_skip(), 
+        AQS_PARAMETER_CODE = col_skip(), 
+        AQS_PARAMETER_DESC = col_skip(), 
+        CBSA_CODE = col_skip(), STATE_CODE = col_skip(), 
+        STATE = col_skip(), COUNTY_CODE = col_skip(), 
+        COUNTY = col_skip(), SITE_LATITUDE = col_skip(), 
+        SITE_LONGITUDE = col_skip()))
+
+# so2 data 2017-2023 portland-vancouver-hillsboro (or-wa)
+so2_portland_2023 <- read_csv("~/Github/project01-ojkp/air data/so2/so2 portland 2023.csv", 
+                               col_types = cols(Date = col_date(format = "%m/%d/%Y"), Source = col_skip(), 
+        `Site ID` = col_skip(), POC = col_skip(), 
+        UNITS = col_skip(), `Site Name` = col_skip(), 
+        DAILY_OBS_COUNT = col_skip(), PERCENT_COMPLETE = col_skip(), 
+        AQS_PARAMETER_CODE = col_skip(), 
+        AQS_PARAMETER_DESC = col_skip(), 
+        CBSA_CODE = col_skip(), STATE_CODE = col_skip(), 
+        STATE = col_skip(), COUNTY_CODE = col_skip(), 
+        COUNTY = col_skip(), SITE_LATITUDE = col_skip(), 
+        SITE_LONGITUDE = col_skip()))
+so2_portland_2022 <- read_csv("~/Github/project01-ojkp/air data/so2/so2 portland 2022.csv", 
+                               col_types = cols(Date = col_date(format = "%m/%d/%Y"), Source = col_skip(), 
+        `Site ID` = col_skip(), POC = col_skip(), 
+        UNITS = col_skip(), `Site Name` = col_skip(), 
+        DAILY_OBS_COUNT = col_skip(), PERCENT_COMPLETE = col_skip(), 
+        AQS_PARAMETER_CODE = col_skip(), 
+        AQS_PARAMETER_DESC = col_skip(), 
+        CBSA_CODE = col_skip(), STATE_CODE = col_skip(), 
+        STATE = col_skip(), COUNTY_CODE = col_skip(), 
+        COUNTY = col_skip(), SITE_LATITUDE = col_skip(), 
+        SITE_LONGITUDE = col_skip()))
+so2_portland_2021 <- read_csv("~/Github/project01-ojkp/air data/so2/so2 portland 2021.csv", 
+                               col_types = cols(Date = col_date(format = "%m/%d/%Y"), Source = col_skip(), 
+        `Site ID` = col_skip(), POC = col_skip(), 
+        UNITS = col_skip(), `Site Name` = col_skip(), 
+        DAILY_OBS_COUNT = col_skip(), PERCENT_COMPLETE = col_skip(), 
+        AQS_PARAMETER_CODE = col_skip(), 
+        AQS_PARAMETER_DESC = col_skip(), 
+        CBSA_CODE = col_skip(), STATE_CODE = col_skip(), 
+        STATE = col_skip(), COUNTY_CODE = col_skip(), 
+        COUNTY = col_skip(), SITE_LATITUDE = col_skip(), 
+        SITE_LONGITUDE = col_skip()))
+so2_portland_2020 <- read_csv("~/Github/project01-ojkp/air data/so2/so2 portland 2020.csv", 
+                               col_types = cols(Date = col_date(format = "%m/%d/%Y"), Source = col_skip(), 
+        `Site ID` = col_skip(), POC = col_skip(), 
+        UNITS = col_skip(), `Site Name` = col_skip(), 
+        DAILY_OBS_COUNT = col_skip(), PERCENT_COMPLETE = col_skip(), 
+        AQS_PARAMETER_CODE = col_skip(), 
+        AQS_PARAMETER_DESC = col_skip(), 
+        CBSA_CODE = col_skip(), STATE_CODE = col_skip(), 
+        STATE = col_skip(), COUNTY_CODE = col_skip(), 
+        COUNTY = col_skip(), SITE_LATITUDE = col_skip(), 
+        SITE_LONGITUDE = col_skip()))
+so2_portland_2019 <- read_csv("~/Github/project01-ojkp/air data/so2/so2 portland 2019.csv", 
+                               col_types = cols(Date = col_date(format = "%m/%d/%Y"), Source = col_skip(), 
+        `Site ID` = col_skip(), POC = col_skip(), 
+        UNITS = col_skip(), `Site Name` = col_skip(), 
+        DAILY_OBS_COUNT = col_skip(), PERCENT_COMPLETE = col_skip(), 
+        AQS_PARAMETER_CODE = col_skip(), 
+        AQS_PARAMETER_DESC = col_skip(), 
+        CBSA_CODE = col_skip(), STATE_CODE = col_skip(), 
+        STATE = col_skip(), COUNTY_CODE = col_skip(), 
+        COUNTY = col_skip(), SITE_LATITUDE = col_skip(), 
+        SITE_LONGITUDE = col_skip()))
+so2_portland_2018 <- read_csv("~/Github/project01-ojkp/air data/so2/so2 portland 2018.csv", 
+                               col_types = cols(Date = col_date(format = "%m/%d/%Y"), Source = col_skip(), 
+        `Site ID` = col_skip(), POC = col_skip(), 
+        UNITS = col_skip(), `Site Name` = col_skip(), 
+        DAILY_OBS_COUNT = col_skip(), PERCENT_COMPLETE = col_skip(), 
+        AQS_PARAMETER_CODE = col_skip(), 
+        AQS_PARAMETER_DESC = col_skip(), 
+        CBSA_CODE = col_skip(), STATE_CODE = col_skip(), 
+        STATE = col_skip(), COUNTY_CODE = col_skip(), 
+        COUNTY = col_skip(), SITE_LATITUDE = col_skip(), 
+        SITE_LONGITUDE = col_skip()))
+so2_portland_2017 <- read_csv("~/Github/project01-ojkp/air data/so2/so2 portland 2017.csv", 
+                               col_types = cols(Date = col_date(format = "%m/%d/%Y"), Source = col_skip(), 
+        `Site ID` = col_skip(), POC = col_skip(), 
+        UNITS = col_skip(), `Site Name` = col_skip(), 
+        DAILY_OBS_COUNT = col_skip(), PERCENT_COMPLETE = col_skip(), 
+        AQS_PARAMETER_CODE = col_skip(), 
+        AQS_PARAMETER_DESC = col_skip(), 
+        CBSA_CODE = col_skip(), STATE_CODE = col_skip(), 
+        STATE = col_skip(), COUNTY_CODE = col_skip(), 
+        COUNTY = col_skip(), SITE_LATITUDE = col_skip(), 
+        SITE_LONGITUDE = col_skip()))
 
 # co data 2017-2023 portland-vancouver-hillsboro (or-wa)
 co_portland_2023 <- read_csv("~/Github/project01-ojkp/air data/co/co portland 2023.csv", 
-                             col_types = cols(Date = col_date(format = "%m/%d/%Y")))
+                             col_types = cols(Date = col_date(format = "%m/%d/%Y"), Source = col_skip(), 
+        `Site ID` = col_skip(), POC = col_skip(), 
+        UNITS = col_skip(), `Site Name` = col_skip(), 
+        DAILY_OBS_COUNT = col_skip(), PERCENT_COMPLETE = col_skip(), 
+        AQS_PARAMETER_CODE = col_skip(), 
+        AQS_PARAMETER_DESC = col_skip(), 
+        CBSA_CODE = col_skip(), STATE_CODE = col_skip(), 
+        STATE = col_skip(), COUNTY_CODE = col_skip(), 
+        COUNTY = col_skip(), SITE_LATITUDE = col_skip(), 
+        SITE_LONGITUDE = col_skip()))
 co_portland_2022 <- read_csv("~/Github/project01-ojkp/air data/co/co portland 2022.csv", 
-                             col_types = cols(Date = col_date(format = "%m/%d/%Y")))
+                             col_types = cols(Date = col_date(format = "%m/%d/%Y"), Source = col_skip(), 
+        `Site ID` = col_skip(), POC = col_skip(), 
+        UNITS = col_skip(), `Site Name` = col_skip(), 
+        DAILY_OBS_COUNT = col_skip(), PERCENT_COMPLETE = col_skip(), 
+        AQS_PARAMETER_CODE = col_skip(), 
+        AQS_PARAMETER_DESC = col_skip(), 
+        CBSA_CODE = col_skip(), STATE_CODE = col_skip(), 
+        STATE = col_skip(), COUNTY_CODE = col_skip(), 
+        COUNTY = col_skip(), SITE_LATITUDE = col_skip(), 
+        SITE_LONGITUDE = col_skip()))
 co_portland_2021 <- read_csv("~/Github/project01-ojkp/air data/co/co portland 2021.csv", 
-                             col_types = cols(Date = col_date(format = "%m/%d/%Y")))
+                             col_types = cols(Date = col_date(format = "%m/%d/%Y"), Source = col_skip(), 
+        `Site ID` = col_skip(), POC = col_skip(), 
+        UNITS = col_skip(), `Site Name` = col_skip(), 
+        DAILY_OBS_COUNT = col_skip(), PERCENT_COMPLETE = col_skip(), 
+        AQS_PARAMETER_CODE = col_skip(), 
+        AQS_PARAMETER_DESC = col_skip(), 
+        CBSA_CODE = col_skip(), STATE_CODE = col_skip(), 
+        STATE = col_skip(), COUNTY_CODE = col_skip(), 
+        COUNTY = col_skip(), SITE_LATITUDE = col_skip(), 
+        SITE_LONGITUDE = col_skip()))
 co_portland_2020 <- read_csv("~/Github/project01-ojkp/air data/co/co portland 2020.csv", 
-                             col_types = cols(Date = col_date(format = "%m/%d/%Y")))
+                             col_types = cols(Date = col_date(format = "%m/%d/%Y"), Source = col_skip(), 
+        `Site ID` = col_skip(), POC = col_skip(), 
+        UNITS = col_skip(), `Site Name` = col_skip(), 
+        DAILY_OBS_COUNT = col_skip(), PERCENT_COMPLETE = col_skip(), 
+        AQS_PARAMETER_CODE = col_skip(), 
+        AQS_PARAMETER_DESC = col_skip(), 
+        CBSA_CODE = col_skip(), STATE_CODE = col_skip(), 
+        STATE = col_skip(), COUNTY_CODE = col_skip(), 
+        COUNTY = col_skip(), SITE_LATITUDE = col_skip(), 
+        SITE_LONGITUDE = col_skip()))
 co_portland_2019 <- read_csv("~/Github/project01-ojkp/air data/co/co portland 2019.csv", 
-                             col_types = cols(Date = col_date(format = "%m/%d/%Y")))
+                             col_types = cols(Date = col_date(format = "%m/%d/%Y"), Source = col_skip(), 
+        `Site ID` = col_skip(), POC = col_skip(), 
+        UNITS = col_skip(), `Site Name` = col_skip(), 
+        DAILY_OBS_COUNT = col_skip(), PERCENT_COMPLETE = col_skip(), 
+        AQS_PARAMETER_CODE = col_skip(), 
+        AQS_PARAMETER_DESC = col_skip(), 
+        CBSA_CODE = col_skip(), STATE_CODE = col_skip(), 
+        STATE = col_skip(), COUNTY_CODE = col_skip(), 
+        COUNTY = col_skip(), SITE_LATITUDE = col_skip(), 
+        SITE_LONGITUDE = col_skip()))
 co_portland_2018 <- read_csv("~/Github/project01-ojkp/air data/co/co portland 2018.csv", 
-                             col_types = cols(Date = col_date(format = "%m/%d/%Y")))
+                             col_types = cols(Date = col_date(format = "%m/%d/%Y"), Source = col_skip(), 
+        `Site ID` = col_skip(), POC = col_skip(), 
+        UNITS = col_skip(), `Site Name` = col_skip(), 
+        DAILY_OBS_COUNT = col_skip(), PERCENT_COMPLETE = col_skip(), 
+        AQS_PARAMETER_CODE = col_skip(), 
+        AQS_PARAMETER_DESC = col_skip(), 
+        CBSA_CODE = col_skip(), STATE_CODE = col_skip(), 
+        STATE = col_skip(), COUNTY_CODE = col_skip(), 
+        COUNTY = col_skip(), SITE_LATITUDE = col_skip(), 
+        SITE_LONGITUDE = col_skip()))
 co_portland_2017 <- read_csv("~/Github/project01-ojkp/air data/co/co portland 2017.csv", 
-                             col_types = cols(Date = col_date(format = "%m/%d/%Y")))
+                             col_types = cols(Date = col_date(format = "%m/%d/%Y"), Source = col_skip(), 
+        `Site ID` = col_skip(), POC = col_skip(), 
+        UNITS = col_skip(), `Site Name` = col_skip(), 
+        DAILY_OBS_COUNT = col_skip(), PERCENT_COMPLETE = col_skip(), 
+        AQS_PARAMETER_CODE = col_skip(), 
+        AQS_PARAMETER_DESC = col_skip(), 
+        CBSA_CODE = col_skip(), STATE_CODE = col_skip(), 
+        STATE = col_skip(), COUNTY_CODE = col_skip(), 
+        COUNTY = col_skip(), SITE_LATITUDE = col_skip(), 
+        SITE_LONGITUDE = col_skip()))
 
 # no2 data 2017-2023 portland-vancouver-hillsboro (or-wa)
 no2_portland_2023 <- read_csv("~/Github/project01-ojkp/air data/no2/no2 portland 2023.csv", 
-                              col_types = cols(Date = col_date(format = "%m/%d/%Y")))
+                              col_types = cols(Date = col_date(format = "%m/%d/%Y"), Source = col_skip(), 
+        `Site ID` = col_skip(), POC = col_skip(), 
+        UNITS = col_skip(), `Site Name` = col_skip(), 
+        DAILY_OBS_COUNT = col_skip(), PERCENT_COMPLETE = col_skip(), 
+        AQS_PARAMETER_CODE = col_skip(), 
+        AQS_PARAMETER_DESC = col_skip(), 
+        CBSA_CODE = col_skip(), STATE_CODE = col_skip(), 
+        STATE = col_skip(), COUNTY_CODE = col_skip(), 
+        COUNTY = col_skip(), SITE_LATITUDE = col_skip(), 
+        SITE_LONGITUDE = col_skip()))
 no2_portland_2022 <- read_csv("~/Github/project01-ojkp/air data/no2/no2 portland 2022.csv", 
-                              col_types = cols(Date = col_date(format = "%m/%d/%Y")))
+                              col_types = cols(Date = col_date(format = "%m/%d/%Y"), Source = col_skip(), 
+        `Site ID` = col_skip(), POC = col_skip(), 
+        UNITS = col_skip(), `Site Name` = col_skip(), 
+        DAILY_OBS_COUNT = col_skip(), PERCENT_COMPLETE = col_skip(), 
+        AQS_PARAMETER_CODE = col_skip(), 
+        AQS_PARAMETER_DESC = col_skip(), 
+        CBSA_CODE = col_skip(), STATE_CODE = col_skip(), 
+        STATE = col_skip(), COUNTY_CODE = col_skip(), 
+        COUNTY = col_skip(), SITE_LATITUDE = col_skip(), 
+        SITE_LONGITUDE = col_skip()))
 no2_portland_2021 <- read_csv("~/Github/project01-ojkp/air data/no2/no2 portland 2021.csv", 
-                              col_types = cols(Date = col_date(format = "%m/%d/%Y")))
+                              col_types = cols(Date = col_date(format = "%m/%d/%Y"), Source = col_skip(), 
+        `Site ID` = col_skip(), POC = col_skip(), 
+        UNITS = col_skip(), `Site Name` = col_skip(), 
+        DAILY_OBS_COUNT = col_skip(), PERCENT_COMPLETE = col_skip(), 
+        AQS_PARAMETER_CODE = col_skip(), 
+        AQS_PARAMETER_DESC = col_skip(), 
+        CBSA_CODE = col_skip(), STATE_CODE = col_skip(), 
+        STATE = col_skip(), COUNTY_CODE = col_skip(), 
+        COUNTY = col_skip(), SITE_LATITUDE = col_skip(), 
+        SITE_LONGITUDE = col_skip()))
 no2_portland_2020 <- read_csv("~/Github/project01-ojkp/air data/no2/no2 portland 2020.csv", 
-                              col_types = cols(Date = col_date(format = "%m/%d/%Y")))
+                              col_types = cols(Date = col_date(format = "%m/%d/%Y"), Source = col_skip(), 
+        `Site ID` = col_skip(), POC = col_skip(), 
+        UNITS = col_skip(), `Site Name` = col_skip(), 
+        DAILY_OBS_COUNT = col_skip(), PERCENT_COMPLETE = col_skip(), 
+        AQS_PARAMETER_CODE = col_skip(), 
+        AQS_PARAMETER_DESC = col_skip(), 
+        CBSA_CODE = col_skip(), STATE_CODE = col_skip(), 
+        STATE = col_skip(), COUNTY_CODE = col_skip(), 
+        COUNTY = col_skip(), SITE_LATITUDE = col_skip(), 
+        SITE_LONGITUDE = col_skip()))
 no2_portland_2019 <- read_csv("~/Github/project01-ojkp/air data/no2/no2 portland 2019.csv", 
-                              col_types = cols(Date = col_date(format = "%m/%d/%Y")))
+                              col_types = cols(Date = col_date(format = "%m/%d/%Y"), Source = col_skip(), 
+        `Site ID` = col_skip(), POC = col_skip(), 
+        UNITS = col_skip(), `Site Name` = col_skip(), 
+        DAILY_OBS_COUNT = col_skip(), PERCENT_COMPLETE = col_skip(), 
+        AQS_PARAMETER_CODE = col_skip(), 
+        AQS_PARAMETER_DESC = col_skip(), 
+        CBSA_CODE = col_skip(), STATE_CODE = col_skip(), 
+        STATE = col_skip(), COUNTY_CODE = col_skip(), 
+        COUNTY = col_skip(), SITE_LATITUDE = col_skip(), 
+        SITE_LONGITUDE = col_skip()))
 no2_portland_2018 <- read_csv("~/Github/project01-ojkp/air data/no2/no2 portland 2018.csv", 
-                              col_types = cols(Date = col_date(format = "%m/%d/%Y")))
+                              col_types = cols(Date = col_date(format = "%m/%d/%Y"), Source = col_skip(), 
+        `Site ID` = col_skip(), POC = col_skip(), 
+        UNITS = col_skip(), `Site Name` = col_skip(), 
+        DAILY_OBS_COUNT = col_skip(), PERCENT_COMPLETE = col_skip(), 
+        AQS_PARAMETER_CODE = col_skip(), 
+        AQS_PARAMETER_DESC = col_skip(), 
+        CBSA_CODE = col_skip(), STATE_CODE = col_skip(), 
+        STATE = col_skip(), COUNTY_CODE = col_skip(), 
+        COUNTY = col_skip(), SITE_LATITUDE = col_skip(), 
+        SITE_LONGITUDE = col_skip()))
 no2_portland_2017 <- read_csv("~/Github/project01-ojkp/air data/no2/no2 portland 2017.csv", 
-                              col_types = cols(Date = col_date(format = "%m/%d/%Y")))
+                              col_types = cols(Date = col_date(format = "%m/%d/%Y"), Source = col_skip(), 
+        `Site ID` = col_skip(), POC = col_skip(), 
+        UNITS = col_skip(), `Site Name` = col_skip(), 
+        DAILY_OBS_COUNT = col_skip(), PERCENT_COMPLETE = col_skip(), 
+        AQS_PARAMETER_CODE = col_skip(), 
+        AQS_PARAMETER_DESC = col_skip(), 
+        CBSA_CODE = col_skip(), STATE_CODE = col_skip(), 
+        STATE = col_skip(), COUNTY_CODE = col_skip(), 
+        COUNTY = col_skip(), SITE_LATITUDE = col_skip(), 
+        SITE_LONGITUDE = col_skip()))
 
 # ozone data 2017-2023 portland-vancouver-hillsboro (or-wa)
 ozone_portland_2023 <- read_csv("~/Github/project01-ojkp/air data/ozone/ozone portland 2023.csv", 
-                                col_types = cols(Date = col_date(format = "%m/%d/%Y")))
+                                col_types = cols(Date = col_date(format = "%m/%d/%Y"), Source = col_skip(), 
+        `Site ID` = col_skip(), POC = col_skip(), 
+        UNITS = col_skip(), `Site Name` = col_skip(), 
+        DAILY_OBS_COUNT = col_skip(), PERCENT_COMPLETE = col_skip(), 
+        AQS_PARAMETER_CODE = col_skip(), 
+        AQS_PARAMETER_DESC = col_skip(), 
+        CBSA_CODE = col_skip(), STATE_CODE = col_skip(), 
+        STATE = col_skip(), COUNTY_CODE = col_skip(), 
+        COUNTY = col_skip(), SITE_LATITUDE = col_skip(), 
+        SITE_LONGITUDE = col_skip()))
 ozone_portland_2022 <- read_csv("~/Github/project01-ojkp/air data/ozone/ozone portland 2022.csv", 
-                                col_types = cols(Date = col_date(format = "%m/%d/%Y")))
+                                col_types = cols(Date = col_date(format = "%m/%d/%Y"), Source = col_skip(), 
+        `Site ID` = col_skip(), POC = col_skip(), 
+        UNITS = col_skip(), `Site Name` = col_skip(), 
+        DAILY_OBS_COUNT = col_skip(), PERCENT_COMPLETE = col_skip(), 
+        AQS_PARAMETER_CODE = col_skip(), 
+        AQS_PARAMETER_DESC = col_skip(), 
+        CBSA_CODE = col_skip(), STATE_CODE = col_skip(), 
+        STATE = col_skip(), COUNTY_CODE = col_skip(), 
+        COUNTY = col_skip(), SITE_LATITUDE = col_skip(), 
+        SITE_LONGITUDE = col_skip()))
 ozone_portland_2021 <- read_csv("~/Github/project01-ojkp/air data/ozone/ozone portland 2021.csv", 
-                                col_types = cols(Date = col_date(format = "%m/%d/%Y")))
+                                col_types = cols(Date = col_date(format = "%m/%d/%Y"), Source = col_skip(), 
+        `Site ID` = col_skip(), POC = col_skip(), 
+        UNITS = col_skip(), `Site Name` = col_skip(), 
+        DAILY_OBS_COUNT = col_skip(), PERCENT_COMPLETE = col_skip(), 
+        AQS_PARAMETER_CODE = col_skip(), 
+        AQS_PARAMETER_DESC = col_skip(), 
+        CBSA_CODE = col_skip(), STATE_CODE = col_skip(), 
+        STATE = col_skip(), COUNTY_CODE = col_skip(), 
+        COUNTY = col_skip(), SITE_LATITUDE = col_skip(), 
+        SITE_LONGITUDE = col_skip()))
 ozone_portland_2020 <- read_csv("~/Github/project01-ojkp/air data/ozone/ozone portland 2020.csv", 
-                                col_types = cols(Date = col_date(format = "%m/%d/%Y")))
+                                col_types = cols(Date = col_date(format = "%m/%d/%Y"), Source = col_skip(), 
+        `Site ID` = col_skip(), POC = col_skip(), 
+        UNITS = col_skip(), `Site Name` = col_skip(), 
+        DAILY_OBS_COUNT = col_skip(), PERCENT_COMPLETE = col_skip(), 
+        AQS_PARAMETER_CODE = col_skip(), 
+        AQS_PARAMETER_DESC = col_skip(), 
+        CBSA_CODE = col_skip(), STATE_CODE = col_skip(), 
+        STATE = col_skip(), COUNTY_CODE = col_skip(), 
+        COUNTY = col_skip(), SITE_LATITUDE = col_skip(), 
+        SITE_LONGITUDE = col_skip()))
 ozone_portland_2019 <- read_csv("~/Github/project01-ojkp/air data/ozone/ozone portland 2019.csv", 
-                                col_types = cols(Date = col_date(format = "%m/%d/%Y")))
+                                col_types = cols(Date = col_date(format = "%m/%d/%Y"), Source = col_skip(), 
+        `Site ID` = col_skip(), POC = col_skip(), 
+        UNITS = col_skip(), `Site Name` = col_skip(), 
+        DAILY_OBS_COUNT = col_skip(), PERCENT_COMPLETE = col_skip(), 
+        AQS_PARAMETER_CODE = col_skip(), 
+        AQS_PARAMETER_DESC = col_skip(), 
+        CBSA_CODE = col_skip(), STATE_CODE = col_skip(), 
+        STATE = col_skip(), COUNTY_CODE = col_skip(), 
+        COUNTY = col_skip(), SITE_LATITUDE = col_skip(), 
+        SITE_LONGITUDE = col_skip()))
 ozone_portland_2018 <- read_csv("~/Github/project01-ojkp/air data/ozone/ozone portland 2018.csv", 
-                                col_types = cols(Date = col_date(format = "%m/%d/%Y")))
+                                col_types = cols(Date = col_date(format = "%m/%d/%Y"), Source = col_skip(), 
+        `Site ID` = col_skip(), POC = col_skip(), 
+        UNITS = col_skip(), `Site Name` = col_skip(), 
+        DAILY_OBS_COUNT = col_skip(), PERCENT_COMPLETE = col_skip(), 
+        AQS_PARAMETER_CODE = col_skip(), 
+        AQS_PARAMETER_DESC = col_skip(), 
+        CBSA_CODE = col_skip(), STATE_CODE = col_skip(), 
+        STATE = col_skip(), COUNTY_CODE = col_skip(), 
+        COUNTY = col_skip(), SITE_LATITUDE = col_skip(), 
+        SITE_LONGITUDE = col_skip()))
 ozone_portland_2017 <- read_csv("~/Github/project01-ojkp/air data/ozone/ozone portland 2017.csv", 
-                                col_types = cols(Date = col_date(format = "%m/%d/%Y")))
+                                col_types = cols(Date = col_date(format = "%m/%d/%Y"), Source = col_skip(), 
+        `Site ID` = col_skip(), POC = col_skip(), 
+        UNITS = col_skip(), `Site Name` = col_skip(), 
+        DAILY_OBS_COUNT = col_skip(), PERCENT_COMPLETE = col_skip(), 
+        AQS_PARAMETER_CODE = col_skip(), 
+        AQS_PARAMETER_DESC = col_skip(), 
+        CBSA_CODE = col_skip(), STATE_CODE = col_skip(), 
+        STATE = col_skip(), COUNTY_CODE = col_skip(), 
+        COUNTY = col_skip(), SITE_LATITUDE = col_skip(), 
+        SITE_LONGITUDE = col_skip()))
 
 
-```
+# merging the data from different years
+
+pm25_portland <- bind_rows(pm25_portland_2017, pm25_portland_2018, pm25_portland_2019, pm25_portland_2020, pm25_portland_2021, pm25_portland_2022, pm25_portland_2023)
+so2_portland <- bind_rows(so2_portland_2017, so2_portland_2018, so2_portland_2019, so2_portland_2020, so2_portland_2021, so2_portland_2022, so2_portland_2023)
+co_portland <- bind_rows(co_portland_2017, co_portland_2018, co_portland_2019, co_portland_2020, co_portland_2021, co_portland_2022, co_portland_2023)
+no2_portland <- bind_rows(no2_portland_2017, no2_portland_2018, no2_portland_2019, no2_portland_2020, no2_portland_2021, no2_portland_2022, no2_portland_2023)
+ozone_portland <- bind_rows(ozone_portland_2017, ozone_portland_2018, ozone_portland_2019, ozone_portland_2020, ozone_portland_2021, ozone_portland_2022, ozone_portland_2023)
 
 
-```{r data merging and wrangling, include = FALSE}
 # average pm2.5 per month 2017-2023
 
 pm25_portland_2023$month_year <- format(pm25_portland_2023$Date, "%Y-%m")
@@ -145,46 +466,46 @@ avg_pm25 <- bind_rows(avg_pm25_2017, avg_pm25_2018, avg_pm25_2019, avg_pm25_2020
 rm(avg_pm25_2017, avg_pm25_2018, avg_pm25_2019, avg_pm25_2020, avg_pm25_2021, avg_pm25_2022, avg_pm25_2023)
 
 
-# average pm10 per month 2017-2023
+# average so2 per month 2017-2023
 
-pm10_portland_2023$month_year <- format(pm10_portland_2023$Date, "%Y-%m")
-pm10_portland_2022$month_year <- format(pm10_portland_2022$Date, "%Y-%m")
-pm10_portland_2021$month_year <- format(pm10_portland_2021$Date, "%Y-%m")
-pm10_portland_2020$month_year <- format(pm10_portland_2020$Date, "%Y-%m")
-pm10_portland_2019$month_year <- format(pm10_portland_2019$Date, "%Y-%m")
-pm10_portland_2018$month_year <- format(pm10_portland_2018$Date, "%Y-%m")
-pm10_portland_2017$month_year <- format(pm10_portland_2017$Date, "%Y-%m")
+so2_portland_2023$month_year <- format(so2_portland_2023$Date, "%Y-%m")
+so2_portland_2022$month_year <- format(so2_portland_2022$Date, "%Y-%m")
+so2_portland_2021$month_year <- format(so2_portland_2021$Date, "%Y-%m")
+so2_portland_2020$month_year <- format(so2_portland_2020$Date, "%Y-%m")
+so2_portland_2019$month_year <- format(so2_portland_2019$Date, "%Y-%m")
+so2_portland_2018$month_year <- format(so2_portland_2018$Date, "%Y-%m")
+so2_portland_2017$month_year <- format(so2_portland_2017$Date, "%Y-%m")
 
-avg_pm10_2023 <- pm10_portland_2023 %>%
+avg_so2_2023 <- so2_portland_2023 %>%
   group_by(month_year) %>%
-  summarize(avg_pm10 = mean(`Daily Mean PM10 Concentration`))
+  summarize(avg_so2 = mean(`Daily Max 1-hour SO2 Concentration`))
 
-avg_pm10_2022 <- pm10_portland_2022 %>%
+avg_so2_2022 <- so2_portland_2022 %>%
   group_by(month_year) %>%
-  summarize(avg_pm10 = mean(`Daily Mean PM10 Concentration`))
+  summarize(avg_so2 = mean(`Daily Max 1-hour SO2 Concentration`))
 
-avg_pm10_2021 <- pm10_portland_2021 %>%
+avg_so2_2021 <- so2_portland_2021 %>%
   group_by(month_year) %>%
-  summarize(avg_pm10 = mean(`Daily Mean PM10 Concentration`))
+  summarize(avg_so2 = mean(`Daily Max 1-hour SO2 Concentration`))
 
-avg_pm10_2020 <- pm10_portland_2020 %>%
+avg_so2_2020 <- so2_portland_2020 %>%
   group_by(month_year) %>%
-  summarize(avg_pm10 = mean(`Daily Mean PM10 Concentration`))
+  summarize(avg_so2 = mean(`Daily Max 1-hour SO2 Concentration`))
 
-avg_pm10_2019 <- pm10_portland_2019 %>%
+avg_so2_2019 <- so2_portland_2019 %>%
   group_by(month_year) %>%
-  summarize(avg_pm10 = mean(`Daily Mean PM10 Concentration`))
+  summarize(avg_so2 = mean(`Daily Max 1-hour SO2 Concentration`))
 
-avg_pm10_2018 <- pm10_portland_2018 %>%
+avg_so2_2018 <- so2_portland_2018 %>%
   group_by(month_year) %>%
-  summarize(avg_pm10 = mean(`Daily Mean PM10 Concentration`))
+  summarize(avg_so2 = mean(`Daily Max 1-hour SO2 Concentration`))
 
-avg_pm10_2017 <- pm10_portland_2017 %>%
+avg_so2_2017 <- so2_portland_2017 %>%
   group_by(month_year) %>%
-  summarize(avg_pm10 = mean(`Daily Mean PM10 Concentration`))
+  summarize(avg_so2 = mean(`Daily Max 1-hour SO2 Concentration`))
 
-avg_pm10 <- bind_rows(avg_pm10_2017, avg_pm10_2018, avg_pm10_2019, avg_pm10_2020, avg_pm10_2021, avg_pm10_2022, avg_pm10_2023)
-rm(avg_pm10_2017, avg_pm10_2018, avg_pm10_2019, avg_pm10_2020, avg_pm10_2021, avg_pm10_2022, avg_pm10_2023)
+avg_so2 <- bind_rows(avg_so2_2017, avg_so2_2018, avg_so2_2019, avg_so2_2020, avg_so2_2021, avg_so2_2022, avg_so2_2023)
+rm(avg_so2_2017, avg_so2_2018, avg_so2_2019, avg_so2_2020, avg_so2_2021, avg_so2_2022, avg_so2_2023)
 
 
 # average co per month 2017-2023
@@ -311,4 +632,12 @@ avg_ozone_2017 <- ozone_portland_2017 %>%
 
 avg_ozone <- bind_rows(avg_ozone_2017, avg_ozone_2018, avg_ozone_2019, avg_ozone_2020, avg_ozone_2021, avg_ozone_2022, avg_ozone_2023)
 rm(avg_ozone_2017, avg_ozone_2018, avg_ozone_2019, avg_ozone_2020, avg_ozone_2021, avg_ozone_2022, avg_ozone_2023)
+
+
+# removing seperate year data
+rm(pm25_portland_2017, pm25_portland_2018, pm25_portland_2019, pm25_portland_2020, pm25_portland_2021, pm25_portland_2022, pm25_portland_2023)
+rm(so2_portland_2017, so2_portland_2018, so2_portland_2019, so2_portland_2020, so2_portland_2021, so2_portland_2022, so2_portland_2023)
+rm(co_portland_2017, co_portland_2018, co_portland_2019, co_portland_2020, co_portland_2021, co_portland_2022, co_portland_2023)
+rm(no2_portland_2017, no2_portland_2018, no2_portland_2019, no2_portland_2020, no2_portland_2021, no2_portland_2022, no2_portland_2023)
+rm(ozone_portland_2017, ozone_portland_2018, ozone_portland_2019, ozone_portland_2020, ozone_portland_2021, ozone_portland_2022, ozone_portland_2023)
 ```
