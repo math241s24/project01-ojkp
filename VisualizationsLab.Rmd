@@ -1,5 +1,5 @@
 ---
-title: "Question 1 Write Up"
+title: "Viz Lab"
 author: "Julian Jacklin"
 date: "`r Sys.Date()`"
 output: pdf_document
@@ -12,8 +12,6 @@ library(lubridate)
 library(dplyr)
 library(readr)
 library(reshape2)
-pm25 <- read_csv("proposal data/pm25.csv")
-avgpm25 <- read_csv("proposal data/avgpm25.csv")
 ```
 
 
