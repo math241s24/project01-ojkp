@@ -1,0 +1,110 @@
+---
+title: "Question 1 Write Up"
+author: "Julian Jacklin"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r include=FALSE}
+
+library(tidyverse)
+library(lubridate)
+library(dplyr)
+library(readr)
+library(reshape2)
+pm25 <- read_csv("proposal data/pm25.csv")
+avgpm25 <- read_csv("proposal data/avgpm25.csv")
+```
+
+
+```{r eval=FALSE, include=FALSE}
+
+#The wonderful code below combines all of the avg_XPOLLUTANT datasets from data_cleanup, into one dataframe, adding a character-type `year` variable, a numeric `month` variable, and a numeric `month by year` variable(Jan-Dec, coded as 1-12). DO NOT RUN THIS CODE if avgAll and avgAll2020 are present in the air data folder. 
+
+avgAll <- left_join(avgpm25, avg_so2, by="month_year")%>%
+  left_join(., avg_ozone, by="month_year") %>%
+  left_join(., avg_no2, by="month_year") %>%
+  left_join(., avg_co, by="month_year") 
+
+avgAll <- avgAll%>%
+  mutate(month=seq_along(month_year), .before=month_year, year = substr(month_year, 0, 4), monthbyyear= rep(1:12, 7))
+
+
+```
+
+```{r include=FALSE}
+#Just run this code :^) with your own file path
+
+avgAll <- read_csv("~/Documents/GitHub/project01-ojkp/air data/avgAll.csv")
+avgAll2020 <- read_csv("~/Documents/GitHub/project01-ojkp/air data/avgAll2020.csv")
+
+avgAll$year <- as.character(avgAll$year)
+avgAll2020$year <- as.character(avgAll2020$year)
+
+
+```
+
+
+```{r eval=FALSE, include=FALSE}
+
+#Here lies a pair of sample visualizations. The first visualizes average pm2.5 levels from months 1-84, color-partitioned by year. If we wanted to do the same but for a different pollutant, we could simply substitute `avg_pm2.5` as it appears below, with another pollutant's variable name, keeping all else functionally the same. But WOAH! There's a UUGE spike in september 2020(portland wildfires). For further analysis, the second plot visualizes roughly the same information as the first, except faceted by year, and conveying a sense of regularity—as in, how skewed is our data by year, and more generally, how does the distribution of pollutant levels seem by year(and by pollutant). To view a different pollutant on this graph, make the same adjustments as you would to the first. 
+
+```
+
+```{r echo=FALSE}
+
+
+ggplot(avgAll,aes(x =month, y = avg_pm2.5, fill=year)) +
+  geom_col(width=.7)+
+  scale_fill_viridis_d() 
+
+ggplot(avgAll, aes(x=monthbyyear,y=avg_pm2.5, fill=year))+
+  geom_col()+
+  facet_wrap(vars(year))+
+  geom_smooth()
+ 
+  
+```
+
+```{r eval=FALSE, include=FALSE}
+
+#Here is a graph. It is a bad graph. I was trying to visualize across all 84 months(7 years), the pollutant levels for every pollutant on the same graph. Not only is this visually unappealing, but these pollutants exhibit scaling discrepancies that could not be dutifully remedied(even by taking their log, which is visually more pleasant, but a contextual nightmare, i.e. log of pollutant levels less than 1 would become negative, which doesn't make sense in context). Take what you would like from this scheme, however. 
+```
+
+```{r echo=FALSE}
+
+ggplot(avgAll,aes(x =month)) +
+  geom_line(aes(y=avgAll$avg_pm2.5), color="orange", linetype="dashed")+
+  geom_line(aes(y=avgAll$avg_so2),color="purple", linetype="dashed")+
+  geom_line(aes(y=avgAll$avg_ozone),color="green")+
+  geom_line(aes(y=avgAll$avg_no2), color="blue")+
+  geom_line(aes(y=avgAll$avg_co),color="red")
+ 
+```
+
+
+
+  
+```{r eval=FALSE, include=FALSE}
+
+#This is a better visualization. Noticing form the last graph that, "something was up," in 2020, I created a visualization that focuses on the different pollutants' levels in 2020, similar to the second graph in this document. I first melted the data frame to a longer form, and faceted by the pollutant levels(essentially). This was just a cool ggplot trick.
+```
+
+```{r echo=FALSE}
+
+
+avgAll2020_melted <- melt(avgAll2020, id.vars = c("year", "monthbyyear"))
+
+
+ggplot(avgAll2020_melted , aes(x = monthbyyear, y = value, fill = variable)) +
+  geom_col() +
+  facet_wrap(variable ~ ., scales = "free_y") +
+  geom_smooth()+
+  scale_x_continuous(breaks = c(1, 2, 3, 4,5,6,7,8,9,10,11,12), labels = c("1" = "Jan", "2" = "Feb","3" = "Mar", "4" = "Apr","5" = "May","6" = "Jun","7" = "Jul","8" = "Aug","9" = "Sep","10" = "Oct","11" = "Nov","12" = "Dec"))+
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, size=5))
+  
+```
+
+
+
+
