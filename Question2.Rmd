@@ -1,4 +1,9 @@
-
+---
+title: "Question 2"
+author: "Kiana Fields"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
 
 
 ```{r include=FALSE}
@@ -46,20 +51,48 @@ pollutants_pdx <- pollutants_pdx %>%
          CO_reading = "Daily Max 8-hour CO Concentration",
          SO2_reading = "Daily Max 1-hour SO2 Concentration",
          PM2.5_reading = "Daily Mean PM2.5 Concentration",
+         AQI_reading = "DAILY_AQI_VALUE",
          )
 
 pollutants_pdx_melt <- pollutants_pdx %>%
-  pivot_longer(cols = c(NO2_reading, CO_reading, SO2_reading, PM2.5_reading, Ozone_reading),
+  pivot_longer(cols = c(NO2_reading, CO_reading, SO2_reading, PM2.5_reading, Ozone_reading, AQI_reading),
                names_to = "variable",
                values_to = "reading") %>%
   filter(!is.na(reading))
 
+pollutants_pdx_melt <- pollutants_pdx_melt %>% 
+  filter(variable == "PM2.5_reading" | 
+           variable == "NO2_reading" | 
+           variable == "Ozone_reading" | 
+           variable == "AQI_reading")
+
 pollutants_pdx_melt$Date <- mdy(pollutants_pdx_melt$Date)
+
+pollutants_pdx_melt <- pollutants_pdx_melt %>% 
+  group_by(Date, variable) %>% 
+  summarise(avrg_reading = mean(reading, na.rm = TRUE)) %>% 
+  ungroup()
 
 pollutants_pdx_melt <- pollutants_pdx_melt %>%
   mutate(year = year(Date))
 
+
 ```
+
+```{r}
+#Is there a correlation between wildfire season and air quality fluctuations in the Portland Metropolitan area?
+
+#INTRO: 
+#The intensity of Oregon's wildfire season in Oregon has increased over time as a result of historical forest management as well as climate change effects. The intensity of these fires is of concern to public safety both immediately in fire prone areas as well as for communities facing decreased air quality from smoke. We are interested in exploring this aspect of the issue of wildfires by analyzing concentration levels of major pollutants produced by wildfires (particularly PM2.5, NO2, Ozone and general AQI) before during and after fire season. 
+
+#Approach:
+#Our assumption is that during wildfire season, more pollutants are emitted into the atmosphere, meaning that from mid-May to September pollutant concentrations will go up. We used six years from our pollutant dataset which offers pollutant concentration by day as well as in a more succinct format with the first, 15th, and last day of the month. We also pulled in our fire dataset which offers the total protected acres burned by day across the six years in order to differentiate between general seasonal fluctuations and the actual severity of wildfire season across years.
+#Julian's graph
+#In our first graph, we focused on the concentration of carbon monoxide across years since this is one of the most prominent pollutants associated with wildfires. This data was visualized by a column graph where each column is a month, sectioned by color and year, with markers indicating the standard wildfire seasons.
+
+# Our second graph
+```
+
 
 
 ```{r}
@@ -81,7 +114,7 @@ ggplot(data = fires_full, aes(x=ReportDate, y = tot_ProAcres)) +
 
 ```{r}
 # In the proposal we said we'd plot observations for the first, 15th, and last day of each month across one year, and observe whether there is a stark increase in pollutant concentrations during the wildfire season (July-September) and have multiple lines to see which pollutants in particular increase. 
-#instead of separate lines, separate graphs for unit/interpretability reasons
+#instead of separate lines, separate graphs for unit/interpretating reasons
 
 #data for first 15th and last day of month
 pollutants_FML <- pollutants_pdx_melt %>%
@@ -91,7 +124,7 @@ pollutants_FML <- pollutants_pdx_melt %>%
 
 #2017, considering trends in just one year, can be altered for whichever year
 ggplot(pollutants_FML %>% 
-         filter(year == 2017), aes(x = Date, y = reading, color = variable)) +
+         filter(year == 2017), aes(x = Date, y = avrg_reading, color = variable)) +
   geom_line() +
   facet_wrap(~ variable + year, scales = "free") +
   labs(title = "Observations for First, 15th, and Last Day of Each Month",
@@ -100,7 +133,7 @@ ggplot(pollutants_FML %>%
 
 
 #on one super mega huge giant ggplot to see how this holds up across years
-ggplot(pollutants_FML, aes(x = Date, y = reading, color = variable)) +
+ggplot(pollutants_FML, aes(x = Date, y = avrg_reading, color = variable)) +
   geom_line() +
   facet_wrap(~ variable + year, scales = "free") +
   labs(title = "Observations for First, 15th, and Last Day of Each Month",
@@ -117,7 +150,7 @@ ggplot(pollutants_FML, aes(x = Date, y = reading, color = variable)) +
 #this is a visualization with all the pollutants over all the years compared to wildfires. surely there's something to be gained from this. maybe not tho.
 
 plots <- lapply(unique(pollutants_pdx_melt$variable), function(var) {
-  ggplot(data = pollutants_pdx_melt[pollutants_pdx_melt$variable == var, ], aes(x = Date, y = reading)) +
+  ggplot(data = pollutants_pdx_melt[pollutants_pdx_melt$variable == var, ], aes(x = Date, y = avrg_reading)) +
     geom_line() +
     labs(title = paste("Reading for", var),
          x = "Date", y = "Reading")
@@ -137,7 +170,7 @@ pollutants_2020 <- pollutants_pdx_melt %>%
   filter(year(Date) == 2020)
 
 plots <- lapply(unique(pollutants_2020$variable), function(var) {
-  ggplot(data = pollutants_2020[pollutants_2020$variable == var, ], aes(x = Date, y = reading)) +
+  ggplot(data = pollutants_2020[pollutants_2020$variable == var, ], aes(x = Date, y = avrg_reading)) +
     geom_line() +
     labs(title = paste("Reading for", var, "in 2020"),
          x = "Date", y = "Reading")
@@ -153,33 +186,73 @@ grid.arrange(arrangeGrob(grobs = plots, ncol = 1), fire_plot, heights = c(4, 1))
 
 ```{r}
 #summary statistics
-#correlation in 2020 between protected area burnt and each pollutant readings
+#correlation across all years
 
 #aggregating data + merging
-pollutant_small20 <- pollutants_2020 %>%
+pollutant_agg <- pollutants_pdx_melt %>%
   group_by(Date, variable) %>%
-  summarise(reading = mean(reading, na.rm = TRUE)) %>%
+  summarise(avrg_reading = mean(avrg_reading, na.rm = TRUE)) %>%
   ungroup()
 
-fires_small20 <- fires_full[fires_full$year == 2020, ] %>%
+fires_agg <- fires_full %>%
   group_by(ReportDate) %>%
   summarise(tot_ProAcres = sum(tot_ProAcres, na.rm = TRUE)) %>%
   ungroup()
 
-merged_data <- merge(pollutant_small20, fires_small20, by.x = "Date", by.y = "ReportDate", all = TRUE)
+merged_data <- merge(pollutant_agg, fires_agg, by.x = "Date", by.y = "ReportDate", all = TRUE)
 
 
 # Calculate correlation coefficients for each pollutant variable
 correlations <- lapply(unique(merged_data$variable), function(var) {
   pollutant_data <- merged_data %>%
     filter(variable == var)
-  correlation <- cor.test(pollutant_data$reading, pollutant_data$tot_ProAcres)$estimate
+  correlation <- cor.test(pollutant_data$avrg_reading, pollutant_data$tot_ProAcres)$estimate
   data.frame(Pollutant = var, Correlation = correlation)
 })
 
 correlations_df <- do.call(rbind, correlations)
 
 print(correlations_df)
+
+
+
+#correlation coefficients for each year
+
+
+pollutant_agg <- pollutants_pdx_melt %>%
+  group_by(Date, variable) %>%
+  summarise(avrg_reading = mean(avrg_reading, na.rm = TRUE)) %>%
+  ungroup()
+
+fires_agg <- fires_full %>%
+  group_by(ReportDate) %>%
+  summarise(tot_ProAcres = sum(tot_ProAcres, na.rm = TRUE)) %>%
+  ungroup()
+
+merged_data <- merge(pollutant_agg, fires_agg, by.x = "Date", by.y = "ReportDate", all = TRUE)
+
+years <- unique(year(merged_data$Date))
+correlations <- lapply(years, function(yr) {
+  merged_data_year <- merged_data %>%
+    filter(year(Date) == yr)
+  lapply(unique(merged_data_year$variable), function(var) {
+    pollutant_data <- merged_data_year %>%
+      filter(variable == var)
+    correlation <- cor.test(pollutant_data$avrg_reading, pollutant_data$tot_ProAcres)$estimate
+    data.frame(Year = yr, Pollutant = var, Correlation = correlation)
+  })
+})
+correlations_df <- do.call(rbind, do.call(c, correlations))
+
+print(correlations_df)
+
+
+```
+
+```{r}
+library(dplyr)
+
+# Calculate average readings for pollutants and total protected acres for fires
 
 ```
 
