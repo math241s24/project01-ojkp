@@ -12,6 +12,7 @@ library(lubridate)
 library(dplyr)
 library(readr)
 library(reshape2)
+library(viridis)
 ```
 
 
@@ -45,53 +46,111 @@ avgAll2020$year <- as.character(avgAll2020$year)
 
 ```{r eval=FALSE, include=FALSE}
 
-#Here lies a pair of sample visualizations. The first visualizes average pm2.5 levels from months 1-84, color-partitioned by year. If we wanted to do the same but for a different pollutant, we could simply substitute `avg_pm2.5` as it appears below, with another pollutant's variable name, keeping all else functionally the same. But WOAH! There's a UUGE spike in september 2020(portland wildfires). For further analysis, the second plot visualizes roughly the same information as the first, except faceted by year, and conveying a sense of regularity—as in, how skewed is our data by year, and more generally, how does the distribution of pollutant levels seem by year(and by pollutant). To view a different pollutant on this graph, make the same adjustments as you would to the first. 
+#INTRO: COVID-19 and it's effects have impacted us all. As with any pandemic, the primary concerns worldwide were largely related to public health and economic welfare. Like many other nations, the U.S met the the concerns of the former, by enacting state-by-state quarantines("stay-at-home" orders). Subsequently, major metropolitan centers in the nation characterized by greater motor-vehicle traffic, experienced a dramatic dip in commuter density as quarantine mandates went into effect and drastically fewer commuters had to drive to work each day. One impact of COVID-19 that has yet to be discussed as severely as the others, is its impact on our climate; particularly, on air quality. A popular assumption, is that air quality improved during this time, as less commuters were "on the road", and so less vehicles were used and emitting pollutants. We are interested in exploring this assumption by analyzing the concentration levels of major pollutants produced by motor-vehicles(namely, the variables PM2.5, SO2, NO2, CO, and Ozone), before, during, and after quarantine, using our chosen dataset.
+
+#Approach: Our underlying assumption, is that because fewer pollutants were emitted into the atmosphere in Portland, from March 2020 - June 2021(span of Oregon state quarantine mandate). Our dataset offers average pollutant concentrations by month, over sever years(2017 Jan - 2023 Dec). In our first graph we have chosen to focus on PM2.5 concentrations over this 7-year window, since this is the most hazardous and prominent pollutant that motor-vehicles emit—additionally, we'd like to observe its trends in recent history, through the quarantine, and afterward, to identify any contrasts. We are visualizing this data by a column graph, such that each column is a month, sectioned by color and year, with markers indicating the beginning and end of Oregon's quarantine. Our second graph(a collection of three plots) explores concentration trends by the other pollutants, over each year in the immediate window around quarantine(2019,2020,2021). This is done via a trend line, overlayed by columns to distinguish monthly concentrations readings. Both of these plots help us better visualize trends in major pollutant concentrations over time, which services our primary goal of comparing pollutant trends before, during, and after quarantine. 
 
 ```
 
-```{r echo=FALSE}
+```{r echo=FALSE, fig.width=8}
+#FIRST GRAPH
 
 
-ggplot(avgAll,aes(x =month, y = avg_pm2.5)) +
-  geom_line()+
-  scale_x_continuous(breaks = c(12, 24, 36, 48,60,72,84), labels = c("12"="2017","24"="2018","36"="2019","48"="2020","60"="2021","72"="2022","84"="2023"))
-  scale_fill_viridis_d() 
 
-ggplot(avgAll,aes(x =month, y = avg_no2, fill=year)) +
-  geom_col(width=.7)+
-  scale_fill_viridis_d() 
+ggplot(avgAll,aes(x =month, y = avg_pm2.5, fill=year)) +
+  geom_col(width=.7, show.legend = FALSE)+
+  scale_fill_viridis_d() +
+ scale_x_continuous(breaks = c(1, 13, 25, 37, 49,61,73, 84), labels = c("1"="2017","13"="2018","25"="2019","37"="2020","49"="2021","61"="2022","73"="2023","84"="2024"))+
+   
+  theme_linedraw()+
+  
+  
+  labs(title = "Concentration of Airborne Fine Particles(PM2.5) in Portland, OR",
+       subtitle="From 2017 to 2024",
+       x = "Year",
+       y = "Average PM2.5 Concentration(µg/m³)") +
+  
+  guides(color = "none")+
+  theme(axis.title.y = element_text(size=10,margin=margin(r=20)), 
+        axis.title.x = element_text(size=10,margin=margin(t=15)))+
+  
+  geom_point(aes(x=39,y=40), show.legend = FALSE, color="#21918c", shape=6)+
+  annotate("segment", x = 39, xend = 39, y = 39, yend = 5.8, color = "#21918c", linewidth = .5, linetype="dashed") +
+  geom_rect(aes(xmin=27, xmax=37, ymin=38, ymax=44 ), fill="#21918c", alpha=0.008)+
+  annotate("text", x = 32, y = 41, label = "Quarantine Begins\n (March 2020)", size=2)+
+  
+  geom_point(aes(x=54,y=40), show.legend = FALSE, color="#5ec962", shape=6)+
+  annotate("segment", x = 54, xend = 54, y = 39, yend = 4.3, color = "#5ec962", linewidth = .5, linetype="dashed") +
+  geom_rect(aes(xmin=56, xmax=66, ymin=38, ymax=44 ), fill="#5ec962", alpha=0.008)+
+  annotate("text", x = 61, y = 41, label = "Quarantine Ends\n (June 2021)", size=2)
+   
 
-ggplot(avgAll,aes(x =month, y = avg_co, fill=year)) +
-  geom_col(width=.7)+
-  scale_fill_viridis_d() 
 
-ggplot(avgAll,aes(x =month, y = avg_so2, fill=year)) +
-  geom_col(width=.7)+
-  scale_fill_viridis_d() 
 
-ggplot(avgAll, aes(x=monthbyyear,y=avg_pm2.5, fill=year))+
-  geom_col()+
-  facet_wrap(vars(year))+
-  geom_smooth()
+
  
   
 ```
 
-```{r eval=FALSE, include=FALSE}
+```{r, fig.width=8}
 
-#Here is a graph. It is a bad graph. I was trying to visualize across all 84 months(7 years), the pollutant levels for every pollutant on the same graph. Not only is this visually unappealing, but these pollutants exhibit scaling discrepancies that could not be dutifully remedied(even by taking their log, which is visually more pleasant, but a contextual nightmare, i.e. log of pollutant levels less than 1 would become negative, which doesn't make sense in context). Take what you would like from this scheme, however. 
+#KIANNA's FIRST GRAPH
+
+
+ggplot(avgAll,aes(x =month, y = avg_co, fill=year)) +
+  geom_col(width=.7, show.legend = FALSE)+
+  scale_fill_manual(values =c("#33302E", "#320a5e", "#781c6d", "#bc3754", "#ed6925","#fbb61a","#fcffa4"))+
+ scale_x_continuous(breaks = c(1, 13, 25, 37, 49,61,73, 84), labels = c("1"="2017","13"="2018","25"="2019","37"="2020","49"="2021","61"="2022","73"="2023","84"="2024"))+
+   
+  theme_linedraw()+
+  
+  
+  labs(title = "Concentration of Carbon Monoxide(CO) in Portland, OR",
+       subtitle="From 2017 to 2024",
+       x = "Year",
+       y = "Average CO Concentration(ppbv)") +
+  
+  guides(color = "none")+
+  theme(axis.title.y = element_text(size=10,margin=margin(r=20)), 
+        axis.title.x = element_text(size=10,margin=margin(t=15)))+
+  theme(
+    panel.background = element_rect(fill = "black"),  # Background color
+    plot.background = element_rect(fill = "black"),  # Plot area color
+    text = element_text(color = "white"),
+    axis.text = element_text(color = "white"),        # Axis text color
+    axis.line = element_line(color = "white"),        # Axis line color
+    panel.grid.major = element_line(color = "white"), # Major grid line color
+    panel.grid.minor = element_line(color = "white"))  +
+  
+  
+  
+  
+  annotate("segment", x = 19, xend = 19, y = .75, yend = 0.3, color = "white", linewidth = .5, linetype="dashed") +
+  annotate("segment", x = 21, xend = 21, y = .75, yend = 0.4, color = "white", linewidth = .5, linetype="dashed") +
+  annotate("segment", x = 19, xend = 21, y = .75, yend = 0.75, color = "white", linewidth = .5) +
+  geom_rect(aes(xmin=10, xmax=20, ymin=.8, ymax=1 ), fill="white", alpha=0.05)+
+  annotate("text", x = 15, y = .9, label = "Regular Wildfire\n Season", size=2)+
+  geom_point(aes(x=20,y=.775), show.legend = FALSE, color="white", shape=6, size=.5)+
+  
+  annotate("segment", x = 67, xend = 67, y = .75, yend = 0.1, color = "white", linewidth = .5, linetype="dashed") +
+  annotate("segment", x = 69, xend = 69, y = .75, yend = 0.2, color = "white", linewidth = .5, linetype="dashed") +
+  annotate("segment", x = 67, xend = 69, y = .75, yend = 0.75, color = "white", linewidth = .5) +
+  geom_rect(aes(xmin=68, xmax=78, ymin=.8, ymax=1 ), fill="white", alpha=0.05)+
+  annotate("text", x = 73, y = .9, label = "Regular Wildfire\n Season", size=2)+
+  geom_point(aes(x=68,y=.775), show.legend = FALSE, color="white", shape=6, size=.5)+
+  
+  annotate("segment", x = 45.5, xend = 58, y = 1.75, yend = 2, color = "red", linewidth = .5) +
+  geom_rect(aes(xmin=55, xmax=65, ymin=2, ymax=2.2 ), fill="red", alpha=0.05)+
+  annotate("text", x = 60, y = 2.1, label = "Archie Creek Fire\n(September 2020)", size=2)+
+  geom_point(aes(x=45.5,y=1.75), show.legend = FALSE, color="red", size=.5)
+  
+  
+  
+  
+
 ```
 
-```{r echo=FALSE}
 
-ggplot(avgAll,aes(x =month)) +
-  geom_line(aes(y=avgAll$avg_pm2.5), color="orange", linetype="dashed")+
-  geom_line(aes(y=avgAll$avg_so2),color="purple", linetype="dashed")+
-  geom_line(aes(y=avgAll$avg_ozone),color="green")+
-  geom_line(aes(y=avgAll$avg_no2), color="blue")+
-  geom_line(aes(y=avgAll$avg_co),color="red")
- 
-```
 
 
 
@@ -102,8 +161,6 @@ ggplot(avgAll,aes(x =month)) +
 ```
 
 ```{r echo=FALSE}
-
-
 avgAll2020_melted <- melt(avgAll2020, id.vars = c("year", "monthbyyear"))
 
 avgAll2019 <- avgAll%>%
@@ -116,27 +173,121 @@ avgAll2021 <- avgAll%>%
   select(year,monthbyyear,avg_pm2.5,avg_so2,avg_ozone,avg_co,avg_no2)
 avgAll2021_melted <- melt(avgAll2021, id.vars = c("year", "monthbyyear"))
 
+avgAll2019_melted <- avgAll2019_melted %>%
+  mutate(variable = case_when(
+    variable == "avg_pm2.5" ~ "Particulate Matter(PM2.5)",
+    variable == "avg_so2" ~ "Sulfur Dioxide(SO2)",
+    variable == "avg_no2" ~ "Nitrogen Dioxide(NO2)",
+    variable == "avg_ozone" ~ "Ozone",
+    variable == "avg_co" ~ "Carbon Monoxide(CO)",
+  ))
+
+avgAll2020_melted <- avgAll2020_melted %>%
+  mutate(variable = case_when(
+    variable == "avg_pm2.5" ~ "Particulate Matter(PM2.5)",
+    variable == "avg_so2" ~ "Sulfur Dioxide(SO2)",
+    variable == "avg_no2" ~ "Nitrogen Dioxide(NO2)",
+    variable == "avg_ozone" ~ "Ozone",
+    variable == "avg_co" ~ "Carbon Monoxide(CO)",
+  ))
+
+avgAll2021_melted <- avgAll2021_melted %>%
+  mutate(variable = case_when(
+    variable == "avg_pm2.5" ~ "Particulate Matter(PM2.5)",
+    variable == "avg_so2" ~ "Sulfur Dioxide(SO2)",
+    variable == "avg_no2" ~ "Nitrogen Dioxide(NO2)",
+    variable == "avg_ozone" ~ "Ozone",
+    variable == "avg_co" ~ "Carbon Monoxide(CO)",
+  ))
+
 
 ggplot(avgAll2019_melted , aes(x = monthbyyear, y = value, fill = variable)) +
   geom_col() +
   facet_wrap(variable ~ ., scales = "free_y") +
   geom_smooth()+
   scale_x_continuous(breaks = c(1, 2, 3, 4,5,6,7,8,9,10,11,12), labels = c("1" = "Jan", "2" = "Feb","3" = "Mar", "4" = "Apr","5" = "May","6" = "Jun","7" = "Jul","8" = "Aug","9" = "Sep","10" = "Oct","11" = "Nov","12" = "Dec"))+
-  theme(axis.text.x = element_text(angle = 45, hjust = 1, size=5))
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, size=5))+
+  
+  scale_fill_viridis_d()+
+  
+  theme_linedraw()+
+  
+  theme(panel.grid = element_blank())+
+  labs(x="", title="Concentration Trends by Pollutant",fill="Pollutant",subtitle="For the Year 2019",y="Concentration by Pollutant")+
+  
+  #REMOVES X-LABELS
+  theme(axis.text.x = element_blank(),
+        
+        #CHANGE MY LEGEND BORDER COLOR AND LINE THICKNESS
+        legend.box.background = element_rect(color = "black", size = 1),
+        
+        
+        legend.box.margin = margin(6, 6, 6, 6),
+        
+        #CHANGE THE POSITION OF THE LEGEND
+        legend.position = c(.85, .2) ,
+        legend.text = element_text(color = "black", size = 7),  # Legend text color and size
+    legend.title = element_text(color = "black"),           # Legend title color
+    legend.key.size = unit(0.4, "cm"))
 
 ggplot(avgAll2020_melted , aes(x = monthbyyear, y = value, fill = variable)) +
   geom_col() +
   facet_wrap(variable ~ ., scales = "free_y") +
   geom_smooth()+
   scale_x_continuous(breaks = c(1, 2, 3, 4,5,6,7,8,9,10,11,12), labels = c("1" = "Jan", "2" = "Feb","3" = "Mar", "4" = "Apr","5" = "May","6" = "Jun","7" = "Jul","8" = "Aug","9" = "Sep","10" = "Oct","11" = "Nov","12" = "Dec"))+
-  theme(axis.text.x = element_text(angle = 45, hjust = 1, size=5))
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, size=5))+
+  
+  scale_fill_viridis_d()+
+  
+  theme_linedraw()+
+  
+  theme(panel.grid = element_blank())+
+  labs(x="", title="Concentration Trends by Pollutant",fill="Pollutant",subtitle="For the Year 2020",y="Concentration by Pollutant")+
+  
+  #REMOVES X-LABELS
+  theme(axis.text.x = element_blank(),
+        
+        #CHANGE MY LEGEND BORDER COLOR AND LINE THICKNESS
+        legend.box.background = element_rect(color = "black", size = 1),
+        
+        
+        legend.box.margin = margin(6, 6, 6, 6),
+        
+        #CHANGE THE POSITION OF THE LEGEND
+        legend.position = c(.85, .2) ,
+        legend.text = element_text(color = "black", size = 7),  # Legend text color and size
+    legend.title = element_text(color = "black"),           # Legend title color
+    legend.key.size = unit(0.4, "cm"))
+
 
 ggplot(avgAll2021_melted , aes(x = monthbyyear, y = value, fill = variable)) +
   geom_col() +
   facet_wrap(variable ~ ., scales = "free_y") +
   geom_smooth()+
   scale_x_continuous(breaks = c(1, 2, 3, 4,5,6,7,8,9,10,11,12), labels = c("1" = "Jan", "2" = "Feb","3" = "Mar", "4" = "Apr","5" = "May","6" = "Jun","7" = "Jul","8" = "Aug","9" = "Sep","10" = "Oct","11" = "Nov","12" = "Dec"))+
-  theme(axis.text.x = element_text(angle = 45, hjust = 1, size=5))
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, size=5))+
+  
+  scale_fill_viridis_d()+
+  
+  theme_linedraw()+
+  
+  theme(panel.grid = element_blank())+
+  labs(x="", title="Concentration Trends by Pollutant",fill="Pollutant",subtitle="For the Year 2021",y="Concentration by Pollutant")+
+  
+  #REMOVES X-LABELS
+  theme(axis.text.x = element_blank(),
+        
+        #CHANGE MY LEGEND BORDER COLOR AND LINE THICKNESS
+        legend.box.background = element_rect(color = "black", size = 1),
+        
+        
+        legend.box.margin = margin(6, 6, 6, 8),
+        
+        #CHANGE THE POSITION OF THE LEGEND
+        legend.position = c(.85, .2),
+        legend.text = element_text(color = "black", size = 7),  # Legend text color and size
+    legend.title = element_text(color = "black"),           # Legend title color
+    legend.key.size = unit(0.4, "cm"))
   
 ```
 
@@ -145,7 +296,6 @@ ggplot(avgAll2021_melted , aes(x = monthbyyear, y = value, fill = variable)) +
 avgAll%>%
   group_by(year)%>%
   summarize(AVGPM = mean(avg_pm2.5), AVGCO = mean(avg_co, na.rm=T),AVGNO = mean(avg_no2,na.rm=T),AVGSO = mean(avg_so2,na.rm=T))
-
 
 ```
 

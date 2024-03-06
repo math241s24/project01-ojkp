@@ -105,4 +105,3 @@ ggplot(avgAll2020_melted , aes(x = monthbyyear, y = value, fill = variable)) +
 
 
 
-

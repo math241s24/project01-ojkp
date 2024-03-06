@@ -21,11 +21,15 @@ library(dplyr)
 pm25 <- read_csv("proposal data/pm25.csv")
 avgpm25 <- read_csv("proposal data/avgpm25.csv")
 ```
+
 Daily data about PM2.5 mean concentration from each site in Portland-Vancouver-Hillsboro from 2017 to 2023:
+
 ```{r, echo = FALSE}
 glimpse(pm25)
 ```
+
 Monthly averages of PM2.5 daily mean concentrations in Portland-Vancouver-Hillsboro from 2017 to 2023:
+
 ```{r, echo = FALSE}
 glimpse(avgpm25)
 ```
