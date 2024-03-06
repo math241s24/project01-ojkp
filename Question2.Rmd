@@ -14,8 +14,8 @@ library(reshape2)
 #Julian's Code
 #Just run this code :^) with your own file path
 
-avgAll <- read_csv("~/Documents/GitHub/project01-ojkp/air data/avgAll.csv")
-avgAll2020 <- read_csv("~/Documents/GitHub/project01-ojkp/air data/avgAll2020.csv")
+avgAll <- read_csv("~/Rstudio/DataScience/proj1.math241/project01-ojkp/air data/avgAll.csv")
+avgAll2020 <- read_csv("~/Rstudio/DataScience/proj1.math241/project01-ojkp/air data/avgAll2020.csv")
 
 avgAll$year <- as.character(avgAll$year)
 avgAll2020$year <- as.character(avgAll2020$year)
@@ -25,8 +25,8 @@ avgAll2020$year <- as.character(avgAll2020$year)
 
 ```{r}
 #data from csvs (will need to change location stuff)
-fires_full <- read_csv("~/Documents/GitHub/project01-ojkp/air data/fires_full.csv")
-pollutants_pdx <- read_csv("~/Documents/GitHub/project01-ojkp/air data/pollutants_pdx.csv", 
+fires_full <- read_csv("~/Rstudio/DataScience/proj1.math241/project01-ojkp/air data/fires_full.csv")
+pollutants_pdx <- read_csv("~/Rstudio/DataScience/proj1.math241/project01-ojkp/air data/pollutants_pdx.csv", 
     col_types = cols(Source = col_skip(), 
         `Site ID` = col_skip(), POC = col_skip(), 
         `Site Name` = col_skip(), DAILY_OBS_COUNT = col_skip(), 
