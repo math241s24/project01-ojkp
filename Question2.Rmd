@@ -25,8 +25,8 @@ avgAll2020$year <- as.character(avgAll2020$year)
 
 ```{r}
 #data from csvs (will need to change location stuff)
-fires_full <- read_csv("~/Rstudio/DataScience/math241repo/fires_full.csv")
-pollutants_pdx <- read_csv("~/Rstudio/DataScience/math241repo/pollutants_pdx.csv", 
+fires_full <- read_csv("~/Rstudio/DataScience/proj1.math241/project01-ojkp/air data/fires_full.csv")
+pollutants_pdx <- read_csv("~/Rstudio/DataScience/proj1.math241/project01-ojkp/air data/pollutants_pdx.csv", 
     col_types = cols(Source = col_skip(), 
         `Site ID` = col_skip(), POC = col_skip(), 
         `Site Name` = col_skip(), DAILY_OBS_COUNT = col_skip(), 
