@@ -166,7 +166,7 @@ fire_plot <- ggplot(data = fires_full, aes(x = ReportDate, y = tot_ProAcres)) +
   labs(title = "Total Protected Acres Burnt",
        x = "Date", y = "Total Protected Acres")
 
-library(gridExtra)
+library("gridExtra")
 grid.arrange(arrangeGrob(grobs = plots, ncol = 1), fire_plot, heights = c(4, 1))
 
 
