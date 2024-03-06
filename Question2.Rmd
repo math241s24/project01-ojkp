@@ -90,9 +90,8 @@ pollutants_pdx_melt <- pollutants_pdx_melt %>%
 #Julian's graph
 #In our first graph, we focused on the concentration of carbon monoxide across years since this is one of the most prominent pollutants associated with wildfires. This data was visualized by a column graph where each column is a month, sectioned by color and year, with markers indicating the standard wildfire seasons.
 
-# Our second graph 
+# Our second graph considers other pollutant levels over each year from 2017-2023 in order to consider overall trends in pollutant concentration fluctuation. It is presented alongside wildfire data in order to consider to what extent the fluctuation is impacted by wildfire season. This is done with a series of line graphs. These plots help to better visualize the relationship between wildfires and air pollution which aligns with our primary goal.
 
-#Our second graph(a collection of three plots) explores concentration trends by the other pollutants, over each year in the immediate window around quarantine(2019,2020,2021). This is done via a trend line, overlayed by columns to distinguish monthly concentrations readings. Both of these plots help us better visualize trends in major pollutant concentrations over time, which services our primary goal of comparing pollutant trends before, during, and after quarantine. 
 ```
 
 
