@@ -34,8 +34,8 @@ avgAll <- avgAll%>%
 ```{r include=FALSE}
 #Just run this code :^) with your own file path
 
-avgAll <- read_csv("~/Documents/GitHub/project01-ojkp/air data/avgAll.csv")
-avgAll2020 <- read_csv("~/Documents/GitHub/project01-ojkp/air data/avgAll2020.csv")
+avgAll <- read_csv("air_data/avgAll.csv")
+avgAll2020 <- read_csv("air_data/avgAll2020.csv")
 
 avgAll$year <- as.character(avgAll$year)
 avgAll2020$year <- as.character(avgAll2020$year)
