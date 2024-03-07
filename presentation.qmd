@@ -127,3 +127,55 @@ ggplot(avgAll,aes(x =month, y = avg_pm2.5, fill=year)) +
     -   Plotted daily values to see seasonal variations
 
 -   Paid special attention to PM2.5, NO2, and O3 (ozone)
+
+## Question 2 Contd
+
+```{r, fig.width=8}
+
+#KIANNA's FIRST GRAPH
+
+
+ggplot(avgAll,aes(x =month, y = avg_co, fill=year)) +
+  geom_col(width=.7, show.legend = FALSE)+
+  scale_fill_manual(values =c("#33302E", "#320a5e", "#781c6d", "#bc3754", "#ed6925","#fbb61a","#fcffa4"))+
+ scale_x_continuous(breaks = c(1, 13, 25, 37, 49,61,73, 84), 
+                    labels = c("1"="2017","13"="2018","25"="2019","37"="2020","49"="2021","61"="2022","73"="2023","84"="2024")) +
+   theme_linedraw()+
+  labs(title = "Concentration of Carbon Monoxide(CO) in Portland, OR",
+       subtitle="From 2017 to 2024",
+       x = "Year",
+       y = "Average CO Concentration(ppbv)") +
+  guides(color = "none") +
+  theme(axis.title.y = element_text(size=10,margin=margin(r=20)), 
+        axis.title.x = element_text(size=10,margin=margin(t=15))) +
+  annotate("segment", 
+           x = 19, xend = 19, 
+           y = .75, yend = 0.3, color = "white", 
+           linewidth = .5, linetype="dashed") +
+  annotate("segment", x = 21, xend = 21, y = .75, yend = 0.4, color = "white", linewidth = .5, linetype="dashed") +
+  annotate("segment", x = 19, xend = 21, y = .75, yend = 0.75, color = "white", linewidth = .5) +
+  geom_rect(aes(xmin=10, xmax=20, ymin=.8, ymax=1 ), fill="white", alpha=0.05)+
+  annotate("text", x = 15, y = .9, 
+           label = "Regular Wildfire\n Season", 
+           size=2)+
+  geom_point(aes(x=20,y=.775), show.legend = FALSE, color="white", shape=6, size=.5)+
+  
+  annotate("segment", x = 67, xend = 67, y = .75, yend = 0.1, color = "white", linewidth = .5, linetype="dashed") +
+  annotate("segment", x = 69, xend = 69, y = .75, yend = 0.2, color = "white", linewidth = .5, linetype="dashed") +
+  annotate("segment", x = 67, xend = 69, y = .75, yend = 0.75, color = "white", linewidth = .5) +
+  geom_rect(aes(xmin=68, xmax=78, ymin=.8, ymax=1 ), fill="white", alpha=0.05)+
+  annotate("text", x = 73, y = .9, label = "Regular Wildfire\n Season", size=2)+
+  geom_point(aes(x=68,y=.775), show.legend = FALSE, color="white", shape=6, size=.5)+
+  
+  annotate("segment", x = 45.5, xend = 58, y = 1.75, yend = 2, color = "pink", linewidth = .5) +
+  geom_rect(aes(xmin=55, xmax=65, ymin=2, ymax=2.2 ), fill="pink", alpha=0.05)+
+  annotate("text", x = 60, y = 2.1, label = "Archie Creek Fire\n(September 2020)", size=2)+
+  geom_point(aes(x=45.5,y=1.75), show.legend = FALSE, color="pink", size=.5)
+  
+  
+  
+  
+
+```
+```
+
