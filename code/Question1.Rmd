@@ -82,7 +82,7 @@ ggplot(avgAll,aes(x = month, y = avg_pm2.5, fill = year)) +
 # KIANA's FIRST GRAPH
 ggplot(avgAll, aes(x = month, y = avg_co, fill = year)) +
   geom_col(width = .7, show.legend = FALSE) +
-  scale_fill_manual(values = c("#33302E", "#320a5e", "#781c6d", "#bc3754", "#ed6925", "#fbb61a", "#fcffa4"))+
+  scale_fill_manual(values = c("#33302E", "#320a5e", "#781c6d", "#bc3754", "#ed6925", "#fbb61a", "#fcffa4")) +
  scale_x_continuous(breaks = c(1, 13, 25, 37, 49,61,73, 84), 
                     labels = c("1" = "2017", "13" = "2018", "25" = "2019", "37" = "2020", "49" = "2021", "61" = "2022", "73" = "2023", "84" = "2024")) +
   
