@@ -348,7 +348,7 @@ ggplot(avgAll, aes(x = month, y = avg_co, fill = year)) +
 
 ## Question 2: Pollutants in 2017-2023
 
-![](Prerendered Pictures/wildfireAll.svg)
+![](code/Prerendered Pictures/wildfireAll.svg)
 ```{r all pollutants, eval = FALSE, include = FALSE, echo = FALSE}
 aqi_plot <- ggplot(data=pollutants_pdx_melt %>% 
                      filter(variable == "AQI"), aes(x=Date, y=avrg_reading)) +
@@ -389,7 +389,7 @@ arranged_plots
 
 ## Question 2: Pollutants in 2019
 
-![](Prerendered Pictures/wildfire2019.svg)
+![](code/Prerendered Pictures/wildfire2019.svg)
 
 ```{r 2019 pollutants, eval = FALSE, include = FALSE, echo = FALSE}
 pollutants19 <- pollutants_pdx_melt %>% 
