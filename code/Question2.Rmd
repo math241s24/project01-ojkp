@@ -40,25 +40,25 @@ pollutants_pdx <- read_csv("../data/air_pollutants/pollutants_pdx.csv",
 ```{r}
 # pollutant data stuff/wrangling
 pollutants_pdx <- pollutants_pdx %>%
-  rename(NO2_reading = "Daily Max 1-hour NO2 Concentration",
-         Ozone_reading = "Daily Max 8-hour Ozone Concentration",
-         CO_reading = "Daily Max 8-hour CO Concentration",
-         SO2_reading = "Daily Max 1-hour SO2 Concentration",
-         PM2.5_reading = "Daily Mean PM2.5 Concentration",
-         AQI_reading = "DAILY_AQI_VALUE",
+  rename(NO2 = "Daily Max 1-hour NO2 Concentration",
+         Ozone = "Daily Max 8-hour Ozone Concentration",
+         CO = "Daily Max 8-hour CO Concentration",
+         SO2 = "Daily Max 1-hour SO2 Concentration",
+         PM2.5 = "Daily Mean PM2.5 Concentration",
+         AQI = "DAILY_AQI_VALUE",
          )
 
 pollutants_pdx_melt <- pollutants_pdx %>%
-  pivot_longer(cols = c(NO2_reading, CO_reading, SO2_reading, PM2.5_reading, Ozone_reading, AQI_reading),
+  pivot_longer(cols = c(NO2, CO, SO2, PM2.5, Ozone, AQI),
                names_to = "variable",
                values_to = "reading") %>%
   filter(!is.na(reading))
 
 pollutants_pdx_melt <- pollutants_pdx_melt %>% 
-  filter(variable == "PM2.5_reading" | 
-           variable == "NO2_reading" | 
-           variable == "Ozone_reading" | 
-           variable == "AQI_reading")
+  filter(variable == "PM2.5" | 
+           variable == "NO2" | 
+           variable == "Ozone" | 
+           variable == "AQI")
 
 pollutants_pdx_melt$Date <- mdy(pollutants_pdx_melt$Date)
 
