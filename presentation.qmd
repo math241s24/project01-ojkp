@@ -1,30 +1,129 @@
 ---
-title: "Project Presentation"
-subtitle: "The data we have chosen"
-format: 
-  revealjs
+title: "Examining Air Pollution and Environmental Factors"
+subtitle: "Kiana Fields, Julian Jacklin, Prasiddhi Thapaliya, Omar Youssif"
+format: revealjs
 highlight-style: a11y
 execute:
   code-link: true
   echo: true
-editor_options: 
+editor_options:
   chunk_output_type: console
+css: |
+  body {
+    font-size: 12px;
 ---
 
-## Outline
+## Introducing the Data {.smaller}
 
-* Your presentation should generally follow the same structure as your write-up. 
+###### From the EPA (Environmental Protection Agency): conc. levels of major pollutants (CO, NO2, O3, PM 2.5, and SO2)
 
-* Each team will have 5 minutes for their presentation, and each team member must speak (roughly equally) during this time. 
+-   Focusing on the Portland-Hillsboro-Vancouver area from 2017-2023.
 
-* Your presentation will be created using `Quarto`, which allows you to write slides using the same coding structure you’re used to with `Rmarkdown`. 
+-   Subsets into two forms for each pollutant type:
 
-* This is a sample Quarto slide template you can edit to your desire to create your presentation. 
+    -   84 x 2 monthly average air pollutant
 
-## Rubric
+    -   28606 x 4 daily air pollutant data.
 
-* Roughly I recommend 1 slide for introduction, 2 slides for Question 1, ans 2 slides for Question 2. 
-  + You can imagine spending roughly one minute on each slide.
-  + You should feel free to have more (or fewer) slides. 
-  
-* Your evaluation will be based on your content, professionalism (including sticking to time), and your performance during the Q&A (question and answer). We don’t care how many slides you use to do this.
+-   10 datasets (5 of each type). Below is a glimpse into one of our datasets; this records the average concentration of each pollutant monthly for the years 2017-2023.
+
+```{r, echo = FALSE}
+library(readr)
+library(dplyr)
+library(tidyverse)
+library(lubridate)
+library(reshape2)
+library(viridis)
+avgAll <- read_csv("data/air_pollutants/avgAll.csv")
+glimpse(avgAll)
+
+```
+
+## Question 1
+
+###### How did the COVID pandemic lockdown impact air quality in the Portland Metropolitan area? {.smaller}
+
+-   Relevant question that experts are asking right now
+
+-   Looked at a timespan of 7 years to get a sense of AQI before/during/after lockdown
+
+    -   Highlighted 2020-2021 as prime lockdown years
+
+    -   Used our monthly average subsets to see a change over time
+
+-   Cars emit CO and NO2; paid special attention to these compounds
+
+## Question 1 Contd
+
+```{r, echo = F, eval = T}
+ggplot(avgAll,aes(x =month, y = avg_pm2.5, fill=year)) +
+  geom_col(width=.7, show.legend = FALSE) +
+  scale_fill_viridis_c() +
+  scale_x_continuous(breaks = c(1, 13, 25, 37, 49,61,73, 84), 
+                     labels = c("1"="2017","13"="2018","25"="2019","37"="2020","49"="2021","61"="2022","73"="2023","84"="2024"))+
+  theme_linedraw()+
+  labs(title = "Concentration of Airborne Fine Particles(PM2.5) in Portland, OR",
+       subtitle="From 2017 to 2024",
+       x = "Year",
+       y = "Average PM2.5 Concentration(µg/m³)") +
+  guides(color = "none")+
+  theme(axis.title.y = element_text(size=10,
+                                    margin=margin(r=20)), 
+        axis.title.x = element_text(size=10,
+                                    margin=margin(t=15))) +
+  geom_point(aes(x=39,y=40), 
+             show.legend = FALSE, 
+             color="#21918c", 
+             shape=6)+
+  annotate("segment", x = 39, xend = 39, y = 39, yend = 5.8, color = "#21918c", linewidth = .5, linetype="dashed") +
+  geom_rect(aes(xmin=27, xmax=37, ymin=38, ymax=44 ), 
+            fill="#21918c", 
+            alpha=0.008)+
+  annotate("text", 
+           x = 32, 
+           y = 41, 
+           label = "Quarantine Begins\n (March 2020)", 
+           size=2)+
+  geom_point(aes(x=54,y=40), 
+             show.legend = FALSE, 
+             color="#5ec962", 
+             shape=6)+
+  annotate("segment", x = 54, xend = 54, y = 39, yend = 4.3, color = "#5ec962", linewidth = .5, linetype="dashed") +
+  geom_rect(aes(xmin=56, 
+                xmax=66, 
+                ymin=38, 
+                ymax=44 ), 
+            fill="#5ec962", 
+            alpha=0.008)+
+  annotate("text", x = 61, y = 41, 
+           label = "Quarantine Ends\n (June 2021)", size=2)
+   
+```
+
+## Question 1 Contd
+
+## Question 1: Discussion
+
+-   General trend: PM2.5 increases in winter, decreases in summer
+
+-   Warm air rises, along with the particles
+
+    -   Exception: 2020 late summer (stay tuned for explanation!)
+
+-   Overall, somewhat decrease during COVID years, would need additional analysis to confirm trends
+
+
+
+## Question 2
+
+###### Is there a relationship between wildfire season and air pollutant concentrations? {.smaller}
+
+-   Interested in potential environmental impacts (GHG levels) and adverse health effects
+
+-   Looked at a timespan of 7 years to get a sense of AQI before/during/after lockdown
+
+    -   Highlighted May-September as potential hazard months
+
+    -   Plotted daily values to see seasonal variations
+
+-   Paid special attention to PM2.5, NO2, and O3 (ozone)
