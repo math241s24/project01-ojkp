@@ -6,7 +6,7 @@ output: pdf_document
 ---
 
 
-```{r include=FALSE}
+```{r importing libraries, include = FALSE}
 library(tidyverse)
 library(lubridate)
 library(dplyr)
@@ -15,7 +15,7 @@ library(reshape2)
 ```
 
 
-```{r include=FALSE}
+```{r importing data, include = FALSE}
 # This code uses relative paths to find your dataset. Please run R studio through the R project in the folder.
 
 avgAll <- read_csv("../data/air_pollutants/avgAll.csv")
@@ -23,13 +23,9 @@ avgAll2020 <- read_csv("../data/air_pollutants/avgAll2020.csv")
 
 avgAll$year <- as.character(avgAll$year)
 avgAll2020$year <- as.character(avgAll2020$year)
-```
 
-
-```{r}
-#data from csvs (will need to change location stuff)
-fires_full <- read_csv("~/Rstudio/DataScience/proj1.math241/project01-ojkp/air data/fires_full.csv")
-pollutants_pdx <- read_csv("~/Rstudio/DataScience/proj1.math241/project01-ojkp/air data/pollutants_pdx.csv", 
+fires_full <- read_csv("../data/air_pollutants/fires_full.csv")
+pollutants_pdx <- read_csv("../data/air_pollutants/pollutants_pdx.csv", 
     col_types = cols(Source = col_skip(), 
         `Site ID` = col_skip(), POC = col_skip(), 
         `Site Name` = col_skip(), DAILY_OBS_COUNT = col_skip(), 
@@ -42,7 +38,7 @@ pollutants_pdx <- read_csv("~/Rstudio/DataScience/proj1.math241/project01-ojkp/a
 
 
 ```{r}
-#pollutant data stuff/wrangling
+# pollutant data stuff/wrangling
 pollutants_pdx <- pollutants_pdx %>%
   rename(NO2_reading = "Daily Max 1-hour NO2 Concentration",
          Ozone_reading = "Daily Max 8-hour Ozone Concentration",
@@ -128,7 +124,8 @@ ggplot(pollutants_FML %>%
   geom_line() +
   facet_wrap(~ variable + year, scales = "free") +
   labs(title = "Observations for First, 15th, and Last Day of Each Month",
-       x = "Date", y = "Reading") +
+       x = "Date", 
+       y = "Reading") +
     theme(axis.text.x = element_text(angle = 45, hjust = 1, size=5))
 
 

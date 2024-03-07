@@ -8,9 +8,6 @@ execute:
   echo: true
 editor_options:
   chunk_output_type: console
-css: |
-  body {
-    font-size: 12px;
 ---
 
 ## Introducing the Data {.smaller}
@@ -27,17 +24,38 @@ css: |
 
 -   10 datasets (5 of each type). Below is a glimpse into one of our datasets; this records the average concentration of each pollutant monthly for the years 2017-2023.
 
-```{r, echo = FALSE}
-library(readr)
-library(dplyr)
+```{r importing libraries, include = FALSE}
 library(tidyverse)
 library(lubridate)
+library(dplyr)
+library(readr)
 library(reshape2)
 library(viridis)
-avgAll <- read_csv("data/air_pollutants/avgAll.csv")
-glimpse(avgAll)
-
 ```
+
+```{r importing data, echo = FALSE, include = FALSE}
+avgAll <- read_csv("data/air_pollutants/avgAll.csv")
+avgAll2020 <- read_csv("data/air_pollutants/avgAll2020.csv")
+avgAll$year <- as.character(avgAll$year)
+avgAll2020$year <- as.character(avgAll2020$year)
+
+fires_full <- read_csv("data/air_pollutants/fires_full.csv")
+pollutants_pdx <- read_csv("data/air_pollutants/pollutants_pdx.csv", 
+    col_types = cols(Source = col_skip(), 
+        `Site ID` = col_skip(), POC = col_skip(), 
+        `Site Name` = col_skip(), DAILY_OBS_COUNT = col_skip(), 
+        PERCENT_COMPLETE = col_skip(), AQS_PARAMETER_CODE = col_skip(), 
+        CBSA_CODE = col_skip(), CBSA_NAME = col_skip(), 
+        STATE_CODE = col_skip(), STATE = col_skip(), 
+        COUNTY_CODE = col_skip(), COUNTY = col_skip(), 
+        SITE_LATITUDE = col_skip(), SITE_LONGITUDE = col_skip()))
+```
+
+```{r glimpse average, echo = FALSE}
+glimpse(avgAll)
+```
+
+
 
 ## Question 1
 
@@ -53,65 +71,167 @@ glimpse(avgAll)
 
 -   Cars emit CO and NO2; paid special attention to these compounds
 
-## Question 1 Contd
+## Question 1 Cont'd
 
-```{r, echo = F, eval = T}
-ggplot(avgAll,aes(x =month, y = avg_pm2.5, fill=year)) +
-  geom_col(width=.7, show.legend = FALSE) +
-  scale_fill_viridis_c() +
-  scale_x_continuous(breaks = c(1, 13, 25, 37, 49,61,73, 84), 
-                     labels = c("1"="2017","13"="2018","25"="2019","37"="2020","49"="2021","61"="2022","73"="2023","84"="2024"))+
-  theme_linedraw()+
-  labs(title = "Concentration of Airborne Fine Particles(PM2.5) in Portland, OR",
-       subtitle="From 2017 to 2024",
-       x = "Year",
-       y = "Average PM2.5 Concentration(µg/m³)") +
-  guides(color = "none")+
-  theme(axis.title.y = element_text(size=10,
-                                    margin=margin(r=20)), 
-        axis.title.x = element_text(size=10,
-                                    margin=margin(t=15))) +
-  geom_point(aes(x=39,y=40), 
-             show.legend = FALSE, 
-             color="#21918c", 
-             shape=6)+
-  annotate("segment", x = 39, xend = 39, y = 39, yend = 5.8, color = "#21918c", linewidth = .5, linetype="dashed") +
-  geom_rect(aes(xmin=27, xmax=37, ymin=38, ymax=44 ), 
-            fill="#21918c", 
-            alpha=0.008)+
-  annotate("text", 
-           x = 32, 
-           y = 41, 
-           label = "Quarantine Begins\n (March 2020)", 
-           size=2)+
-  geom_point(aes(x=54,y=40), 
-             show.legend = FALSE, 
-             color="#5ec962", 
-             shape=6)+
-  annotate("segment", x = 54, xend = 54, y = 39, yend = 4.3, color = "#5ec962", linewidth = .5, linetype="dashed") +
-  geom_rect(aes(xmin=56, 
-                xmax=66, 
-                ymin=38, 
-                ymax=44 ), 
-            fill="#5ec962", 
-            alpha=0.008)+
-  annotate("text", x = 61, y = 41, 
-           label = "Quarantine Ends\n (June 2021)", size=2)
+```{r PM2.5 graph, echo = FALSE, fig.width = 8}
+# FIRST GRAPH
+ggplot(avgAll,aes(x = month, y = avg_pm2.5, fill = year)) +
+  geom_col(width = .7, show.legend = FALSE) +
+  scale_fill_viridis_d() +
+ scale_x_continuous(breaks = c(1, 13, 25, 37, 49, 61, 73, 84), 
+                    labels = c("1" = "2017", "13" = "2018", "25" = "2019", "37" = "2020", "49" = "2021", "61" = "2022", "73" = "2023", "84" = "2024")) +
    
+  theme_linedraw() +
+  
+  labs(title = "Concentration of Airborne Fine Particles (PM2.5) in Portland, OR",
+       subtitle = "From 2017 to 2024",
+       x = "Year",
+       y = "Average PM2.5 Concentration (µg/m³)") +
+  
+  guides(color = "none") +
+  theme(axis.title.y = element_text(size = 10, margin = margin(r = 20)), 
+        axis.title.x = element_text(size = 10, margin = margin(t = 15))) +
+  
+  geom_point(aes(x = 39, y = 40), show.legend = FALSE, color = "#21918c", shape = 6) +
+    annotate("segment", x = 39, xend = 39, y = 39, yend = 5.8, color = "#21918c", linewidth = .5, linetype = "dashed") +
+    geom_rect(aes(xmin = 27, xmax = 37, ymin = 38, ymax = 44 ), fill = "#21918c", alpha = 0.008) +
+    annotate("text", x = 32, y = 41, label = "Quarantine Begins\n (March 2020)", size = 2) +
+  
+  geom_point(aes(x = 54, y = 40), show.legend = FALSE, color = "#5ec962", shape = 6) +
+    annotate("segment", x = 54, xend = 54, y = 39, yend = 4.3, color = "#5ec962", linewidth = .5, linetype = "dashed") +
+    geom_rect(aes(xmin = 56, xmax = 66, ymin = 38, ymax = 44 ), fill = "#5ec962", alpha = 0.008) +
+    annotate("text", x = 61, y = 41, label = "Quarantine Ends\n (June 2021)", size = 2)
 ```
 
-## Question 1 Contd
+```{r trends data wrangling, include = FALSE}
+avgAll2020_melted <- melt(avgAll2020, id.vars = c("year", "monthbyyear"))
+
+avgAll2019 <- avgAll %>%
+  filter(year == 2019) %>%
+  select(year, monthbyyear, avg_pm2.5, avg_so2, avg_ozone, avg_co, avg_no2)
+
+avgAll2019_melted <- melt(avgAll2019, id.vars = c("year", "monthbyyear"))
+
+avgAll2021 <- avgAll %>%
+  filter(year == 2021) %>%
+  select(year, monthbyyear, avg_pm2.5, avg_so2, avg_ozone, avg_co, avg_no2)
+
+avgAll2021_melted <- melt(avgAll2021, id.vars = c("year", "monthbyyear"))
+
+avgAll2019_melted <- avgAll2019_melted %>%
+  mutate(variable = case_when(
+    variable == "avg_pm2.5" ~ "Particulate Matter (PM2.5)",
+    variable == "avg_so2" ~ "Sulfur Dioxide (SO2)",
+    variable == "avg_no2" ~ "Nitrogen Dioxide (NO2)",
+    variable == "avg_ozone" ~ "Ozone",
+    variable == "avg_co" ~ "Carbon Monoxide (CO)",
+  ))
+
+avgAll2020_melted <- avgAll2020_melted %>%
+  mutate(variable = case_when(
+    variable == "avg_pm2.5" ~ "Particulate Matter (PM2.5)",
+    variable == "avg_so2" ~ "Sulfur Dioxide (SO2)",
+    variable == "avg_no2" ~ "Nitrogen Dioxide (NO2)",
+    variable == "avg_ozone" ~ "Ozone",
+    variable == "avg_co" ~ "Carbon Monoxide (CO)",
+  ))
+
+avgAll2021_melted <- avgAll2021_melted %>%
+  mutate(variable = case_when(
+    variable == "avg_pm2.5" ~ "Particulate Matter (PM2.5)",
+    variable == "avg_so2" ~ "Sulfur Dioxide (SO2)",
+    variable == "avg_no2" ~ "Nitrogen Dioxide (NO2)",
+    variable == "avg_ozone" ~ "Ozone",
+    variable == "avg_co" ~ "Carbon Monoxide (CO)",
+  ))
+```
+
+## Question 1 Cont'd
+
+```{r 2019 concentration trends graph, echo = FALSE}
+ggplot(avgAll2019_melted , aes(x = monthbyyear, y = value, fill = variable)) +
+  geom_col() +
+  facet_wrap(variable ~ ., scales = "free_y") +
+  geom_smooth()+
+  scale_x_continuous(breaks = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12), 
+                     labels = c("1" = "Jan", "2" = "Feb", "3" = "Mar", "4" = "Apr", "5" = "May", "6" = "Jun", "7" = "Jul", "8" = "Aug", "9" = "Sep", "10" = "Oct", "11" = "Nov", "12" = "Dec")) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, size=5)) +
+  
+  scale_fill_viridis_d() +
+  
+  theme_linedraw() +
+  theme(panel.grid = element_blank()) +
+  labs(x = "", 
+       title = "Concentration Trends by Pollutant",
+       fill = "Pollutant",
+       subtitle = "For the Year 2019",
+       y = "Concentration by Pollutant") +
+  
+  # REMOVES X-LABELS
+  theme(axis.text.x = element_blank(),
+        
+        # CHANGE MY LEGEND BORDER COLOR AND LINE THICKNESS
+        legend.box.background = element_rect(color = "black", size = 1),
+        legend.box.margin = margin(6, 6, 6, 6),
+        
+        # CHANGE THE POSITION OF THE LEGEND
+        legend.position = c(.85, .2),
+        legend.text = element_text(color = "black", size = 7),  # Legend text color and size
+        legend.title = element_text(color = "black"),           # Legend title color
+        legend.key.size = unit(0.4, "cm")
+        )
+
+```
+
+## Question 1 Cont'd
+
+```{r 2020 concentration trends, echo = FALSE}
+ggplot(avgAll2020_melted, aes(x = monthbyyear, y = value, fill = variable)) +
+  geom_col() +
+  facet_wrap(variable ~ ., scales = "free_y") +
+  geom_smooth() +
+  scale_x_continuous(breaks = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12), 
+                     labels = c("1" = "Jan", "2" = "Feb", "3" = "Mar", "4" = "Apr", "5" = "May", "6" = "Jun", "7" = "Jul", "8" = "Aug", "9" = "Sep", "10" = "Oct", "11" = "Nov", "12" = "Dec")) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, size=5)) +
+  
+  scale_fill_viridis_d()+
+  
+  theme_linedraw()+
+  theme(panel.grid = element_blank())+
+  labs(x="", 
+       title = "Concentration Trends by Pollutant",
+       fill = "Pollutant",
+       subtitle = "For the Year 2020", 
+       y = "Concentration by Pollutant") +
+  
+  # REMOVES X-LABELS
+  theme(axis.text.x = element_blank(),
+        
+        # CHANGE MY LEGEND BORDER COLOR AND LINE THICKNESS
+        legend.box.background = element_rect(color = "black", size = 1),
+        legend.box.margin = margin(6, 6, 6, 6),
+        
+        # CHANGE THE POSITION OF THE LEGEND
+        legend.position = c(.85, .2) ,
+        legend.text = element_text(color = "black", size = 7),  # Legend text color and size
+        legend.title = element_text(color = "black"),           # Legend title color
+        legend.key.size = unit(0.4, "cm")
+        )
+```
 
 ## Question 1: Discussion
 
--   General trend: PM2.5 increases in winter, decreases in summer
+-   General trend: PM2.5 increases in winter, decreases in summer for all years
 
 -   Warm air rises, along with the particles
 
     -   Exception: 2020 late summer (stay tuned for explanation!)
 
--   Overall, somewhat decrease during COVID years, would need additional analysis to confirm trends
+-   SO2 went down in 2020 compared to 2019 (main source: electric utilities, businesses closing?)
 
+    - Other pollutants don't have as much of noticeable difference
+
+-   Overall, somewhat decrease during COVID years, would need additional analysis to confirm trends
 
 
 ## Question 2
@@ -126,56 +246,127 @@ ggplot(avgAll,aes(x =month, y = avg_pm2.5, fill=year)) +
 
     -   Plotted daily values to see seasonal variations
 
--   Paid special attention to PM2.5, NO2, and O3 (ozone)
+-   Paid special attention to PM2.5, CO, and O3 (ozone)
 
-## Question 2 Contd
+## Question 2 Cont'd
 
-```{r, fig.width=8}
+```{r pollutant data stuff/wrangling, echo = FALSE, include = FALSE}
+# pollutant data stuff/wrangling
+pollutants_pdx <- pollutants_pdx %>%
+  rename(NO2_reading = "Daily Max 1-hour NO2 Concentration",
+         Ozone_reading = "Daily Max 8-hour Ozone Concentration",
+         CO_reading = "Daily Max 8-hour CO Concentration",
+         SO2_reading = "Daily Max 1-hour SO2 Concentration",
+         PM2.5_reading = "Daily Mean PM2.5 Concentration",
+         AQI_reading = "DAILY_AQI_VALUE",
+         )
 
-#KIANNA's FIRST GRAPH
+pollutants_pdx_melt <- pollutants_pdx %>%
+  pivot_longer(cols = c(NO2_reading, CO_reading, SO2_reading, PM2.5_reading, Ozone_reading, AQI_reading),
+               names_to = "variable",
+               values_to = "reading") %>%
+  filter(!is.na(reading))
+
+pollutants_pdx_melt <- pollutants_pdx_melt %>% 
+  filter(variable == "PM2.5_reading" | 
+           variable == "NO2_reading" | 
+           variable == "Ozone_reading" | 
+           variable == "AQI_reading")
+
+pollutants_pdx_melt$Date <- mdy(pollutants_pdx_melt$Date)
+
+pollutants_pdx_melt <- pollutants_pdx_melt %>% 
+  group_by(Date, variable) %>% 
+  summarise(avrg_reading = mean(reading, na.rm = TRUE)) %>% 
+  ungroup()
+
+pollutants_pdx_melt <- pollutants_pdx_melt %>%
+  mutate(year = year(Date))
+
+pollutants_FML <- pollutants_pdx_melt %>%
+  mutate(day = day(Date)) %>%
+  filter(day == 1 | day == 15 | day == max(day)) %>%
+  select(-day)
+```
+
+```{r 2017 pollutants, echo = F, fig.width = 8}
+ggplot(pollutants_FML %>% 
+         filter(year == 2017), aes(x = Date, y = avrg_reading, color = variable)) +
+  geom_line() +
+  facet_wrap(~ variable + year, scales = "free") +
+  labs(title = "Observations for First, 15th, and Last Day of Each Month",
+       x = "Date", 
+       y = "Reading") +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1, size=5))
+```
 
 
-ggplot(avgAll,aes(x =month, y = avg_co, fill=year)) +
-  geom_col(width=.7, show.legend = FALSE)+
-  scale_fill_manual(values =c("#33302E", "#320a5e", "#781c6d", "#bc3754", "#ed6925","#fbb61a","#fcffa4"))+
- scale_x_continuous(breaks = c(1, 13, 25, 37, 49,61,73, 84), 
-                    labels = c("1"="2017","13"="2018","25"="2019","37"="2020","49"="2021","61"="2022","73"="2023","84"="2024")) +
-   theme_linedraw()+
-  labs(title = "Concentration of Carbon Monoxide(CO) in Portland, OR",
-       subtitle="From 2017 to 2024",
-       x = "Year",
-       y = "Average CO Concentration(ppbv)") +
-  guides(color = "none") +
-  theme(axis.title.y = element_text(size=10,margin=margin(r=20)), 
-        axis.title.x = element_text(size=10,margin=margin(t=15))) +
-  annotate("segment", 
-           x = 19, xend = 19, 
-           y = .75, yend = 0.3, color = "white", 
-           linewidth = .5, linetype="dashed") +
-  annotate("segment", x = 21, xend = 21, y = .75, yend = 0.4, color = "white", linewidth = .5, linetype="dashed") +
-  annotate("segment", x = 19, xend = 21, y = .75, yend = 0.75, color = "white", linewidth = .5) +
-  geom_rect(aes(xmin=10, xmax=20, ymin=.8, ymax=1 ), fill="white", alpha=0.05)+
-  annotate("text", x = 15, y = .9, 
-           label = "Regular Wildfire\n Season", 
-           size=2)+
-  geom_point(aes(x=20,y=.775), show.legend = FALSE, color="white", shape=6, size=.5)+
+## Question 2 Cont'd
+
+```{r 2020 pollutants, echo = F, fig.width = 8}
+ggplot(pollutants_FML %>% 
+         filter(year == 2020), aes(x = Date, y = avrg_reading, color = variable)) +
+  geom_line() +
+  facet_wrap(~ variable + year, scales = "free") +
+  labs(title = "Observations for First, 15th, and Last Day of Each Month",
+       x = "Date", 
+       y = "Reading") +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1, size=5))
+```
+
+## Question 2 Cont'd
+
+```{r wildfire graph, echo = F, fig.width = 8}
+# KIANA's FIRST GRAPH
+ggplot(avgAll, aes(x = month, y = avg_co, fill = year)) +
+  geom_col(width = .7, show.legend = FALSE) +
+  scale_fill_manual(values = c("#33302E", "#320a5e", "#781c6d", "#bc3754", "#ed6925", "#fbb61a", "#fcffa4")) +
+  scale_x_continuous(breaks = c(1, 13, 25, 37, 49,61,73, 84), 
+                    labels = c("1" = "2017", "13" = "2018", "25" = "2019", "37" = "2020", "49" = "2021", "61" = "2022", "73" = "2023", "84" = "2024")) +
   
-  annotate("segment", x = 67, xend = 67, y = .75, yend = 0.1, color = "white", linewidth = .5, linetype="dashed") +
-  annotate("segment", x = 69, xend = 69, y = .75, yend = 0.2, color = "white", linewidth = .5, linetype="dashed") +
+  theme_linedraw() +
+  
+  labs(title = "Concentration of Carbon Monoxide (CO) in Portland, OR",
+       subtitle = "From 2017 to 2024",
+       x = "Year",
+       y = "Average CO Concentration (ppb)") +
+  
+  guides(color = "none") +
+  theme(axis.title.y = element_text(size = 10, margin = margin(r = 20)), 
+        axis.title.x = element_text(size = 10, margin = margin(t = 15))) +
+  
+  annotate("segment", x = 19, xend = 19, y = .75, yend = 0.3, color = "white", linewidth = .5, linetype = "dashed") +
+  annotate("segment", x = 21, xend = 21, y = .75, yend = 0.4, color = "white", linewidth = .5, linetype = "dashed") +
+  annotate("segment", x = 19, xend = 21, y = .75, yend = 0.75, color = "white", linewidth = .5) +
+  geom_rect(aes(xmin = 10, xmax = 20, ymin = .8, ymax = 1 ), fill = "white", alpha = 0.05) +
+  annotate("text", x = 15, y = .9, label = "Regular Wildfire\n Season", size = 2) +
+  geom_point(aes(x = 20,y = .775), show.legend = FALSE, color = "white", shape = 6, size = .5) +
+  
+  annotate("segment", x = 67, xend = 67, y = .75, yend = 0.1, color = "white", linewidth = .5, linetype = "dashed") +
+  annotate("segment", x = 69, xend = 69, y = .75, yend = 0.2, color = "white", linewidth = .5, linetype = "dashed") +
   annotate("segment", x = 67, xend = 69, y = .75, yend = 0.75, color = "white", linewidth = .5) +
-  geom_rect(aes(xmin=68, xmax=78, ymin=.8, ymax=1 ), fill="white", alpha=0.05)+
-  annotate("text", x = 73, y = .9, label = "Regular Wildfire\n Season", size=2)+
-  geom_point(aes(x=68,y=.775), show.legend = FALSE, color="white", shape=6, size=.5)+
+  geom_rect(aes(xmin = 68, xmax = 78, ymin = .8, ymax = 1 ), fill = "white", alpha = 0.05) +
+  annotate("text", x = 73, y = .9, label = "Regular Wildfire\n Season", size = 2) +
+  geom_point(aes(x = 68,y = .775), show.legend = FALSE, color = "white", shape = 6, size=.5) +
   
   annotate("segment", x = 45.5, xend = 58, y = 1.75, yend = 2, color = "pink", linewidth = .5) +
-  geom_rect(aes(xmin=55, xmax=65, ymin=2, ymax=2.2 ), fill="pink", alpha=0.05)+
-  annotate("text", x = 60, y = 2.1, label = "Archie Creek Fire\n(September 2020)", size=2)+
-  geom_point(aes(x=45.5,y=1.75), show.legend = FALSE, color="pink", size=.5)
-  
-  
-  
-  
-
-```
+  geom_rect(aes(xmin = 55, xmax = 65, ymin = 2, ymax = 2.2), fill = "pink", alpha = 0.05) +
+  annotate("text", x = 60, y = 2.1, label = "Archie Creek Fire\n(September 2020)", size = 2) +
+  geom_point(aes(x = 45.5, y = 1.75), show.legend = FALSE, color = "pink", size = .5)
 ```
 
+## Question 2: Discussion
+
+-   2020 had huge wildfire: biggest impact on AQI, PM, and CO
+
+-   Not all seasonal trends due to fire season
+
+    -   NO2 decreases with solar radiation
+
+    -   Ozone increases with NO2 reaction in the summer
+
+-   Carbon monoxide and PM2.5 most relevant compounds
+
+-   Disaster had noticeable, regular fire season not so much?
+
+-   Changes may be more drastic as fires get worse and climate changes

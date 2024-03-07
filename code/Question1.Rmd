@@ -144,29 +144,29 @@ avgAll2021_melted <- melt(avgAll2021, id.vars = c("year", "monthbyyear"))
 
 avgAll2019_melted <- avgAll2019_melted %>%
   mutate(variable = case_when(
-    variable == "avg_pm2.5" ~ "Particulate Matter(PM2.5)",
-    variable == "avg_so2" ~ "Sulfur Dioxide(SO2)",
-    variable == "avg_no2" ~ "Nitrogen Dioxide(NO2)",
+    variable == "avg_pm2.5" ~ "Particulate Matter (PM2.5)",
+    variable == "avg_so2" ~ "Sulfur Dioxide (SO2)",
+    variable == "avg_no2" ~ "Nitrogen Dioxide (NO2)",
     variable == "avg_ozone" ~ "Ozone",
-    variable == "avg_co" ~ "Carbon Monoxide(CO)",
+    variable == "avg_co" ~ "Carbon Monoxide (CO)",
   ))
 
 avgAll2020_melted <- avgAll2020_melted %>%
   mutate(variable = case_when(
-    variable == "avg_pm2.5" ~ "Particulate Matter(PM2.5)",
-    variable == "avg_so2" ~ "Sulfur Dioxide(SO2)",
-    variable == "avg_no2" ~ "Nitrogen Dioxide(NO2)",
+    variable == "avg_pm2.5" ~ "Particulate Matter (PM2.5)",
+    variable == "avg_so2" ~ "Sulfur Dioxide (SO2)",
+    variable == "avg_no2" ~ "Nitrogen Dioxide (NO2)",
     variable == "avg_ozone" ~ "Ozone",
-    variable == "avg_co" ~ "Carbon Monoxide(CO)",
+    variable == "avg_co" ~ "Carbon Monoxide (CO)",
   ))
 
 avgAll2021_melted <- avgAll2021_melted %>%
   mutate(variable = case_when(
-    variable == "avg_pm2.5" ~ "Particulate Matter(PM2.5)",
-    variable == "avg_so2" ~ "Sulfur Dioxide(SO2)",
-    variable == "avg_no2" ~ "Nitrogen Dioxide(NO2)",
+    variable == "avg_pm2.5" ~ "Particulate Matter (PM2.5)",
+    variable == "avg_so2" ~ "Sulfur Dioxide (SO2)",
+    variable == "avg_no2" ~ "Nitrogen Dioxide (NO2)",
     variable == "avg_ozone" ~ "Ozone",
-    variable == "avg_co" ~ "Carbon Monoxide(CO)",
+    variable == "avg_co" ~ "Carbon Monoxide (CO)",
   ))
 ```
 

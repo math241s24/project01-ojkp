@@ -60,7 +60,7 @@
     "href": "presentation.html#introducing-the-data",
     "title": "Examining Air Pollution and Environmental Factors",
     "section": "Introducing the Data",
-    "text": "Introducing the Data\nFrom the EPA (Environmental Protection Agency): conc. levels of major pollutants (CO, NO2, O3, PM 2.5, and SO2)\n\nFocusing on the Portland-Hillsboro-Vancouver area from 2017-2023.\nSubsets into two forms for each pollutant type:\n\n84 x 2 monthly average air pollutant\n28606 x 4 daily air pollutant data.\n\n10 datasets (5 of each type). Below is a glimpse into one of our datasets; this records the average concentration of each pollutant monthly for the years 2017-2023.\n\n\n\nRows: 84\nColumns: 9\n$ month       &lt;dbl&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,…\n$ year        &lt;dbl&gt; 2017, 2017, 2017, 2017, 2017, 2017, 2017, 2017, 2017, 2017…\n$ monthbyyear &lt;dbl&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7…\n$ month_year  &lt;chr&gt; \"2017-01\", \"2017-02\", \"2017-03\", \"2017-04\", \"2017-05\", \"20…\n$ avg_pm2.5   &lt;dbl&gt; 9.776526, 5.328638, 3.842800, 3.857500, 3.912355, 3.677011…\n$ avg_so2     &lt;dbl&gt; 0.8208333, 0.5615385, 0.5750000, 0.5400000, 0.6100000, 0.4…\n$ avg_ozone   &lt;dbl&gt; 0.02901818, 0.03053333, 0.03338462, 0.03662712, 0.03674011…\n$ avg_no2     &lt;dbl&gt; 21.90484, 23.49273, 21.63103, 21.97778, 18.15574, 14.34667…\n$ avg_co      &lt;dbl&gt; 0.4800000, 0.3854545, 0.3516129, 0.3416667, NA, 0.2500000,…"
+    "text": "Introducing the Data\nFrom the EPA (Environmental Protection Agency): conc. levels of major pollutants (CO, NO2, O3, PM 2.5, and SO2)\n\nFocusing on the Portland-Hillsboro-Vancouver area from 2017-2023.\nSubsets into two forms for each pollutant type:\n\n84 x 2 monthly average air pollutant\n28606 x 4 daily air pollutant data.\n\n10 datasets (5 of each type). Below is a glimpse into one of our datasets; this records the average concentration of each pollutant monthly for the years 2017-2023.\n\n\n\nRows: 84\nColumns: 9\n$ month       &lt;dbl&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,…\n$ year        &lt;chr&gt; \"2017\", \"2017\", \"2017\", \"2017\", \"2017\", \"2017\", \"2017\", \"2…\n$ monthbyyear &lt;dbl&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7…\n$ month_year  &lt;chr&gt; \"2017-01\", \"2017-02\", \"2017-03\", \"2017-04\", \"2017-05\", \"20…\n$ avg_pm2.5   &lt;dbl&gt; 9.776526, 5.328638, 3.842800, 3.857500, 3.912355, 3.677011…\n$ avg_so2     &lt;dbl&gt; 0.8208333, 0.5615385, 0.5750000, 0.5400000, 0.6100000, 0.4…\n$ avg_ozone   &lt;dbl&gt; 0.02901818, 0.03053333, 0.03338462, 0.03662712, 0.03674011…\n$ avg_no2     &lt;dbl&gt; 21.90484, 23.49273, 21.63103, 21.97778, 18.15574, 14.34667…\n$ avg_co      &lt;dbl&gt; 0.4800000, 0.3854545, 0.3516129, 0.3416667, NA, 0.2500000,…"
   },
   {
     "objectID": "presentation.html#question-1",
@@ -80,21 +80,63 @@
     "objectID": "presentation.html#question-1-contd-1",
     "href": "presentation.html#question-1-contd-1",
     "title": "Examining Air Pollution and Environmental Factors",
-    "section": "Question 1 Contd",
-    "text": "Question 1 Contd"
+    "section": "Question 1 Cont’d",
+    "text": "Question 1 Cont’d"
   },
   {
     "objectID": "presentation.html#question-1-discussion",
     "href": "presentation.html#question-1-discussion",
     "title": "Examining Air Pollution and Environmental Factors",
     "section": "Question 1: Discussion",
-    "text": "Question 1: Discussion\n\nGeneral trend: PM2.5 increases in winter, decreases in summer\nWarm air rises, along with the particles\n\nException: 2020 late summer (stay tuned for explanation!)\n\nOverall, somewhat decrease during COVID years, would need additional analysis to confirm trends"
+    "text": "Question 1: Discussion\n\nGeneral trend: PM2.5 increases in winter, decreases in summer for all years\nWarm air rises, along with the particles\n\nException: 2020 late summer (stay tuned for explanation!)\n\nSO2 went down in 2020 compared to 2019 (main source: electric utilities, businesses closing?)\n\nOther pollutants don’t have as much of noticeable difference\n\nOverall, somewhat decrease during COVID years, would need additional analysis to confirm trends"
   },
   {
     "objectID": "presentation.html#question-2",
     "href": "presentation.html#question-2",
     "title": "Examining Air Pollution and Environmental Factors",
     "section": "Question 2",
-    "text": "Question 2\nIs there a relationship between wildfire season and air pollutant concentrations?\n\nInterested in potential environmental impacts (GHG levels) and adverse health effects\nLooked at a timespan of 7 years to get a sense of AQI before/during/after lockdown\n\nHighlighted May-September as potential hazard months\nPlotted daily values to see seasonal variations\n\nPaid special attention to PM2.5, NO2, and O3 (ozone)"
+    "text": "Question 2\nIs there a relationship between wildfire season and air pollutant concentrations?\n\nInterested in potential environmental impacts (GHG levels) and adverse health effects\nLooked at a timespan of 7 years to get a sense of AQI before/during/after lockdown\n\nHighlighted May-September as potential hazard months\nPlotted daily values to see seasonal variations\n\nPaid special attention to PM2.5, CO, and O3 (ozone)"
+  },
+  {
+    "objectID": "presentation.html#question-2-contd",
+    "href": "presentation.html#question-2-contd",
+    "title": "Examining Air Pollution and Environmental Factors",
+    "section": "Question 2 Cont’d",
+    "text": "Question 2 Cont’d"
+  },
+  {
+    "objectID": "presentation.html#question-2-contd-1",
+    "href": "presentation.html#question-2-contd-1",
+    "title": "Examining Air Pollution and Environmental Factors",
+    "section": "Question 2 Cont’d",
+    "text": "Question 2 Cont’d"
+  },
+  {
+    "objectID": "presentation.html#question-2-contd-2",
+    "href": "presentation.html#question-2-contd-2",
+    "title": "Examining Air Pollution and Environmental Factors",
+    "section": "Question 2 Cont’d",
+    "text": "Question 2 Cont’d"
+  },
+  {
+    "objectID": "presentation.html#question-2-discussion",
+    "href": "presentation.html#question-2-discussion",
+    "title": "Examining Air Pollution and Environmental Factors",
+    "section": "Question 2: Discussion",
+    "text": "Question 2: Discussion\n\n2020 had huge wildfire: biggest impact on AQI, PM, and CO\nNot all seasonal trends due to fire season\n\nNO2 decreases with solar radiation\nOzone increases with NO2 reaction in the summer\n\nCarbon monoxide and PM2.5 most relevant compounds\nDisaster had noticeable, regular fire season not so much?\nChanges may be more drastic as fires get worse and climate changes"
+  },
+  {
+    "objectID": "presentation.html#question-1-contd-2",
+    "href": "presentation.html#question-1-contd-2",
+    "title": "Examining Air Pollution and Environmental Factors",
+    "section": "Question 1 Cont’d",
+    "text": "Question 1 Cont’d"
+  },
+  {
+    "objectID": "presentation.html#question-1-contd-3",
+    "href": "presentation.html#question-1-contd-3",
+    "title": "Examining Air Pollution and Environmental Factors",
+    "section": "Question 1 Cont’d",
+    "text": "Question 1 Cont’d"
   }
 ]
