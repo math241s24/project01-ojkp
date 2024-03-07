@@ -12,6 +12,8 @@ library(lubridate)
 library(dplyr)
 library(readr)
 library(reshape2)
+library(cowplot)
+
 ```
 
 
@@ -148,77 +150,164 @@ ggplot(pollutants_FML, aes(x = Date, y = avrg_reading, color = variable)) +
 #Its a little yucky but shows a seasonal pattern of fluctuation in pollutant levels thats pretty clear (esp for NO2 and Ozone). It also supports the wow 2020 was weird findings from other graphs
 #this chunk also has this same thing but specific years (2019, 2020, and 2021) to kind of look a little more into 2020 by comparing with these other times
 
-plots <- lapply(unique(pollutants_pdx_melt$variable), function(var) {
-  ggplot(data = pollutants_pdx_melt[pollutants_pdx_melt$variable == var, ], aes(x = Date, y = avrg_reading)) +
-    geom_line() +
-    labs(title = paste("Reading for", var),
-         x = "Date", y = "Reading")
-})
-
+aqi_plot <- ggplot(data=pollutants_pdx_melt %>% 
+                     filter(variable == "AQI"), aes(x=Date, y=avrg_reading)) +
+  geom_line() +
+  labs(title = paste("Air Quality Index"),
+         x = "Date", y = "AQI")
+NO2_plot <- ggplot(data=pollutants_pdx_melt %>% 
+                     filter(variable == "NO2"), aes(x=Date, y=avrg_reading)) +
+  geom_line() +
+  labs(title = paste("NO2"),
+         x = "Date", y = "ppb")
+ozone_plot <- ggplot(data=pollutants_pdx_melt %>% 
+                     filter(variable == "Ozone"), aes(x=Date, y=avrg_reading)) +
+  geom_line() +
+  labs(title = paste("Ozone"),
+         x = "Date", y = "ppm")
+pm2.5_plot <- ggplot(data=pollutants_pdx_melt %>% 
+                     filter(variable == "PM2.5"), aes(x=Date, y=avrg_reading)) +
+  geom_line() +
+  labs(title = paste("PM2.5"),
+         x = "Date", y = "ug/m3")
 fire_plot <- ggplot(data = fires_full, aes(x = ReportDate, y = tot_ProAcres)) +
   geom_line(color = "red") +
   labs(title = "Total Protected Acres Burnt",
-       x = "Date", y = "Total Protected Acres")
-
-library("gridExtra")
-grid.arrange(arrangeGrob(grobs = plots, ncol = 1), fire_plot, heights = c(4, 1))
+       x = "Date", y = "Acres Burnt")
+arranged_plots <- plot_grid(fire_plot,
+                             aqi_plot, 
+                             pm2.5_plot,
+                             NO2_plot, 
+                             ozone_plot, 
+                             ncol = 1, 
+                             align = "v", 
+                             rel_heights = c(1, rep(1, 4)),
+                             hjust = -1,
+                             vjust = 1)
+arranged_plots
 
 
 #this is that same nonsense but just for 2020:
-pollutants_2020 <- pollutants_pdx_melt %>%
-  filter(year(Date) == 2020)
-
-plots <- lapply(unique(pollutants_2020$variable), function(var) {
-  ggplot(data = pollutants_2020[pollutants_2020$variable == var, ], aes(x = Date, y = avrg_reading)) +
-    geom_line() +
-    labs(title = paste("Reading for", var, "in 2020"),
-         x = "Date", y = "Reading")
-})
-
-fire_plot <- ggplot(data = fires_full[fires_full$year == 2020, ], aes(x = ReportDate, y = tot_ProAcres)) +
+pollutants20 <- pollutants_pdx_melt %>% 
+  filter(year == "2020")
+aqi_plot20 <- ggplot(data=pollutants20 %>% 
+                     filter(variable == "AQI"), aes(x=Date, y=avrg_reading)) +
+  geom_line() +
+  labs(title = paste("Air Quality Index"),
+         x = "Date", y = "AQI")
+NO2_plot20 <- ggplot(data=pollutants20 %>% 
+                     filter(variable == "NO2"), aes(x=Date, y=avrg_reading)) +
+  geom_line() +
+  labs(title = paste("NO2"),
+         x = "Date", y = "ppb")
+ozone_plot20 <- ggplot(data=pollutants20 %>% 
+                     filter(variable == "Ozone"), aes(x=Date, y=avrg_reading)) +
+  geom_line() +
+  labs(title = paste("Ozone"),
+         x = "Date", y = "ppm")
+pm2.5_plot20 <- ggplot(data=pollutants20 %>% 
+                     filter(variable == "PM2.5"), aes(x=Date, y=avrg_reading)) +
+  geom_line() +
+  labs(title = paste("PM2.5"),
+         x = "Date", y = "ug/m3")
+fire_plot20 <- ggplot(data = fires_full %>% 
+                        filter(year == "2020"), aes(x = ReportDate, y = tot_ProAcres)) +
   geom_line(color = "red") +
-  labs(title = "Total Protected Acres Burnt in 2020",
-       x = "Date", y = "Total Protected Acres")
-
-grid.arrange(arrangeGrob(grobs = plots, ncol = 1), fire_plot, heights = c(4, 1))
-
+  labs(title = "Total Protected Acres Burnt",
+       x = "Date", y = "Acres Burnt")
+arranged_plots20 <- plot_grid(fire_plot20,
+                             aqi_plot20, 
+                             pm2.5_plot20,
+                             NO2_plot20, 
+                             ozone_plot20, 
+                             ncol = 1, 
+                             align = "v", 
+                             rel_heights = c(1, rep(1, 4)),
+                             hjust = -1,
+                             vjust = 1)
+arranged_plots20
 
 #aaaaannd for 2021
-pollutants_2021 <- pollutants_pdx_melt %>%
-  filter(year(Date) == 2021)
-
-plots <- lapply(unique(pollutants_2021$variable), function(var) {
-  ggplot(data = pollutants_2021[pollutants_2021$variable == var, ], aes(x = Date, y = avrg_reading)) +
-    geom_line() +
-    labs(title = paste("Reading for", var, "in 2021"),
-         x = "Date", y = "Reading")
-})
-
-fire_plot <- ggplot(data = fires_full[fires_full$year == 2021, ], aes(x = ReportDate, y = tot_ProAcres)) +
+pollutants21 <- pollutants_pdx_melt %>% 
+  filter(year == "2021")
+aqi_plot21 <- ggplot(data=pollutants21 %>% 
+                     filter(variable == "AQI"), aes(x=Date, y=avrg_reading)) +
+  geom_line() +
+  labs(title = paste("Air Quality Index"),
+         x = "Date", y = "AQI")
+NO2_plot21 <- ggplot(data=pollutants21 %>% 
+                     filter(variable == "NO2"), aes(x=Date, y=avrg_reading)) +
+  geom_line() +
+  labs(title = paste("NO2"),
+         x = "Date", y = "ppb")
+ozone_plot21 <- ggplot(data=pollutants21 %>% 
+                     filter(variable == "Ozone"), aes(x=Date, y=avrg_reading)) +
+  geom_line() +
+  labs(title = paste("Ozone"),
+         x = "Date", y = "ppm")
+pm2.5_plot21 <- ggplot(data=pollutants21 %>% 
+                     filter(variable == "PM2.5"), aes(x=Date, y=avrg_reading)) +
+  geom_line() +
+  labs(title = paste("PM2.5"),
+         x = "Date", y = "ug/m3")
+fire_plot21 <- ggplot(data = fires_full %>% 
+                      filter(year == "2021"), aes(x = ReportDate, y = tot_ProAcres)) +
   geom_line(color = "red") +
-  labs(title = "Total Protected Acres Burnt in 2021",
-       x = "Date", y = "Total Protected Acres")
-
-grid.arrange(arrangeGrob(grobs = plots, ncol = 1), fire_plot, heights = c(4, 1))
+  labs(title = "Total Protected Acres Burnt",
+       x = "Date", y = "Acres Burnt")
+arranged_plots21 <- plot_grid(fire_plot21,
+                             aqi_plot21, 
+                             pm2.5_plot21,
+                             NO2_plot21, 
+                             ozone_plot21, 
+                             ncol = 1, 
+                             align = "v", 
+                             rel_heights = c(1, rep(1, 4)),
+                             hjust = -1,
+                             vjust = 1)
+arranged_plots21
 
 #aaaand 2019
-pollutants_2019 <- pollutants_pdx_melt %>%
-  filter(year(Date) == 2019)
-
-plots <- lapply(unique(pollutants_2019$variable), function(var) {
-  ggplot(data = pollutants_2019[pollutants_2019$variable == var, ], aes(x = Date, y = avrg_reading)) +
-    geom_line() +
-    labs(title = paste("Reading for", var, "in 2019"),
-         x = "Date", y = "Reading")
-})
-
-fire_plot <- ggplot(data = fires_full[fires_full$year == 2019, ], aes(x = ReportDate, y = tot_ProAcres)) +
+pollutants19 <- pollutants_pdx_melt %>% 
+  filter(year == "2019")
+aqi_plot19 <- ggplot(data=pollutants19 %>% 
+                     filter(variable == "AQI"), aes(x=Date, y=avrg_reading)) +
+  geom_line() +
+  labs(title = paste("Air Quality Index"),
+         x = "Date", y = "AQI")
+NO2_plot19 <- ggplot(data=pollutants19 %>% 
+                     filter(variable == "NO2"), aes(x=Date, y=avrg_reading)) +
+  geom_line() +
+  labs(title = paste("NO2"),
+         x = "Date", y = "ppb")
+ozone_plot19 <- ggplot(data=pollutants19 %>% 
+                     filter(variable == "Ozone"), aes(x=Date, y=avrg_reading)) +
+  geom_line() +
+  labs(title = paste("Ozone"),
+         x = "Date", y = "ppm")
+pm2.5_plot19 <- ggplot(data=pollutants19 %>% 
+                     filter(variable == "PM2.5"), aes(x=Date, y=avrg_reading)) +
+  geom_line() +
+  labs(title = paste("PM2.5"),
+         x = "Date", y = "ug/m3")
+fire_plot19 <- ggplot(data = fires_full %>% 
+                      filter(year == "2019"), aes(x = ReportDate, y = tot_ProAcres)) +
   geom_line(color = "red") +
-  labs(title = "Total Protected Acres Burnt in 2019",
-       x = "Date", y = "Total Protected Acres")
-
-grid.arrange(arrangeGrob(grobs = plots, ncol = 1), fire_plot, heights = c(4, 1))
+  labs(title = "Total Protected Acres Burnt",
+       x = "Date", y = "Acres Burnt")
+arranged_plots19 <- plot_grid(fire_plot19,
+                             aqi_plot19, 
+                             pm2.5_plot19,
+                             NO2_plot19, 
+                             ozone_plot19, 
+                             ncol = 1, 
+                             align = "v", 
+                             rel_heights = c(1, rep(1, 4)),
+                             hjust = -1,
+                             vjust = 1)
+arranged_plots19
 ```
+
 
 ```{r}
 #summary statistics
