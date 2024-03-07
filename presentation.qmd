@@ -78,29 +78,51 @@ glimpse(avgAll)
 ggplot(avgAll,aes(x = month, y = avg_pm2.5, fill = year)) +
   geom_col(width = .7, show.legend = FALSE) +
   scale_fill_viridis_d() +
- scale_x_continuous(breaks = c(1, 13, 25, 37, 49, 61, 73, 84), 
+  scale_x_continuous(breaks = c(1, 13, 25, 37, 49, 61, 73, 84), 
                     labels = c("1" = "2017", "13" = "2018", "25" = "2019", "37" = "2020", "49" = "2021", "61" = "2022", "73" = "2023", "84" = "2024")) +
-   
-  theme_linedraw() +
-  
-  labs(title = "Concentration of Airborne Fine Particles (PM2.5) in Portland, OR",
-       subtitle = "From 2017 to 2024",
-       x = "Year",
-       y = "Average PM2.5 Concentration (µg/m³)") +
-  
-  guides(color = "none") +
-  theme(axis.title.y = element_text(size = 10, margin = margin(r = 20)), 
-        axis.title.x = element_text(size = 10, margin = margin(t = 15))) +
-  
-  geom_point(aes(x = 39, y = 40), show.legend = FALSE, color = "#21918c", shape = 6) +
-    annotate("segment", x = 39, xend = 39, y = 39, yend = 5.8, color = "#21918c", linewidth = .5, linetype = "dashed") +
-    geom_rect(aes(xmin = 27, xmax = 37, ymin = 38, ymax = 44 ), fill = "#21918c", alpha = 0.008) +
-    annotate("text", x = 32, y = 41, label = "Quarantine Begins\n (March 2020)", size = 2) +
-  
-  geom_point(aes(x = 54, y = 40), show.legend = FALSE, color = "#5ec962", shape = 6) +
-    annotate("segment", x = 54, xend = 54, y = 39, yend = 4.3, color = "#5ec962", linewidth = .5, linetype = "dashed") +
-    geom_rect(aes(xmin = 56, xmax = 66, ymin = 38, ymax = 44 ), fill = "#5ec962", alpha = 0.008) +
-    annotate("text", x = 61, y = 41, label = "Quarantine Ends\n (June 2021)", size = 2)
+   theme_linedraw() +
+   labs(title = "Concentration of Airborne Fine Particles (PM2.5) in Portland, OR",
+        subtitle = "From 2017 to 2024",
+        x = "Year",
+        y = "Average PM2.5 Concentration (µg/m³)") +
+   guides(color = "none") +
+   theme(axis.title.y = element_text(size = 10, 
+                                     margin = margin(r = 20)), 
+        axis.title.x = element_text(size = 10, 
+                                    margin = margin(t = 15))) +
+   geom_point(aes(x = 39, y = 40), 
+              show.legend = FALSE, 
+              color = "#21918c", 
+              shape = 6) +
+   annotate("segment", 
+            x = 39, xend = 39, 
+            y = 39, yend = 5.8, 
+            color = "#21918c", 
+            linewidth = .5, 
+            linetype = "dashed") +
+   geom_rect(aes(xmin = 27, xmax = 37, 
+                 ymin = 38, ymax = 44 ), 
+             fill = "#21918c", 
+             alpha = 0.008) +
+   annotate("text", x = 32, y = 41, 
+            label = "Quarantine Begins\n (March 2020)", 
+            size = 2) +
+   geom_point(aes(x = 54, y = 40), 
+              show.legend = FALSE, 
+              color = "#5ec962", 
+              shape = 6) +
+   annotate("segment", x = 54, xend = 54, 
+            y = 39, yend = 4.3, 
+            color = "#5ec962", 
+            linewidth = .5, 
+            linetype = "dashed") +
+   geom_rect(aes(xmin = 56, xmax = 66, 
+                 ymin = 38, ymax = 44 ), 
+             fill = "#5ec962", 
+             alpha = 0.008) +
+   annotate("text", x = 61, y = 41, 
+            label = "Quarantine Ends\n (June 2021)", 
+            size = 2)
 ```
 
 ```{r trends data wrangling, include = FALSE}
@@ -156,9 +178,7 @@ ggplot(avgAll2019_melted , aes(x = monthbyyear, y = value, fill = variable)) +
   scale_x_continuous(breaks = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12), 
                      labels = c("1" = "Jan", "2" = "Feb", "3" = "Mar", "4" = "Apr", "5" = "May", "6" = "Jun", "7" = "Jul", "8" = "Aug", "9" = "Sep", "10" = "Oct", "11" = "Nov", "12" = "Dec")) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1, size=5)) +
-  
   scale_fill_viridis_d() +
-  
   theme_linedraw() +
   theme(panel.grid = element_blank()) +
   labs(x = "", 
@@ -166,9 +186,7 @@ ggplot(avgAll2019_melted , aes(x = monthbyyear, y = value, fill = variable)) +
        fill = "Pollutant",
        subtitle = "For the Year 2019",
        y = "Concentration by Pollutant") +
-  
-  # REMOVES X-LABELS
-  theme(axis.text.x = element_blank(),
+  theme(axis.text.x = element_blank(), # REMOVES X-LABELS
         
         # CHANGE MY LEGEND BORDER COLOR AND LINE THICKNESS
         legend.box.background = element_rect(color = "black", size = 1),
@@ -367,6 +385,6 @@ ggplot(avgAll, aes(x = month, y = avg_co, fill = year)) +
 
 -   Carbon monoxide and PM2.5 most relevant compounds
 
--   Disaster had noticeable, regular fire season not so much?
+-   Disaster had noticeable impact, regular fire season not so much
 
 -   Changes may be more drastic as fires get worse and climate changes
