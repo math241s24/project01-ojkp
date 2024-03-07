@@ -3,10 +3,10 @@ title: "Question 1"
 author: "Julian Jacklin"
 date: "`r Sys.Date()`"
 output: pdf_document
+
 ---
 
 ```{r include=FALSE}
-
 library(tidyverse)
 library(lubridate)
 library(dplyr)
@@ -18,7 +18,7 @@ library(viridis)
 
 ```{r eval=FALSE, include=FALSE}
 
-#The wonderful code below combines all of the avg_XPOLLUTANT datasets from data_cleanup, into one dataframe, adding a character-type `year` variable, a numeric `month` variable, and a numeric `month by year` variable(Jan-Dec, coded as 1-12). DO NOT RUN THIS CODE if avgAll and avgAll2020 are present in the air data folder. 
+# The wonderful code below combines all of the avg_XPOLLUTANT datasets from data_cleanup, into one dataframe, adding a character-type `year` variable, a numeric `month` variable, and a numeric `month by year` variable (Jan-Dec, coded as 1-12). DO NOT RUN THIS CODE if avgAll and avgAll2020 are present in the air data folder. 
 
 avgAll <- left_join(avgpm25, avg_so2, by="month_year")%>%
   left_join(., avg_ozone, by="month_year") %>%
@@ -27,28 +27,24 @@ avgAll <- left_join(avgpm25, avg_so2, by="month_year")%>%
 
 avgAll <- avgAll%>%
   mutate(month=seq_along(month_year), .before=month_year, year = substr(month_year, 0, 4), monthbyyear= rep(1:12, 7))
-
-
 ```
 
 ```{r include=FALSE}
-#Just run this code :^) with your own file path
+# This code uses relative paths to find your dataset. Please run R studio through the R project in the folder.
 
-avgAll <- read_csv("air_data/avgAll.csv")
-avgAll2020 <- read_csv("air_data/avgAll2020.csv")
+avgAll <- read_csv("../data/air_pollutants/avgAll.csv")
+avgAll2020 <- read_csv("../data/air_pollutants/avgAll2020.csv")
 
 avgAll$year <- as.character(avgAll$year)
 avgAll2020$year <- as.character(avgAll2020$year)
-
-
 ```
 
 
 ```{r eval=FALSE, include=FALSE}
 
-#INTRO: COVID-19 and it's effects have impacted us all. As with any pandemic, the primary concerns worldwide were largely related to public health and economic welfare. Like many other nations, the U.S met the the concerns of the former, by enacting state-by-state quarantines("stay-at-home" orders). Subsequently, major metropolitan centers in the nation characterized by greater motor-vehicle traffic, experienced a dramatic dip in commuter density as quarantine mandates went into effect and drastically fewer commuters had to drive to work each day. One impact of COVID-19 that has yet to be discussed as severely as the others, is its impact on our climate; particularly, on air quality. A popular assumption, is that air quality improved during this time, as less commuters were "on the road", and so less vehicles were used and emitting pollutants. We are interested in exploring this assumption by analyzing the concentration levels of major pollutants produced by motor-vehicles(namely, the variables PM2.5, SO2, NO2, CO, and Ozone), before, during, and after quarantine, using our chosen dataset.
+#INTRO: COVID-19 and it's effects have impacted us all. As with any pandemic, the primary concerns worldwide were largely related to public health and economic welfare. Like many other nations, the U.S met the the concerns of the former, by enacting state-by-state quarantines ("stay-at-home" orders). Subsequently, major metropolitan centers in the nation characterized by greater motor-vehicle traffic, experienced a dramatic dip in commuter density as quarantine mandates went into effect and drastically fewer commuters had to drive to work each day. One impact of COVID-19 that has yet to be discussed as severely as the others, is its impact on our climate; particularly, on air quality. A popular assumption, is that air quality improved during this time, as less commuters were "on the road", and so less vehicles were used and emitting pollutants. We are interested in exploring this assumption by analyzing the concentration levels of major pollutants produced by motor-vehicles (namely, the variables PM2.5, SO2, NO2, CO, and Ozone), before, during, and after quarantine, using our chosen dataset.
 
-#Approach: Our underlying assumption, is that because fewer pollutants were emitted into the atmosphere in Portland, from March 2020 - June 2021(span of Oregon state quarantine mandate). Our dataset offers average pollutant concentrations by month, over sever years(2017 Jan - 2023 Dec). In our first graph we have chosen to focus on PM2.5 concentrations over this 7-year window, since this is the most hazardous and prominent pollutant that motor-vehicles emit—additionally, we'd like to observe its trends in recent history, through the quarantine, and afterward, to identify any contrasts. We are visualizing this data by a column graph, such that each column is a month, sectioned by color and year, with markers indicating the beginning and end of Oregon's quarantine. Our second graph(a collection of three plots) explores concentration trends by the other pollutants, over each year in the immediate window around quarantine(2019,2020,2021). This is done via a trend line, overlayed by columns to distinguish monthly concentrations readings. Both of these plots help us better visualize trends in major pollutant concentrations over time, which services our primary goal of comparing pollutant trends before, during, and after quarantine. 
+#Approach: Our underlying assumption, is that because fewer pollutants were emitted into the atmosphere in Portland, from March 2020 - June 2021 (span of Oregon state quarantine mandate). Our dataset offers average pollutant concentrations by month, over sever years (Jan 2017 - Dec 2023). In our first graph we have chosen to focus on PM2.5 concentrations over this 7-year window, since this is the most hazardous and prominent pollutant that motor-vehicles emit—additionally, we'd like to observe its trends in recent history, through the quarantine, and afterward, to identify any contrasts. We are visualizing this data by a column graph, such that each column is a month, sectioned by color and year, with markers indicating the beginning and end of Oregon's quarantine. Our second graph(a collection of three plots) explores concentration trends by the other pollutants, over each year in the immediate window around quarantine (2019, 2020, 2021). This is done via a trend line, overlayed by columns to distinguish monthly concentrations readings. Both of these plots help us better visualize trends in major pollutant concentrations over time, which services our primary goal of comparing pollutant trends before, during, and after quarantine. 
 
 ```
 

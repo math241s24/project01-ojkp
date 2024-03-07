@@ -16,15 +16,13 @@ library(reshape2)
 
 
 ```{r include=FALSE}
-#Julian's Code
-#Just run this code :^) with your own file path
+# This code uses relative paths to find your dataset. Please run R studio through the R project in the folder.
 
-avgAll <- read_csv("~/Rstudio/DataScience/proj1.math241/project01-ojkp/air data/avgAll.csv")
-avgAll2020 <- read_csv("~/Rstudio/DataScience/proj1.math241/project01-ojkp/air data/avgAll2020.csv")
+avgAll <- read_csv("../data/air_pollutants/avgAll.csv")
+avgAll2020 <- read_csv("../data/air_pollutants/avgAll2020.csv")
 
 avgAll$year <- as.character(avgAll$year)
 avgAll2020$year <- as.character(avgAll2020$year)
-
 ```
 
 
