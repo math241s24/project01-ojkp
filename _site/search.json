@@ -39,7 +39,7 @@
     "href": "about.html",
     "title": "About",
     "section": "",
-    "text": "This project is developed by Adrien as a template for the first mini-project of Math/Stat 241 at Reed College."
+    "text": "This project is developed by Kiana Fields, Julian Jacklin, Prasiddhi Thapaliya, and Omar Youssif as a template for the first mini-project of Math/Stat 241 at Reed College. In this project, we’re examining air pollution and environmental factors through analyzing Portland Metropolitian Area’s air quality and pollution.\nIn this project, we guided it through two questions. First, how did the COVID pandemic lockdown impact air quality in the Portland Metropolitan area? The other question was whether there was a relationship between wildfire season and air pollutant concentrations?\nWe used R for our analysis and attained our data from the Environmental Protection Agency (EPA). We also used Quarto for our website and presentation, and GitHub to store our files in a repository."
   },
   {
     "objectID": "Question1.html",

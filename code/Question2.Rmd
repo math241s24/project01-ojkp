@@ -38,7 +38,7 @@ pollutants_pdx <- read_csv("../data/air_pollutants/pollutants_pdx.csv",
 ```
 
 
-```{r}
+```{r pollutant wrangling}
 # pollutant data stuff/wrangling
 pollutants_pdx <- pollutants_pdx %>%
   rename(NO2 = "Daily Max 1-hour NO2 Concentration",
@@ -74,7 +74,7 @@ pollutants_pdx_melt <- pollutants_pdx_melt %>%
 
 ```
 
-```{r}
+```{r wildfire response}
 #Is there a correlation between wildfire season and air quality fluctuations in the Portland Metropolitan area?
 
 #INTRO: 
@@ -91,7 +91,7 @@ pollutants_pdx_melt <- pollutants_pdx_melt %>%
 
 
 
-```{r}
+```{r fire graphs}
 #graphing fires
 #considering changing severity of fire seasons over years
 ggplot(data = fires_full, aes(x=ReportDate, y = tot_ProAcres)) +
@@ -108,7 +108,7 @@ ggplot(data = fires_full, aes(x=ReportDate, y = tot_ProAcres)) +
 ```
 
 
-```{r}
+```{r fml graph}
 # In the proposal we said we'd plot observations for the first, 15th, and last day of each month across one year, and observe whether there is a stark increase in pollutant concentrations during the wildfire season (July-September) and have multiple lines to see which pollutants in particular increase. 
 #instead of separate lines, separate graphs for unit/interpretating reasons
 #but yeah this is that from the proposal
@@ -143,7 +143,7 @@ ggplot(pollutants_FML, aes(x = Date, y = avrg_reading, color = variable)) +
 
 
 
-```{r}
+```{r pollutant years}
 #this could be graph 2
 #uhhhh this is a visualization with all the pollutants over all the years compared to wildfires
 #Its a little yucky but shows a seasonal pattern of fluctuation in pollutant levels thats pretty clear (esp for NO2 and Ozone). It also supports the wow 2020 was weird findings from other graphs
@@ -308,7 +308,7 @@ arranged_plots19
 ```
 
 
-```{r}
+```{r summary}
 #summary statistics
 #correlation across all years
 
