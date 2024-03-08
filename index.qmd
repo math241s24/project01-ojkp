@@ -7,7 +7,7 @@ editor: visual
 
 # Write-up
 
-## Introduction:
+## Introduction
 
 We are using data from the United States Environmental Protection Agency (EPA). Their tool provides daily records of air pollutant concentrations of various atmospheric pollutants. This can be filtered by geographic area such as state, city, county, or specific monitoring site. The typical units for each pollutant, depending on its abundance in the air, is either in ppm (parts per million), ppb (parts per billion), or µg/m^3^ (micrograms per cubic meter).
 
@@ -15,36 +15,318 @@ For our research, we narrowed our focus on the Portland-Hillsboro-Vancouver area
 
 ### Question 1: Effects of COVID on Air Quality
 
-#### Introduction (1-2 paragraphs):
+#### Introduction
 
 COVID-19 and it's effects have impacted us all. As with any pandemic, the primary concerns worldwide were largely related to public health and economic welfare. Like many other nations, the U.S met the the concerns of the former, by enacting state-by-state quarantines ("stay-at-home" orders). Subsequently, major metropolitan centers in the nation characterized by greater motor-vehicle traffic, experienced a dramatic dip in commuter density as quarantine mandates went into effect and drastically fewer commuters had to drive to work each day. One impact of COVID-19 that has yet to be discussed as severely as the others, is its impact on our climate; particularly, on air quality. A popular assumption, is that air quality improved during this time, as less commuters were "on the road", and so less vehicles were used and emitting pollutants. We are interested in exploring this assumption by analyzing the concentration levels of major pollutants produced by motor-vehicles (namely, the variables PM2.5, SO2, NO2, CO, and Ozone), before, during, and after quarantine, using our chosen dataset.
 
-#### Approach (1-2 paragraphs):
+#### Approach
 
 Our underlying hypothesis is that fewer pollutants were emitted into the atmosphere in Portland from March 2020 - June 2021 (span of Oregon state quarantine mandate). Our dataset offers average pollutant concentrations by month, over several years (Jan 2017 - Dec 2023). In our first graph we have chosen to focus on PM2.5 concentrations over this 7-year window, since this is the most hazardous and prominent pollutant that motor-vehicles emit. Additionally, we'd like to observe its trends in recent history, through the quarantine, and afterward, to identify any contrasts. We are visualizing this data by a column graph such that each column is a month, sectioned by color and year, with markers indicating the beginning and end of Oregon's quarantine. Our second graph (a collection of three plots) explores concentration trends by the other pollutants, over each year in the immediate window around quarantine (2019, 2020, 2021). This is done via a trend line, overlayed by columns to distinguish monthly concentrations readings. Both of these plots help us better visualize trends in major pollutant concentrations over time.
 
-#### Analysis (2-3 code blocks, 2 figures, text/code comments as needed):
+#### Analysis
 
 In this section, provide the code that generates your plots. Use scale functions to provide nice axis labels and guides. You are welcome to use theme functions to customize the appearance of your plot, but you are not required to do so. All plots must be made with ggplot2. Do not use base R or lattice plotting functions.
 
-```{r graph 1 echo=FALSE, fig.width=8}
-#FIRST GRAPH
-
-
-
-
-
-
-
-
- 
-  
+```{r libraries, echo = FALSE, message = FALSE, fig.width = 8}
+# libraries
+library(tidyverse)
+library(lubridate)
+library(dplyr)
+library(readr)
+library(reshape2)
+library(viridis)
+library(cowplot)
 ```
 
-#### Discussion (1-3 paragraphs):
+```{r importing data, echo = FALSE, include = FALSE}
+avgAll <- read_csv("data/air_pollutants/avgAll.csv")
+avgAll2020 <- read_csv("data/air_pollutants/avgAll2020.csv")
+avgAll$year <- as.character(avgAll$year)
+avgAll2020$year <- as.character(avgAll2020$year)
 
-In the Discussion section, interpret the results of your analysis. Identify any trends revealed (or not revealed) by the plots. Speculate about why the data looks the way it does.
+fires_full <- read_csv("data/air_pollutants/fires_full.csv")
+pollutants_pdx <- read_csv("data/air_pollutants/pollutants_pdx.csv", 
+    col_types = cols(Source = col_skip(), 
+        `Site ID` = col_skip(), POC = col_skip(), 
+        `Site Name` = col_skip(), DAILY_OBS_COUNT = col_skip(), 
+        PERCENT_COMPLETE = col_skip(), AQS_PARAMETER_CODE = col_skip(), 
+        CBSA_CODE = col_skip(), CBSA_NAME = col_skip(), 
+        STATE_CODE = col_skip(), STATE = col_skip(), 
+        COUNTY_CODE = col_skip(), COUNTY = col_skip(), 
+        SITE_LATITUDE = col_skip(), SITE_LONGITUDE = col_skip()))
+```
+
+
+```{r trends data wrangling, echo = FALSE, include = FALSE}
+avgAll2020_melted <- melt(avgAll2020, id.vars = c("year", "monthbyyear"))
+
+avgAll2019 <- avgAll %>%
+  filter(year == 2019) %>%
+  select(year, monthbyyear, avg_pm2.5, avg_so2, avg_ozone, avg_co, avg_no2)
+
+avgAll2019_melted <- melt(avgAll2019, id.vars = c("year", "monthbyyear"))
+
+avgAll2021 <- avgAll %>%
+  filter(year == 2021) %>%
+  select(year, monthbyyear, avg_pm2.5, avg_so2, avg_ozone, avg_co, avg_no2)
+
+avgAll2021_melted <- melt(avgAll2021, id.vars = c("year", "monthbyyear"))
+
+avgAll2019_melted <- avgAll2019_melted %>%
+  mutate(variable = case_when(
+    variable == "avg_pm2.5" ~ "Particulate Matter (PM2.5)",
+    variable == "avg_so2" ~ "Sulfur Dioxide (SO2)",
+    variable == "avg_no2" ~ "Nitrogen Dioxide (NO2)",
+    variable == "avg_ozone" ~ "Ozone",
+    variable == "avg_co" ~ "Carbon Monoxide (CO)",
+  ))
+
+avgAll2020_melted <- avgAll2020_melted %>%
+  mutate(variable = case_when(
+    variable == "avg_pm2.5" ~ "Particulate Matter (PM2.5)",
+    variable == "avg_so2" ~ "Sulfur Dioxide (SO2)",
+    variable == "avg_no2" ~ "Nitrogen Dioxide (NO2)",
+    variable == "avg_ozone" ~ "Ozone",
+    variable == "avg_co" ~ "Carbon Monoxide (CO)",
+  ))
+
+avgAll2021_melted <- avgAll2021_melted %>%
+  mutate(variable = case_when(
+    variable == "avg_pm2.5" ~ "Particulate Matter (PM2.5)",
+    variable == "avg_so2" ~ "Sulfur Dioxide (SO2)",
+    variable == "avg_no2" ~ "Nitrogen Dioxide (NO2)",
+    variable == "avg_ozone" ~ "Ozone",
+    variable == "avg_co" ~ "Carbon Monoxide (CO)",
+  ))
+```
+
+```{r PM2.5 graph, echo = FALSE, warning = FALSE, message = FALSE, fig.width = 8}
+# FIRST GRAPH
+ggplot(avgAll,aes(x = month, y = avg_pm2.5, fill = year)) +
+  geom_col(width = .7, show.legend = FALSE) +
+  scale_fill_viridis_d() +
+  scale_x_continuous(breaks = c(1, 13, 25, 37, 49, 61, 73, 84), 
+                    labels = c("1" = "2017", "13" = "2018", "25" = "2019", "37" = "2020", "49" = "2021", "61" = "2022", "73" = "2023", "84" = "2024")) +
+   theme_linedraw() +
+   labs(title = "Concentration of Airborne Fine Particles (PM2.5) in Portland, OR",
+        subtitle = "Data sourced from the EPA ranging from 2017 to 2023",
+        x = "Year",
+        y = "Average PM2.5 Concentration (µg/m³)") +
+   guides(color = "none") +
+   theme(axis.title.y = element_text(size = 10, 
+                                     margin = margin(r = 20)), 
+        axis.title.x = element_text(size = 10, 
+                                    margin = margin(t = 15))) +
+   geom_point(aes(x = 39, y = 40), 
+              show.legend = FALSE, 
+              color = "#21918c", 
+              shape = 6) +
+   annotate("segment", 
+            x = 39, xend = 39, 
+            y = 39, yend = 5.8, 
+            color = "#21918c", 
+            linewidth = .5, 
+            linetype = "dashed") +
+   geom_rect(aes(xmin = 27, xmax = 37, 
+                 ymin = 38, ymax = 44 ), 
+             fill = "#21918c", 
+             alpha = 0.008) +
+   annotate("text", x = 32, y = 41, 
+            label = "Quarantine Begins\n (March 2020)", 
+            size = 2) +
+   geom_point(aes(x = 54, y = 40), 
+              show.legend = FALSE, 
+              color = "#5ec962", 
+              shape = 6) +
+   annotate("segment", x = 54, xend = 54, 
+            y = 39, yend = 4.3, 
+            color = "#5ec962", 
+            linewidth = .5, 
+            linetype = "dashed") +
+   geom_rect(aes(xmin = 56, xmax = 66, 
+                 ymin = 38, ymax = 44 ), 
+             fill = "#5ec962", 
+             alpha = 0.008) +
+   annotate("text", x = 61, y = 41, 
+            label = "Quarantine Ends\n (June 2021)", 
+            size = 2)
+```
+
+
+```{r 2019 concentration trends graph, message= FALSE, warning = FALSE, echo = FALSE}
+ggplot(avgAll2019_melted , aes(x = monthbyyear, y = value, fill = variable)) +
+  geom_col() +
+  facet_wrap(variable ~ ., scales = "free_y") +
+  geom_smooth()+
+  scale_x_continuous(breaks = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12), 
+                     labels = c("1" = "Jan", "2" = "Feb", "3" = "Mar", "4" = "Apr", "5" = "May", "6" = "Jun", "7" = "Jul", "8" = "Aug", "9" = "Sep", "10" = "Oct", "11" = "Nov", "12" = "Dec")) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, size=5)) +
+  scale_fill_viridis_d() +
+  theme_linedraw() +
+  theme(panel.grid = element_blank()) +
+  labs(x = "", 
+       title = "Concentration Trends by Pollutant in 2019",
+       fill = "Pollutant",
+       subtitle = "Data sourced from the EPA",
+       y = "Concentration by Pollutant") +
+  theme(axis.text.x = element_blank(), # REMOVES X-LABELS
+        
+        # CHANGE MY LEGEND BORDER COLOR AND LINE THICKNESS
+        legend.box.background = element_rect(color = "black", size = 1),
+        legend.box.margin = margin(6, 6, 6, 6),
+        
+        # CHANGE THE POSITION OF THE LEGEND
+        legend.position = c(.85, .2),
+        legend.text = element_text(color = "black", size = 7),  # Legend text color and size
+        legend.title = element_text(color = "black"),           # Legend title color
+        legend.key.size = unit(0.4, "cm")
+        )
+
+```
+
+```{r 2020 concentration trends, echo = FALSE, message = FALSE}
+ggplot(avgAll2020_melted, aes(x = monthbyyear, y = value, fill = variable)) +
+  geom_col() +
+  facet_wrap(variable ~ ., scales = "free_y") +
+  geom_smooth() +
+  scale_x_continuous(breaks = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12), 
+                     labels = c("1" = "Jan", "2" = "Feb", "3" = "Mar", "4" = "Apr", "5" = "May", "6" = "Jun", "7" = "Jul", "8" = "Aug", "9" = "Sep", "10" = "Oct", "11" = "Nov", "12" = "Dec")) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, size=5)) +
+  
+  scale_fill_viridis_d()+
+  
+  theme_linedraw()+
+  theme(panel.grid = element_blank())+
+  labs(x="", 
+       title = "Concentration Trends by Pollutant in 2020",
+       fill = "Pollutant",
+       subtitle = "Data sourced from the EPA", 
+       y = "Concentration by Pollutant") +
+  
+  # REMOVES X-LABELS
+  theme(axis.text.x = element_blank(),
+        
+        # CHANGE MY LEGEND BORDER COLOR AND LINE THICKNESS
+        legend.box.background = element_rect(color = "black", size = 1),
+        legend.box.margin = margin(6, 6, 6, 6),
+        
+        # CHANGE THE POSITION OF THE LEGEND
+        legend.position = c(.85, .2) ,
+        legend.text = element_text(color = "black", size = 7),  # Legend text color and size
+        legend.title = element_text(color = "black"),           # Legend title color
+        legend.key.size = unit(0.4, "cm")
+        )
+```
+
+#### Discussion
+
+In our graphs, we can see some general trends that apply to all years. For example, PM2.5 concentrations tend to increase in the winter and decrease in the summer throughout the time series, indicating normal seasnal fluctuations. We found out that this is because as the air gets warmer, it rises and brings fine particulate matter higher into the atmosphere. An exception to this is in September 2020, a phenomenon which will be explained in our second analysis. 
+
+During 2020, SO2 concentration levels seemed to have a more dramatic decrease compared to 2019, a year which we consider to be a "normal" observation for comparison. In March 2020, SO2 seems to have gone down significantly compared to in 2019 where there is a gradual decrease throughout the first half of the year. One main source of SO2 is emisisons from electric utilities, suggesting a potential correlation between COVID lockdown and SO2 emissions. This may be due to businesses and other buildings closing with the quarantine policy in place.
+
+Overall, other pollutants do not seem to have been majorly impacted by the COVID lockdown. CO and PM2.5 are the only ones that had significant changes in September. In order to confirm any effect of the quarantine on air quality, further analysis would be needed. A potential avenue for further research is looking at how specifically motor vehicle activity changed over the pandemic, perhaps by isolating those pollutants through further scientific approaches.
+
 
 ### Question 2: Wildfire Season and Air Quality
 
 The intensity of Oregon's wildfire season in Oregon has increased over time as a result of historical forest management as well as climate change effects. The intensity of these fires is of concern to public safety both immediately in fire prone areas as well as for communities facing decreased air quality from smoke. We are interested in exploring this aspect of the issue of wildfires by analyzing concentration levels of major pollutants produced by wildfires (particularly PM2.5, NO2, Ozone and general AQI) before during and after fire season.
+
+#### Approach
+
+Our assumption is that during wildfire season, more pollutants are emitted into the atmosphere, meaning that from mid-May to September pollutant concentrations will go up. We used six years from our pollutant dataset which offers pollutant concentration by day as well as in a more succinct format with the first, 15th, and last day of the month. We also pulled in our fire dataset which offers the total protected acres burned by day across the six years in order to differentiate between general seasonal fluctuations and the actual severity of wildfire season across years.
+
+In our first graph from question 1, we focused on the concentration of carbon monoxide across years since this is one of the most prominent pollutants associated with wildfires. This data was visualized by a column graph where each column is a month, sectioned by color and year, with markers indicating the standard wildfire seasons.
+
+Our second graph considers other pollutant levels over each year from 2017-2023 in order to consider overall trends in pollutant concentration fluctuation. It is presented alongside wildfire data in order to consider to what extent the fluctuation is impacted by wildfire season. This is done with a series of line graphs. These plots help to better visualize the relationship between wildfires and air pollution which aligns with our primary goal.
+
+#### Analysis
+
+```{r pollutant data stuff/wrangling, echo = FALSE, message = FALSE, warning = FALSE, include = FALSE}
+# pollutant data stuff/wrangling
+pollutants_pdx <- pollutants_pdx %>%
+  rename(NO2_reading = "Daily Max 1-hour NO2 Concentration",
+         Ozone_reading = "Daily Max 8-hour Ozone Concentration",
+         CO_reading = "Daily Max 8-hour CO Concentration",
+         SO2_reading = "Daily Max 1-hour SO2 Concentration",
+         PM2.5_reading = "Daily Mean PM2.5 Concentration",
+         AQI_reading = "DAILY_AQI_VALUE",
+         )
+
+pollutants_pdx_melt <- pollutants_pdx %>%
+  pivot_longer(cols = c(NO2_reading, CO_reading, SO2_reading, PM2.5_reading, Ozone_reading, AQI_reading),
+               names_to = "variable",
+               values_to = "reading") %>%
+  filter(!is.na(reading))
+
+pollutants_pdx_melt <- pollutants_pdx_melt %>% 
+  filter(variable == "PM2.5_reading" | 
+           variable == "NO2_reading" | 
+           variable == "Ozone_reading" | 
+           variable == "AQI_reading")
+
+pollutants_pdx_melt$Date <- mdy(pollutants_pdx_melt$Date)
+
+pollutants_pdx_melt <- pollutants_pdx_melt %>% 
+  group_by(Date, variable) %>% 
+  summarise(avrg_reading = mean(reading, na.rm = TRUE)) %>% 
+  ungroup()
+
+pollutants_pdx_melt <- pollutants_pdx_melt %>%
+  mutate(year = year(Date))
+
+pollutants_FML <- pollutants_pdx_melt %>%
+  mutate(day = day(Date)) %>%
+  filter(day == 1 | day == 15 | day == max(day)) %>%
+  select(-day)
+```
+
+
+```{r wildfire graph, echo = F, warning = F, message = F, fig.width = 8}
+# KIANA's FIRST GRAPH
+ggplot(avgAll, aes(x = month, y = avg_co, fill = year)) +
+  geom_col(width = .7, show.legend = FALSE) +
+  scale_fill_manual(values = c("#33302E", "#320a5e", "#781c6d", "#bc3754", "#ed6925", "#fbb61a", "#fcffa4")) +
+  scale_x_continuous(breaks = c(1, 13, 25, 37, 49,61,73, 84), 
+                    labels = c("1" = "2017", "13" = "2018", "25" = "2019", "37" = "2020", "49" = "2021", "61" = "2022", "73" = "2023", "84" = "2024")) +
+  
+  theme_linedraw() +
+  
+  labs(title = "Concentration of Carbon Monoxide (CO) in Portland, OR",
+       subtitle = "Data sourced from the EPA ranging from 2017 to 2023",
+       x = "Year",
+       y = "Average CO Concentration (ppb)") +
+  
+  guides(color = "none") +
+  theme(axis.title.y = element_text(size = 10, margin = margin(r = 20)), 
+        axis.title.x = element_text(size = 10, margin = margin(t = 15))) +
+  
+  annotate("segment", x = 19, xend = 19, y = .75, yend = 0.3, color = "white", linewidth = .5, linetype = "dashed") +
+  annotate("segment", x = 21, xend = 21, y = .75, yend = 0.4, color = "white", linewidth = .5, linetype = "dashed") +
+  annotate("segment", x = 19, xend = 21, y = .75, yend = 0.75, color = "white", linewidth = .5) +
+  geom_rect(aes(xmin = 10, xmax = 20, ymin = .8, ymax = 1 ), fill = "white", alpha = 0.05) +
+  annotate("text", x = 15, y = .9, label = "Regular Wildfire\n Season", size = 2) +
+  geom_point(aes(x = 20,y = .775), show.legend = FALSE, color = "white", shape = 6, size = .5) +
+  
+  annotate("segment", x = 67, xend = 67, y = .75, yend = 0.1, color = "white", linewidth = .5, linetype = "dashed") +
+  annotate("segment", x = 69, xend = 69, y = .75, yend = 0.2, color = "white", linewidth = .5, linetype = "dashed") +
+  annotate("segment", x = 67, xend = 69, y = .75, yend = 0.75, color = "white", linewidth = .5) +
+  geom_rect(aes(xmin = 68, xmax = 78, ymin = .8, ymax = 1 ), fill = "white", alpha = 0.05) +
+  annotate("text", x = 73, y = .9, label = "Regular Wildfire\n Season", size = 2) +
+  geom_point(aes(x = 68,y = .775), show.legend = FALSE, color = "white", shape = 6, size=.5) +
+  
+  annotate("segment", x = 45.5, xend = 58, y = 1.75, yend = 2, color = "pink", linewidth = .5) +
+  geom_rect(aes(xmin = 55, xmax = 65, ymin = 2, ymax = 2.2), fill = "pink", alpha = 0.05) +
+  annotate("text", x = 60, y = 2.1, label = "Archie Creek Fire\n(September 2020)", size = 2) +
+  geom_point(aes(x = 45.5, y = 1.75), show.legend = FALSE, color = "pink", size = .5)
+```
+
+![](code/Prerendered Pictures/wildfireAll.svg)
+![](code/Prerendered Pictures/wildfire2019.svg)
+
+#### Discussion
+
+From our graphs, we notice that there are typical seasonal fluctuations for various pollutants; not all of these trends are due to wildfire season. We found out that NO2 decreases in the presence of solar radiation and reacts to form Ozone, which explains the respective decrease and increase for those pollutants in the summer. 
+
+2020 had a huge wildfire, the Archie Creek Fire, in late September in Oregon. This disaster had a noticeable impact on air quality. During this month, PM2.5, CO, and AQI (Air Quality Index) all skyrocketed. Other pollutants did not undergo much of a change. From this analysis, we can see that normal fire seasons don't necessarily have huge impacts on pollutant levels, but a disaster on the scale of the Archie Creek fire can have drastic effects. As cliamte change worsens, temperatures increase, and the summers get drier, we may see regular fire seasons getting worse over time.
+
+

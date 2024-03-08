@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Seattle Bike - Project Write-up</title>
+<title>Portland Area Air Quality - Examining Air Pollution and Environmental Factors</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -71,7 +71,7 @@ ul.task-list li input[type="checkbox"] {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">Seattle Bike</span>
+    <span class="navbar-title">Portland Area Air Quality</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -99,7 +99,7 @@ ul.task-list li input[type="checkbox"] {
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/aallorant/project01-seattle-bike" rel="" target=""><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/math241s24/project01-ojkp" rel="" target=""><i class="bi bi-github" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
@@ -121,10 +121,10 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#write-up" id="toc-write-up" class="nav-link active" data-scroll-target="#write-up">Write-up</a>
   <ul class="collapse">
-  <li><a href="#introduction-1-2-paragraphs" id="toc-introduction-1-2-paragraphs" class="nav-link" data-scroll-target="#introduction-1-2-paragraphs">Introduction (1-2 paragraphs):</a>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a>
   <ul class="collapse">
-  <li><a href="#question-1" id="toc-question-1" class="nav-link" data-scroll-target="#question-1">Question 1:</a></li>
-  <li><a href="#question-2" id="toc-question-2" class="nav-link" data-scroll-target="#question-2">Question 2:</a></li>
+  <li><a href="#question-1-effects-of-covid-on-air-quality" id="toc-question-1-effects-of-covid-on-air-quality" class="nav-link" data-scroll-target="#question-1-effects-of-covid-on-air-quality">Question 1: Effects of COVID on Air Quality</a></li>
+  <li><a href="#question-2-wildfire-season-and-air-quality" id="toc-question-2-wildfire-season-and-air-quality" class="nav-link" data-scroll-target="#question-2-wildfire-season-and-air-quality">Question 2: Wildfire Season and Air Quality</a></li>
   </ul></li>
   </ul></li>
   </ul>
@@ -135,7 +135,8 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Project Write-up</h1>
+<h1 class="title">Examining Air Pollution and Environmental Factors</h1>
+<p class="subtitle lead">Kiana Fields, Julian Jacklin, Prasiddhi Thapaliya, Omar Youssif</p>
 </div>
 
 
@@ -152,37 +153,71 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="write-up" class="level1">
 <h1>Write-up</h1>
-<p>Your write-up should consist of three parts:</p>
-<section id="introduction-1-2-paragraphs" class="level2">
-<h2 class="anchored" data-anchor-id="introduction-1-2-paragraphs">Introduction (1-2 paragraphs):</h2>
-<p>Brief introduction to the dataset. You may repeat some of the information about the dataset provided in the introduction to the dataset on the <code>TidyTuesday</code> repository, for instance. Imagine that your project is a standalone document and the grader has no prior knowledge of the dataset.</p>
-<section id="question-1" class="level3">
-<h3 class="anchored" data-anchor-id="question-1">Question 1:</h3>
-<p>The title should relate to the question you’re answering.</p>
-<section id="introduction-1-2-paragraphs-1" class="level4">
-<h4 class="anchored" data-anchor-id="introduction-1-2-paragraphs-1">Introduction (1-2 paragraphs):</h4>
-<p>Introduction to the question and what parts of the dataset are necessary to answer the question. Also discuss why you’re interested in this question.</p>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>We are using data from the United States Environmental Protection Agency (EPA). Their tool provides daily records of air pollutant concentrations of various atmospheric pollutants. This can be filtered by geographic area such as state, city, county, or specific monitoring site. The typical units for each pollutant, depending on its abundance in the air, is either in ppm (parts per million), ppb (parts per billion), or µg/m<sup>3</sup> (micrograms per cubic meter).</p>
+<p>For our research, we narrowed our focus on the Portland-Hillsboro-Vancouver area to analyze changes in pollutant concentration and thus air quality. We looked at the following atmospheric compounds: CO (carbon monoxide), NO2 (nitrogen dioxide), O3 (ozone), PM2.5 (fine particulate matter), and SO2 (sulfur dioxide). We chose these because they are the most abundant and seem to be the most talked about greenhouse gases among the general population.</p>
+<section id="question-1-effects-of-covid-on-air-quality" class="level3">
+<h3 class="anchored" data-anchor-id="question-1-effects-of-covid-on-air-quality">Question 1: Effects of COVID on Air Quality</h3>
+<section id="introduction-1" class="level4">
+<h4 class="anchored" data-anchor-id="introduction-1">Introduction</h4>
+<p>COVID-19 and it’s effects have impacted us all. As with any pandemic, the primary concerns worldwide were largely related to public health and economic welfare. Like many other nations, the U.S met the the concerns of the former, by enacting state-by-state quarantines (“stay-at-home” orders). Subsequently, major metropolitan centers in the nation characterized by greater motor-vehicle traffic, experienced a dramatic dip in commuter density as quarantine mandates went into effect and drastically fewer commuters had to drive to work each day. One impact of COVID-19 that has yet to be discussed as severely as the others, is its impact on our climate; particularly, on air quality. A popular assumption, is that air quality improved during this time, as less commuters were “on the road”, and so less vehicles were used and emitting pollutants. We are interested in exploring this assumption by analyzing the concentration levels of major pollutants produced by motor-vehicles (namely, the variables PM2.5, SO2, NO2, CO, and Ozone), before, during, and after quarantine, using our chosen dataset.</p>
 </section>
-<section id="approach-1-2-paragraphs" class="level4">
-<h4 class="anchored" data-anchor-id="approach-1-2-paragraphs">Approach (1-2 paragraphs):</h4>
-<p>Describe what types of plots you are going to make to address your question. For each plot, provide a clear explanation as to why this plot (e.g.&nbsp;boxplot, barplot, histogram, etc.) is best for providing the information you are asking about. The two plots should be of different types, and at least one of the two plots needs to use either color mapping or facets.</p>
+<section id="approach" class="level4">
+<h4 class="anchored" data-anchor-id="approach">Approach</h4>
+<p>Our underlying hypothesis is that fewer pollutants were emitted into the atmosphere in Portland from March 2020 - June 2021 (span of Oregon state quarantine mandate). Our dataset offers average pollutant concentrations by month, over several years (Jan 2017 - Dec 2023). In our first graph we have chosen to focus on PM2.5 concentrations over this 7-year window, since this is the most hazardous and prominent pollutant that motor-vehicles emit. Additionally, we’d like to observe its trends in recent history, through the quarantine, and afterward, to identify any contrasts. We are visualizing this data by a column graph such that each column is a month, sectioned by color and year, with markers indicating the beginning and end of Oregon’s quarantine. Our second graph (a collection of three plots) explores concentration trends by the other pollutants, over each year in the immediate window around quarantine (2019, 2020, 2021). This is done via a trend line, overlayed by columns to distinguish monthly concentrations readings. Both of these plots help us better visualize trends in major pollutant concentrations over time.</p>
 </section>
-<section id="analysis-2-3-code-blocks-2-figures-textcode-comments-as-needed" class="level4">
-<h4 class="anchored" data-anchor-id="analysis-2-3-code-blocks-2-figures-textcode-comments-as-needed">Analysis (2-3 code blocks, 2 figures, text/code comments as needed):</h4>
+<section id="analysis" class="level4">
+<h4 class="anchored" data-anchor-id="analysis">Analysis</h4>
 <p>In this section, provide the code that generates your plots. Use scale functions to provide nice axis labels and guides. You are welcome to use theme functions to customize the appearance of your plot, but you are not required to do so. All plots must be made with ggplot2. Do not use base R or lattice plotting functions.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/PM2.5 graph-1.png" class="img-fluid" width="768"></p>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/2019 concentration trends graph-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/2020 concentration trends-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 </section>
-<section id="discussion-1-3-paragraphs" class="level4">
-<h4 class="anchored" data-anchor-id="discussion-1-3-paragraphs">Discussion (1-3 paragraphs):</h4>
-<p>In the Discussion section, interpret the results of your analysis. Identify any trends revealed (or not revealed) by the plots. Speculate about why the data looks the way it does.</p>
+<section id="discussion" class="level4">
+<h4 class="anchored" data-anchor-id="discussion">Discussion</h4>
+<p>In our graphs, we can see some general trends that apply to all years. For example, PM2.5 concentrations tend to increase in the winter and decrease in the summer throughout the time series, indicating normal seasnal fluctuations. We found out that this is because as the air gets warmer, it rises and brings fine particulate matter higher into the atmosphere. An exception to this is in September 2020, a phenomenon which will be explained in our second analysis.</p>
+<p>During 2020, SO2 concentration levels seemed to have a more dramatic decrease compared to 2019, a year which we consider to be a “normal” observation for comparison. In March 2020, SO2 seems to have gone down significantly compared to in 2019 where there is a gradual decrease throughout the first half of the year. One main source of SO2 is emisisons from electric utilities, suggesting a potential correlation between COVID lockdown and SO2 emissions. This may be due to businesses and other buildings closing with the quarantine policy in place.</p>
+<p>Overall, other pollutants do not seem to have been majorly impacted by the COVID lockdown. CO and PM2.5 are the only ones that had significant changes in September. In order to confirm any effect of the quarantine on air quality, further analysis would be needed. A potential avenue for further research is looking at how specifically motor vehicle activity changed over the pandemic, perhaps by isolating those pollutants through further scientific approaches.</p>
 </section>
 </section>
-<section id="question-2" class="level3">
-<h3 class="anchored" data-anchor-id="question-2">Question 2:</h3>
-<p>Same structure outlined for Question 1, but for your new question. And the title should relate to the question you’re answering.</p>
-<p>We encourage you to be concise. A paragraph should typically not be longer than 5 sentences.</p>
-<p>You are not required to perform any statistical tests in this project, but you may do so if you find it helpful to answer your question.</p>
+<section id="question-2-wildfire-season-and-air-quality" class="level3">
+<h3 class="anchored" data-anchor-id="question-2-wildfire-season-and-air-quality">Question 2: Wildfire Season and Air Quality</h3>
+<p>The intensity of Oregon’s wildfire season in Oregon has increased over time as a result of historical forest management as well as climate change effects. The intensity of these fires is of concern to public safety both immediately in fire prone areas as well as for communities facing decreased air quality from smoke. We are interested in exploring this aspect of the issue of wildfires by analyzing concentration levels of major pollutants produced by wildfires (particularly PM2.5, NO2, Ozone and general AQI) before during and after fire season.</p>
+<section id="approach-1" class="level4">
+<h4 class="anchored" data-anchor-id="approach-1">Approach</h4>
+<p>Our assumption is that during wildfire season, more pollutants are emitted into the atmosphere, meaning that from mid-May to September pollutant concentrations will go up. We used six years from our pollutant dataset which offers pollutant concentration by day as well as in a more succinct format with the first, 15th, and last day of the month. We also pulled in our fire dataset which offers the total protected acres burned by day across the six years in order to differentiate between general seasonal fluctuations and the actual severity of wildfire season across years.</p>
+<p>In our first graph from question 1, we focused on the concentration of carbon monoxide across years since this is one of the most prominent pollutants associated with wildfires. This data was visualized by a column graph where each column is a month, sectioned by color and year, with markers indicating the standard wildfire seasons.</p>
+<p>Our second graph considers other pollutant levels over each year from 2017-2023 in order to consider overall trends in pollutant concentration fluctuation. It is presented alongside wildfire data in order to consider to what extent the fluctuation is impacted by wildfire season. This is done with a series of line graphs. These plots help to better visualize the relationship between wildfires and air pollution which aligns with our primary goal.</p>
+</section>
+<section id="analysis-1" class="level4">
+<h4 class="anchored" data-anchor-id="analysis-1">Analysis</h4>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/wildfire graph-1.png" class="img-fluid" width="768"></p>
+</div>
+</div>
+<p><img src="code/Prerendered Pictures/wildfireAll.svg" class="img-fluid"> <img src="code/Prerendered Pictures/wildfire2019.svg" class="img-fluid"></p>
+</section>
+<section id="discussion-1" class="level4">
+<h4 class="anchored" data-anchor-id="discussion-1">Discussion</h4>
+<p>From our graphs, we notice that there are typical seasonal fluctuations for various pollutants; not all of these trends are due to wildfire season. We found out that NO2 decreases in the presence of solar radiation and reacts to form Ozone, which explains the respective decrease and increase for those pollutants in the summer.</p>
+<p>2020 had a huge wildfire, the Archie Creek Fire, in late September in Oregon. This disaster had a noticeable impact on air quality. During this month, PM2.5, CO, and AQI (Air Quality Index) all skyrocketed. Other pollutants did not undergo much of a change. From this analysis, we can see that normal fire seasons don’t necessarily have huge impacts on pollutant levels, but a disaster on the scale of the Archie Creek fire can have drastic effects. As cliamte change worsens, temperatures increase, and the summers get drier, we may see regular fire seasons getting worse over time.</p>
 
 
+</section>
 </section>
 </section>
 </section>

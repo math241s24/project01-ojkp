@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Omar Youssif">
+<meta name="dcterms.date" content="2024-02-21">
 
-<title>Portland Area Air Quality - Project Proposal</title>
+<title>Portland Area Air Quality - Data Cleanup</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,22 +25,22 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -70,7 +72,7 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">Portland Area Air Quality</span>
     </a>
   </div>
@@ -81,19 +83,19 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html" rel="" target="">
+    <a class="nav-link" href="../index.html" rel="" target="">
  <span class="menu-text">Project</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./proposal.html" rel="" target="" aria-current="page">
+    <a class="nav-link" href="../proposal.html" rel="" target="">
  <span class="menu-text">Proposal</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./presentation.html" rel="" target="">
+    <a class="nav-link" href="../presentation.html" rel="" target="">
  <span class="menu-text">Presentation</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./about.html" rel="" target="">
+    <a class="nav-link" href="../about.html" rel="" target="">
  <span class="menu-text">About</span></a>
   </li>  
 </ul>
@@ -115,27 +117,33 @@ ul.task-list li input[type="checkbox"] {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#proposal" id="toc-proposal" class="nav-link active" data-scroll-target="#proposal">Proposal</a></li>
-  </ul>
-</nav>
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Project Proposal</h1>
+<h1 class="title">Data Cleanup</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Omar Youssif </p>
+          </div>
+  </div>
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">February 21, 2024</p>
+    </div>
+  </div>
   
     
   </div>
@@ -143,55 +151,8 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<section id="proposal" class="level1">
-<h1>Proposal</h1>
-<p>Your proposal should include:</p>
-<ul>
-<li>A brief description of your dataset including its provenance, dimensions, etc. (Make sure to load the data and use inline code for some of this information.)</li>
-<li>The reason why you chose this dataset.</li>
-<li>The two questions you want to answer.
-<ul>
-<li>A plan for answering each of the questions including the variables involved, variables to be created (if any), external data to be merged in (if any).</li>
-</ul></li>
-</ul>
-<ol type="1">
-<li>We are using air quality data from the EPA (Environmental Protection Agency). Their data records atmospheric concentrations of major pollutants (CO, NO2, O3, PM 2.5, and SO2) every day of the year in geographic areas across the United States. The data can be as granular as county level; for our research purposes, we are focusing on the Portland metropolitan area (Portland-Hillsboro-Vancouver) and using data from 2017-2023. For our two research questions, we have subsetted the EPA data into two forms for each pollutant type: a 84 x 2 monthly average air pollutant and a 28606 x 4 daily air pollutant data. The specific number of observations differs by data set, due to the dataset having information from multiple sites in the Portland area. We have 10 datasets (5 of each type). Below is a glimpse into how our two forms of datasets are structured for one of our chosen top pollutants (PM2.5) which is 2 out of our 10 datasets.</li>
-</ol>
-<p>Daily data about PM2.5 mean concentration from each site in Portland-Vancouver-Hillsboro from 2017 to 2023:</p>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>Rows: 28,606
-Columns: 4
-$ Date                             &lt;date&gt; 2017-06-16, 2017-06-17, 2017-06-18, …
-$ `Daily Mean PM2.5 Concentration` &lt;dbl&gt; 2.3, 3.7, 3.0, 5.4, 2.9, 3.9, 3.6, 3.…
-$ DAILY_AQI_VALUE                  &lt;dbl&gt; 10, 15, 13, 23, 12, 16, 15, 16, 15, 1…
-$ CBSA_NAME                        &lt;chr&gt; "Portland-Vancouver-Hillsboro, OR-WA"…</code></pre>
-</div>
-</div>
-<p>Monthly averages of PM2.5 daily mean concentrations in Portland-Vancouver-Hillsboro from 2017 to 2023:</p>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>Rows: 84
-Columns: 2
-$ month_year &lt;chr&gt; "2017-01", "2017-02", "2017-03", "2017-04", "2017-05", "201…
-$ avg_pm2.5  &lt;dbl&gt; 9.776526, 5.328638, 3.842800, 3.857500, 3.912355, 3.677011,…</code></pre>
-</div>
-</div>
-<ol start="2" type="1">
-<li><p>We wanted to explore environmental data because it can be considered a “subversive” topic by some audiences. We believe it is important to study environmental trends in order to confirm or deny common arguments and observe relationships between anthropogenic activity and environmental impacts. We chose this dataset because it is accessible through the EPA’s website and can be easily filtered from the AQI monitoring webpage by type of pollutant, geographic area, and year.</p></li>
-<li><p>Our two questions are:</p></li>
-</ol>
-<ul>
-<li>How did the COVID pandemic lockdown impact air quality in the Portland Metropolitan area?</li>
-<li>Is there a correlation between wildfire season and air quality fluctuations in the Portland Metropolitan area?</li>
-</ul>
-<ol start="4" type="1">
-<li>For our first question, we will be visualizing changes over time for the 5 major pollutants above in the Portland-Vancouver-Hillsboro area. We will be using data from 2017 to 2023 in order to get a sense of what the air quality looked like before the pandemic, during the pandemic (highlighting 2020-2021 as prime lockdown years), and seeing if pollutant concentrations increased after lockdown restrictions were lifted (from 2022-2023). We will plot monthly averages for each pollutant and graph the changes across the 7 year time span on a line graph, with multiple lines for each pollutant. If there are too many observations we may split the data into three graphs (before, during, and after lockdown).</li>
-</ol>
-<p>For our second question, we will plot observations for the first, 15th, and last day of each month across one year. We will observe whether there is a stark increase in pollutant concentrations during the wildfire season (July-September) and have multiple lines to see which pollutants in particular increase. We will make a graph for each year to check for precision.</p>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
