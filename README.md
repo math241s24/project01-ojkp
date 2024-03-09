@@ -1,4 +1,6 @@
-**Examining Air Pollution and Environmental Factors in Portland Metropolitan Area** (Reed College: Math 241 with Adrien Allorant - Data Science)
+# **Examining Air Pollution and Environmental Factors in Portland Metropolitan Area** 
+
+### Reed College: Math 241 with Adrien Allorant - Data Science
 
 In the uppermost repo, we have these following files.
 
