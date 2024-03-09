@@ -14,7 +14,7 @@ In the uppermost repo, we have these following files.
 
 -   proposal.qmd: This is the file where we did our project proposal and have some data processing in it.
 
-Under a folder named ***data*** is where all of our data is stored (split across proposal data and air pollutant data). The data is stored as a csv.
+Under a folder named ***data*** is where all of our data (sourced from the U.S. Environmental Protection Agency) is stored (split across proposal data and air pollutant data). The data is stored as a csv.
 
 Under the folder ***code***, we have these following files:
 
