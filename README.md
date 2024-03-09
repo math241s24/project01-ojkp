@@ -4,9 +4,6 @@ In the uppermost repo, we have these following files.
 
 -   project01-ojkp.Rproj: This is the project environment for this project. **Please open R Studio using this file in order to not have data directory issues.**
 
-```{=html}
-<!-- -->
-```
 -   about.qmd: This has a general project description page. You can open the website by rendering this file.
 
 -   index.qmd: This includes our write-up where we talk about the justification of our approaches, while summarizing our findings and conclusions.
