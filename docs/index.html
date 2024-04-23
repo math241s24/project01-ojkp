@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.353">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Portland Area Air Quality - Examining Air Pollution and Environmental Factors</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Portland Area Air Quality</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="./index.html" rel="" target="" aria-current="page">
+ <span class="menu-text">Project</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./proposal.html" rel="" target="">
+ <span class="menu-text">Proposal</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./presentation.html" rel="" target="">
+ <span class="menu-text">Presentation</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./about.html" rel="" target="">
+ <span class="menu-text">About</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/math241s24/project01-ojkp" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#write-up" id="toc-write-up" class="nav-link active" data-scroll-target="#write-up">Write-up</a>
+  <ul class="collapse">
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a>
+  <ul class="collapse">
+  <li><a href="#question-1-effects-of-covid-on-air-quality" id="toc-question-1-effects-of-covid-on-air-quality" class="nav-link" data-scroll-target="#question-1-effects-of-covid-on-air-quality">Question 1: Effects of COVID on Air Quality</a></li>
+  <li><a href="#question-2-wildfire-season-and-air-quality" id="toc-question-2-wildfire-season-and-air-quality" class="nav-link" data-scroll-target="#question-2-wildfire-season-and-air-quality">Question 2: Wildfire Season and Air Quality</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Examining Air Pollution and Environmental Factors</h1>
+<p class="subtitle lead">Kiana Fields, Julian Jacklin, Prasiddhi Thapaliya, Omar Youssif</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="write-up" class="level1">
+<h1>Write-up</h1>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>We are using data from the United States Environmental Protection Agency (EPA). Their tool provides daily records of air pollutant concentrations of various atmospheric pollutants. This can be filtered by geographic area such as state, city, county, or specific monitoring site. The typical units for each pollutant, depending on its abundance in the air, is either in ppm (parts per million), ppb (parts per billion), or µg/m<sup>3</sup> (micrograms per cubic meter).</p>
+<p>For our research, we narrowed our focus on the Portland-Hillsboro-Vancouver area to analyze changes in pollutant concentration and thus air quality. We looked at the following atmospheric compounds: CO (carbon monoxide), NO2 (nitrogen dioxide), O3 (ozone), PM2.5 (fine particulate matter), and SO2 (sulfur dioxide). We chose these because they are the most abundant and seem to be the most talked about greenhouse gases among the general population.</p>
+<section id="question-1-effects-of-covid-on-air-quality" class="level3">
+<h3 class="anchored" data-anchor-id="question-1-effects-of-covid-on-air-quality">Question 1: Effects of COVID on Air Quality</h3>
+<section id="introduction-1" class="level4">
+<h4 class="anchored" data-anchor-id="introduction-1">Introduction</h4>
+<p>COVID-19 and it’s effects have impacted us all. As with any pandemic, the primary concerns worldwide were largely related to public health and economic welfare. Like many other nations, the U.S met the the concerns of the former, by enacting state-by-state quarantines (“stay-at-home” orders). Subsequently, major metropolitan centers in the nation characterized by greater motor-vehicle traffic, experienced a dramatic dip in commuter density as quarantine mandates went into effect and drastically fewer commuters had to drive to work each day. One impact of COVID-19 that has yet to be discussed as severely as the others, is its impact on our climate; particularly, on air quality. A popular assumption, is that air quality improved during this time, as less commuters were “on the road”, and so less vehicles were used and emitting pollutants. We are interested in exploring this assumption by analyzing the concentration levels of major pollutants produced by motor-vehicles (namely, the variables PM2.5, SO2, NO2, CO, and Ozone), before, during, and after quarantine, using our chosen dataset.</p>
+</section>
+<section id="approach" class="level4">
+<h4 class="anchored" data-anchor-id="approach">Approach</h4>
+<p>Our underlying hypothesis is that fewer pollutants were emitted into the atmosphere in Portland from March 2020 - June 2021 (span of Oregon state quarantine mandate). Our dataset offers average pollutant concentrations by month, over several years (Jan 2017 - Dec 2023). In our first graph we have chosen to focus on PM2.5 concentrations over this 7-year window, since this is the most hazardous and prominent pollutant that motor-vehicles emit. Additionally, we’d like to observe its trends in recent history, through the quarantine, and afterward, to identify any contrasts. We are visualizing this data by a column graph such that each column is a month, sectioned by color and year, with markers indicating the beginning and end of Oregon’s quarantine. Our second graph (a collection of three plots) explores concentration trends by the other pollutants, over each year in the immediate window around quarantine (2019, 2020, 2021). This is done via a trend line, overlayed by columns to distinguish monthly concentrations readings. Both of these plots help us better visualize trends in major pollutant concentrations over time.</p>
+</section>
+<section id="analysis" class="level4">
+<h4 class="anchored" data-anchor-id="analysis">Analysis</h4>
+<p>In this section, provide the code that generates your plots. Use scale functions to provide nice axis labels and guides. You are welcome to use theme functions to customize the appearance of your plot, but you are not required to do so. All plots must be made with ggplot2. Do not use base R or lattice plotting functions.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/PM2.5 graph-1.png" class="img-fluid" width="768"></p>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/2019 concentration trends graph-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/2020 concentration trends-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="discussion" class="level4">
+<h4 class="anchored" data-anchor-id="discussion">Discussion</h4>
+<p>In our graphs, we can see some general trends that apply to all years. For example, PM2.5 concentrations tend to increase in the winter and decrease in the summer throughout the time series, indicating normal seasnal fluctuations. We found out that this is because as the air gets warmer, it rises and brings fine particulate matter higher into the atmosphere. An exception to this is in September 2020, a phenomenon which will be explained in our second analysis.</p>
+<p>During 2020, SO2 concentration levels seemed to have a more dramatic decrease compared to 2019, a year which we consider to be a “normal” observation for comparison. In March 2020, SO2 seems to have gone down significantly compared to in 2019 where there is a gradual decrease throughout the first half of the year. One main source of SO2 is emisisons from electric utilities, suggesting a potential correlation between COVID lockdown and SO2 emissions. This may be due to businesses and other buildings closing with the quarantine policy in place.</p>
+<p>Overall, other pollutants do not seem to have been majorly impacted by the COVID lockdown. CO and PM2.5 are the only ones that had significant changes in September. In order to confirm any effect of the quarantine on air quality, further analysis would be needed. A potential avenue for further research is looking at how specifically motor vehicle activity changed over the pandemic, perhaps by isolating those pollutants through further scientific approaches.</p>
+</section>
+</section>
+<section id="question-2-wildfire-season-and-air-quality" class="level3">
+<h3 class="anchored" data-anchor-id="question-2-wildfire-season-and-air-quality">Question 2: Wildfire Season and Air Quality</h3>
+<p>The intensity of Oregon’s wildfire season in Oregon has increased over time as a result of historical forest management as well as climate change effects. The intensity of these fires is of concern to public safety both immediately in fire prone areas as well as for communities facing decreased air quality from smoke. We are interested in exploring this aspect of the issue of wildfires by analyzing concentration levels of major pollutants produced by wildfires (particularly PM2.5, NO2, Ozone and general AQI) before during and after fire season.</p>
+<section id="approach-1" class="level4">
+<h4 class="anchored" data-anchor-id="approach-1">Approach</h4>
+<p>Our assumption is that during wildfire season, more pollutants are emitted into the atmosphere, meaning that from mid-May to September pollutant concentrations will go up. We used six years from our pollutant dataset which offers pollutant concentration by day as well as in a more succinct format with the first, 15th, and last day of the month. We also pulled in our fire dataset which offers the total protected acres burned by day across the six years in order to differentiate between general seasonal fluctuations and the actual severity of wildfire season across years.</p>
+<p>In our first graph from question 1, we focused on the concentration of carbon monoxide across years since this is one of the most prominent pollutants associated with wildfires. This data was visualized by a column graph where each column is a month, sectioned by color and year, with markers indicating the standard wildfire seasons.</p>
+<p>Our second graph considers other pollutant levels over each year from 2017-2023 in order to consider overall trends in pollutant concentration fluctuation. It is presented alongside wildfire data in order to consider to what extent the fluctuation is impacted by wildfire season. This is done with a series of line graphs. These plots help to better visualize the relationship between wildfires and air pollution which aligns with our primary goal.</p>
+</section>
+<section id="analysis-1" class="level4">
+<h4 class="anchored" data-anchor-id="analysis-1">Analysis</h4>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/wildfire graph-1.png" class="img-fluid" width="768"></p>
+</div>
+</div>
+<p><img src="code/Prerendered Pictures/wildfireAll.svg" class="img-fluid"> <img src="code/Prerendered Pictures/wildfire2019.svg" class="img-fluid"></p>
+</section>
+<section id="discussion-1" class="level4">
+<h4 class="anchored" data-anchor-id="discussion-1">Discussion</h4>
+<p>From our graphs, we notice that there are typical seasonal fluctuations for various pollutants; not all of these trends are due to wildfire season. We found out that NO2 decreases in the presence of solar radiation and reacts to form Ozone, which explains the respective decrease and increase for those pollutants in the summer.</p>
+<p>2020 had a huge wildfire, the Archie Creek Fire, in late September in Oregon. This disaster had a noticeable impact on air quality. During this month, PM2.5, CO, and AQI (Air Quality Index) all skyrocketed. Other pollutants did not undergo much of a change. From this analysis, we can see that normal fire seasons don’t necessarily have huge impacts on pollutant levels, but a disaster on the scale of the Archie Creek fire can have drastic effects. As cliamte change worsens, temperatures increase, and the summers get drier, we may see regular fire seasons getting worse over time.</p>
+
+
+</section>
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
